@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 
-export default function Deteils({ addElementToMatrix }) {
+export default function Deteils({ addElementToMatrix,elementRow,elementCol }) {
     const [formData, setFormData] = useState({
         height: '',
         width: '',
         name: '',
-        location: { row: '', col: '' },
+        location: { row: elementRow, col: elementCol },
         enterance: { row: '', col: '' },
         type: 'store', // Default type
     });
@@ -74,7 +74,7 @@ export default function Deteils({ addElementToMatrix }) {
                 </label>
                 <br />
 
-                <label>
+                {/* <label>
                     Location - Row:
                     <input
                         type="number"
@@ -92,7 +92,7 @@ export default function Deteils({ addElementToMatrix }) {
                         onChange={handleChangeEL}
                     />
                 </label>
-                <br />
+                <br /> */}
 
                 <label>
                     enterance - Row:
