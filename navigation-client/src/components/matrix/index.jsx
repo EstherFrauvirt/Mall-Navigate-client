@@ -3,12 +3,12 @@ import Deteils from '../details';
 import Cube from './Cube';
 import { Stack } from '@mui/material';
 
-export default function Matrix({matrix , width, height ,setElementCol,setElementRow }) {
+export default function Matrix({ matrix, width, height, setElementCol, setElementRow }) {
 
-   //const [mat,setMat]=useState(mar)
+    //const [mat,setMat]=useState(mar)
 
     useEffect(() => {
-            // printMat();
+        // printMat();
         console.log("hi");
 
     }, [])
@@ -26,14 +26,14 @@ export default function Matrix({matrix , width, height ,setElementCol,setElement
     return (
         <>
             {/* {printMat()} */}
-            { matrix.map((row, indexR) => {
-            return <Stack direction="row" >
-                {row.map((col, indexC) => {
-                    // console.log(`${indexR},${indexC}  ===>  ${matrix[indexR][indexC]}`);
-                    return<div onClick={()=>{setElementCol(indexC);setElementRow(indexR)}}> <Cube key={`${indexR},${indexC}`} title={matrix[indexR][indexC]} row={indexR} col={indexC} /></div>
-                })}
-            </Stack>
-        })}
+            {matrix.map((row, indexR) => {
+                return <Stack direction="row" >
+                    {row.map((col, indexC) => {
+                        // console.log(`${indexR},${indexC}  ===>  ${matrix[indexR][indexC]}`);
+                        return <div onClick={() => { console.log("onclick", indexR, indexC); setElementCol(indexC); setElementRow(indexR) }}> <Cube key={`${indexR},${indexC}`} title={matrix[indexR][indexC]} row={indexR} col={indexC} /></div>
+                    })}
+                </Stack>
+            })}
         </>
     )
 }

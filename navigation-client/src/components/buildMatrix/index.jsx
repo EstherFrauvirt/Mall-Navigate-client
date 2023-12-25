@@ -15,8 +15,8 @@ export default function BuildMatrix() {
     const [mat, setMat] = useState([[]]);
     let tmp = [];
     let module = 1;
-const [elementRow, setElementRow] = useState(0)
-const [elementCol, setElementCol] = useState(0)
+    const [elementRow, setElementRow] = useState(0)
+    const [elementCol, setElementCol] = useState(0)
     // {FORMDATA
     //     height: '',
     //     width: '',
@@ -51,20 +51,20 @@ const [elementCol, setElementCol] = useState(0)
         // Iterate through the rectangle and mark each square with 1
         for (let row = i; row < h; row++) {
             for (let col = j; col < w; col++) {
-                if(tmp[row][col]==-1){
-                if (row == formData.enterance.row && col == formData.enterance.col) {
-                    tmp[row][col] = "0";
-                    //keep the data of enterance point
-                }
-                else {
-                    tmp[row][col] = 1;
-                }
+                if (tmp[row][col] == -1) {
+                    if (row == formData.enterance.row && col == formData.enterance.col) {
+                        tmp[row][col] = "0";
+                        //keep the data of enterance point
+                    }
+                    else {
+                        tmp[row][col] = 1;
+                    }
 
-            }else{
-                console.error("the area is occupied please choose again");
-                return
+                } else {
+                    console.error("the area is occupied please choose again");
+                    return
+                }
             }
-        }
         }
         console.log(tmp);
         setMat([...tmp])
@@ -97,7 +97,7 @@ const [elementCol, setElementCol] = useState(0)
     console.log({ mat });
     return (
         <>
-            <Matrix matrix={mat} setElementRow={setElementRow} setElementCol={setElementCol}/>
+            <Matrix matrix={mat} setElementRow={setElementRow} setElementCol={setElementCol} />
             <Details addElementToMatrix={addElementToMatrix} elementRow={elementRow} elementCol={elementCol} />
         </>
     )
