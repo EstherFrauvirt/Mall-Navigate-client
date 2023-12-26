@@ -31,7 +31,15 @@ export default function BuildMatrix() {
       
         return color;
       }
+const addPathToMatrix=(formData)=>{
+    const tmp = mat
+    tmp[elementRow][elementCol].name = formData.type;
+    tmp[elementRow][elementCol].color = "grey";
+    tmp[elementRow][elementCol].content = 0;
+    setMat([...tmp])
 
+
+}
     const addDorToMAtrix = (formData) => {
         const tmp = mat
         console.log(formData);
@@ -109,7 +117,7 @@ export default function BuildMatrix() {
     return (
         <>
             <Matrix matrix={mat} setElementRow={setElementRow} setElementCol={setElementCol} setShow1={setShow1} setShow2={setShow2}/>
-            <Details addStoreToMatrix={addStoreToMatrix} elementRow={elementRow} elementCol={elementCol} addDorToMAtrix={addDorToMAtrix} show1={show1} show2={show2}/>
+            <Details addStoreToMatrix={addStoreToMatrix} elementRow={elementRow} elementCol={elementCol} addDorToMAtrix={addDorToMAtrix} show1={show1} show2={show2} setShow1={setShow1} setShow2={setShow2} addPathToMatrix={addPathToMatrix}/>
         </>
     )
 }
