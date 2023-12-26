@@ -13,15 +13,18 @@ export default function Login() {
     email: '',
     password: ''
   });
+const [res, setRes] = useState("")
 
   const navigate = useNavigate();
 
 
   const fetchData = async () => {
+    let result;
     try {
+      
       const response = await fetch(`${config.BASE_URL}users/login`,
         {
-          method: 'POST', 
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
@@ -31,17 +34,23 @@ export default function Login() {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      const result = await response.json();
+       result = await response.json();
+    setRes(result);
+
       console.log(result);
     } catch (error) {
-      lcosole.log(error);
+      console.log(error);
     }
   };
 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetchData();
+     fetchData();
+    console.log(res);
+    if (res) {
+      navigate(`/admin?res=${res}`)
+    }
 
   };
 
@@ -54,7 +63,7 @@ export default function Login() {
           <Form.Control type="email" placeholder="Enter email" onChange={(e) => { setUser({ ...user, email: e.target.value }) }} />
           <Form.Text className="text-muted">
             We'll never share your email with anyone else.
-        </Form.Text>
+          </Form.Text>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -64,7 +73,8 @@ export default function Login() {
 
         <Button variant="primary" type="submit" onClick={handleSubmit}>
           Submit
-      </Button>
+        </Button>
+
         <br />
         <br />
         <Alert.Link href="/register">new user? register</Alert.Link>
