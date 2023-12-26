@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 export default function Register() {
     const [user, setUser] = useState({
         email: '',
-        password: ''
+        password: '',
+        name: ''
     });
     const navigate = useNavigate();
 
@@ -14,6 +15,7 @@ export default function Register() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        
         navigate("/");
     };
 
@@ -22,6 +24,11 @@ export default function Register() {
             <h5>REGISTER</h5>
 
             <Form>
+
+                <Form.Group className="mb-3" controlId="formBasicName">
+                    <Form.Label>name</Form.Label>
+                    <Form.Control type="text" placeholder="Enter your name" onChange={(e) => { setUser({ ...user, name: e.target.value }) }} />
+                </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
