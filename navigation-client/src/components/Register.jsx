@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useNavigate } from "react-router-dom";
+import config from './config';
 
 
 export default function Register() {
@@ -12,10 +13,34 @@ export default function Register() {
     const navigate = useNavigate();
 
 
+    const fetchData = async () => {
+        try {
+          const response = await fetch(`${config.BASE_URL}users/register`,
+          {
+            method: 'POST', // specify the HTTP method
+            headers: {
+              'Content-Type': 'application/json', // specify the content type if sending JSON data
+              // Add any additional headers as needed
+            },
+            body: JSON.stringify(user),
+          });
+          
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+  
+          const result = await response.json();
+          console.log(result);
+        } catch (error) {
+          lcosole.log(error);
+        } 
+      };
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
+         fetchData();
+
         navigate("/");
     };
 
