@@ -17,18 +17,35 @@ export default function BuildMatrix() {
     let module = 1;
     const [elementRow, setElementRow] = useState(0)
     const [elementCol, setElementCol] = useState(0)
+    const [show1, setShow1] = useState()
+    const [show2, setShow2] = useState()
  
+    function getRandomColor() {
+        // Generate random values for RGB components
+        const red = Math.floor(Math.random() * 256);
+        const green = Math.floor(Math.random() * 256);
+        const blue = Math.floor(Math.random() * 256);
+      
+        // Construct the RGB color string
+        const color = `rgb(${red}, ${green}, ${blue})`;
+      
+        return color;
+      }
+
     const addDorToMAtrix = (formData) => {
         const tmp = mat
-        tmp[formData.enterance.row][formData.enterance.col] = 0;
+        console.log(formData);
+
+        tmp[formData.enterance.row][formData.enterance.col].content = 0;
+        tmp[formData.enterance.row][formData.enterance.col].name = `door`;
         console.log("addDor", formData);
         setMat([...tmp])
     }
     const addStoreToMatrix = (formData) => {
         const tmp = mat;
+        const color = getRandomColor();
         console.log("tmp", tmp);
         console.log("formData", formData);
-        //מאתחלים לפי הנתונים היבשים TEMP
         let i = parseInt(formData.location.row)
         let j = parseInt(formData.location.col)
         // i=i/module
@@ -49,8 +66,11 @@ export default function BuildMatrix() {
         // Iterate through the rectangle and mark each square with 1
         for (let row = i; row < h; row++) {
             for (let col = j; col < w; col++) {
-                if (tmp[row][col] == -1) {
-                    tmp[row][col] = 1;
+                if (tmp[row][col].content == -1) {
+                    tmp[row][col].content = 1;
+                    tmp[row][col].color = color;
+                    tmp[row][col].name = formData.name;
+                    console.log("tmp",tmp);
                 } else {
                     console.error("the area is occupied please choose again");
                     return
@@ -73,23 +93,23 @@ export default function BuildMatrix() {
         //     module = 10
         // }
         // console.log("build%", height, width);
-
+        const tmp=[];
         for (let index = 0; index < height; index++) {
-            const tmp2 = []
+            const tmp2 = [];
             for (let j = 0; j < width; j++) {
-                tmp2.push(-1)
+                tmp2[j]={content : -1,name:"o"}
             }
-            tmp.push(tmp2)
+            tmp.push(tmp2);
         }
-        setMat(tmp)
+        setMat([...tmp])
     }, [])
 
 
     console.log({ mat });
     return (
         <>
-            <Matrix matrix={mat} setElementRow={setElementRow} setElementCol={setElementCol} />
-            <Details addStoreToMatrix={addStoreToMatrix} elementRow={elementRow} elementCol={elementCol} addDorToMAtrix={addDorToMAtrix} />
+            <Matrix matrix={mat} setElementRow={setElementRow} setElementCol={setElementCol} setShow1={setShow1} setShow2={setShow2}/>
+            <Details addStoreToMatrix={addStoreToMatrix} elementRow={elementRow} elementCol={elementCol} addDorToMAtrix={addDorToMAtrix} show1={show1} show2={show2}/>
         </>
     )
 }
