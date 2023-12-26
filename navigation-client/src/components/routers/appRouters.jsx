@@ -5,6 +5,7 @@ import App from '../../App'
 import Admin from '../admin'
 import CampSize from '../details/campSize'
 import Home from '../../pages/Home'
+import Register from '../Register'
 
 export default function AppRoutes() {
     return (
@@ -14,6 +15,8 @@ export default function AppRoutes() {
                 <Route path='/buildMatrix' element={<BuildMatrix />} />
                  <Route path='/campSize' element={<CampSize  />} />
                  <Route path='/' element={<Home />}/>
+                 <Route path='/register' element={<Register />}/>
+
 
                {/* <Route path='/cvList' element={<CvList />} /> */}
                 {/* <Route path='/cvList/:id' element={<Resume />} /> */}
