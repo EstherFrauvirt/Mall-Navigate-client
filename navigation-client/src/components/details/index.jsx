@@ -1,6 +1,7 @@
+import { Button } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 
-export default function Deteils({ addElementToMatrix, elementRow, elementCol }) {
+export default function Deteils({ addStoreToMatrix, elementRow, elementCol, addDorToMAtrix }) {
     const [formData, setFormData] = useState({
         height: '',
         width: '',
@@ -10,7 +11,6 @@ export default function Deteils({ addElementToMatrix, elementRow, elementCol }) 
         type: 'store', // Default type
     });
     const [show, setShow] = useState()
-    const [firstClick, setFirsClick] = useState()
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -32,47 +32,27 @@ export default function Deteils({ addElementToMatrix, elementRow, elementCol }) 
                 : value,
         }));
     };
-    const nowDor = () => {
-        // if(!firstClick){
-        setFormData((prevFormData) => ({
-            ...prevFormData,
-            location: {
-                ...prevFormData.location,
-                ["row"]: elementRow
-            }
-        }));
-        setFormData((prevFormData) => ({
-            ...prevFormData,
-            location: {
-                ...prevFormData.location,
-                ["col"]: elementCol
-            }
-        }));
-        // }
-        // else{
-
-        // }
+    const addStore = () => {
+        const tmpData = formData;
+        tmpData.location.row = elementRow
+        tmpData.location.col = elementCol
         setShow(true)
+        addStoreToMatrix(tmpData);
+        setFormData(tmpData);
 
+    }
+    const addDor = () => {
+        const tmpData = formData;
+        tmpData.enterance.row = elementRow
+        tmpData.enterance.col = elementCol
+        console.log("dor", tmpData);
+        addStoreToMatrix(tmpData)
+        setFormData(tmpData)
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        setFormData((prevFormData) => ({
-            ...prevFormData,
-            enterance: {
-                ...prevFormData.enterance,
-                ["row"]: elementRow
-            }
-        }));
-        setFormData((prevFormData) => ({
-            ...prevFormData,
-            enterance: {
-                ...prevFormData.enterance,
-                ["col"]: elementCol
-            }
-        }));
         // Handle form submission, you can access form data from formData state
-        addElementToMatrix(formData);
+        addDorToMAtrix(formData);
         console.log('Form submitted:', formData);
     };
 
@@ -111,47 +91,6 @@ export default function Deteils({ addElementToMatrix, elementRow, elementCol }) 
                     />
                 </label>
                 <br />
-
-                {/* <label>
-                    Location - Row:
-                    <input
-                        type="number"
-                        name="locationrow"
-                        value={formData.location?.row}
-                        onChange={handleChangeEL}
-                    />
-                </label>
-                <label>
-                    Location - Col:
-                    <input
-                        type="number"
-                        name="locationcol"
-                        value={formData.location?.col}
-                        onChange={handleChangeEL}
-                    />
-                </label>
-                <br /> */}
-
-                {/* <label>
-                    enterance - Row:
-                    <input
-                        type="number"
-                        name="enterancerow"
-                        value={formData.enterance.row}
-                        onChange={handleChangeEL}
-                    />
-                </label>
-                <label>
-                    enterance - Col:
-                    <input
-                        type="number"
-                        name="enterancecol"
-                        value={formData.enterance.col}
-                        onChange={handleChangeEL}
-                    />
-                </label> */}
-                <br />
-
                 <label>
                     Type:
                     <select name="type" value={formData.type} onChange={handleChange}>
@@ -160,10 +99,10 @@ export default function Deteils({ addElementToMatrix, elementRow, elementCol }) 
                     </select>
                 </label>
                 <br />
-                <button onClick={nowDor}>OK</button>
+                <Button onClick={addStore}>OK</Button>
 
-                {show && <div><h3>choose dor</h3>
-                    <button type="submit">Submit</button>
+                {show && <div><span>choose dor</span>
+                    <Button onClick={addDor}>Submit</Button>
                 </div>
                 }</form>
         </>

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import Deteils from '../details';
 import Cube from './Cube';
-import { Stack } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 
-export default function Matrix({ matrix, width, height, setElementCol, setElementRow }) {
+export default function Matrix({ matrix, width, height, setElementCol, setElementRow ,title}) {
 
     //const [mat,setMat]=useState(mar)
 
@@ -18,7 +18,7 @@ export default function Matrix({ matrix, width, height, setElementCol, setElemen
             return <div>
                 {row.map((col, indexC) => {
                     // console.log("printMat",`${indexR},${indexC}  ===>  ${matrix[indexR][indexC]}`);
-                    return <Cube key={`${indexR},${indexC}`} title={matrix[indexR][indexC]} />
+                    return <Cube key={`${indexR},${indexC}`} title={title} />
                 })}
             </div>
         })
@@ -30,7 +30,17 @@ export default function Matrix({ matrix, width, height, setElementCol, setElemen
                 return <Stack direction="row" >
                     {row.map((col, indexC) => {
                         // console.log(`${indexR},${indexC}  ===>  ${matrix[indexR][indexC]}`);
-                        return <div onClick={() => { console.log("onclick", indexR, indexC); setElementCol(indexC); setElementRow(indexR) }}> <Cube key={`${indexR},${indexC}`} title={matrix[indexR][indexC]} row={indexR} col={indexC} /></div>
+                        return <div onClick={() => {
+                            console.log("onclick", indexR, indexC);
+                            setElementCol(indexC);
+                            setElementRow(indexR)
+                        }}>
+                            
+                                <Cube key={`${indexR},${indexC}`} title={matrix[indexR][indexC]} row={indexR} col={indexC} >
+                                    
+                                </Cube>
+                            
+                        </div>
                     })}
                 </Stack>
             })}

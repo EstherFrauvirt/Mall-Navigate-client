@@ -17,16 +17,14 @@ export default function BuildMatrix() {
     let module = 1;
     const [elementRow, setElementRow] = useState(0)
     const [elementCol, setElementCol] = useState(0)
-    // {FORMDATA
-    //     height: '',
-    //     width: '',
-    //     name: '',
-    //     location: { row: '', col: '' },
-    //     entrance: { row: '', col: '' },
-    //     type: 'store', // Default type
-    // }
-
-    const addElementToMatrix = (formData) => {
+ 
+    const addDorToMAtrix = (formData) => {
+        const tmp = mat
+        tmp[formData.enterance.row][formData.enterance.col] = 0;
+        console.log("addDor", formData);
+        setMat([...tmp])
+    }
+    const addStoreToMatrix = (formData) => {
         const tmp = mat;
         console.log("tmp", tmp);
         console.log("formData", formData);
@@ -52,14 +50,7 @@ export default function BuildMatrix() {
         for (let row = i; row < h; row++) {
             for (let col = j; col < w; col++) {
                 if (tmp[row][col] == -1) {
-                    if (row == formData.enterance.row && col == formData.enterance.col) {
-                        tmp[row][col] = "0";
-                        //keep the data of enterance point
-                    }
-                    else {
-                        tmp[row][col] = 1;
-                    }
-
+                    tmp[row][col] = 1;
                 } else {
                     console.error("the area is occupied please choose again");
                     return
@@ -98,7 +89,7 @@ export default function BuildMatrix() {
     return (
         <>
             <Matrix matrix={mat} setElementRow={setElementRow} setElementCol={setElementCol} />
-            <Details addElementToMatrix={addElementToMatrix} elementRow={elementRow} elementCol={elementCol} />
+            <Details addStoreToMatrix={addStoreToMatrix} elementRow={elementRow} elementCol={elementCol} addDorToMAtrix={addDorToMAtrix} />
         </>
     )
 }
