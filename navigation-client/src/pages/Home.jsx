@@ -1,20 +1,21 @@
-import React from 'react'
-import Login from '../components/Login'
-import { Col, Container, Row } from 'react-bootstrap'
+import React from 'react';
+import Login from '../components/Login';
+import './Home.css'
+import ResponsiveAppBar from '../components/navBar';
+import CssBaseline from '@mui/material/CssBaseline';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+
 
 export default function Home() {
     return (
-        <div><h1>Welcome to navigation</h1>
-            <br />
-            <br />
-            <Container>
-                <Row>
-                    <Col><Login /></Col>
-                </Row>
-            </Container>
-
-
-
-        </div>
-    )
+    <React.Fragment>
+    <CssBaseline />
+    <Container maxWidth="xl">
+    <ResponsiveAppBar></ResponsiveAppBar>
+      <Box sx={{ bgcolor: '', height: '100vh' }} />
+    </Container>
+  </React.Fragment>
+  
+    );
 }

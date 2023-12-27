@@ -6,6 +6,7 @@ import Admin from '../admin'
 import CampSize from '../details/campSize'
 import Home from '../../pages/Home'
 import Register from '../Register'
+import Login from '../Login'
 
 export default function AppRoutes() {
     return (
@@ -16,6 +17,7 @@ export default function AppRoutes() {
                  <Route path='/campSize' element={<CampSize  />} />
                  <Route path='/' element={<Home />}/>
                  <Route path='/register' element={<Register />}/>
+                 <Route path='/login' element={<Login />}/>
 
 
                {/* <Route path='/cvList' element={<CvList />} /> */}
