@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useNavigate, Link } from "react-router-dom";
@@ -13,20 +13,26 @@ export default function Login() {
     email: '',
     password: ''
   });
-const [res, setRes] = useState("")
+  const [res, setRes] = useState("")
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (res) {
+      navigate(`/admin?res=${res}`)
+      localStorage.setItem("token", res.token)
+    }
+  }, [res])
 
   const fetchData = async () => {
     let result;
     try {
-      
+
       const response = await fetch(`${config.BASE_URL}users/login`,
         {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify(user),
         });
@@ -34,8 +40,9 @@ const [res, setRes] = useState("")
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-       result = await response.json();
-    setRes(result);
+      result = await response.json();
+      console.log(result);
+      setRes(result);
 
       console.log(result);
     } catch (error) {
@@ -46,12 +53,8 @@ const [res, setRes] = useState("")
 
   const handleSubmit = (e) => {
     e.preventDefault();
-     fetchData();
+    fetchData();
     console.log(res);
-    if (res) {
-      navigate(`/admin?res=${res}`)
-    }
-
   };
 
   return (

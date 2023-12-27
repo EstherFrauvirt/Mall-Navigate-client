@@ -14,7 +14,6 @@ export default function BuildMatrix() {
     let width = parseInt(searchParams.get('width'));
     console.log("build", height, width);
     const [mat, setMat] = useState([[]]);
-    let tmp = [];
     let module = 1;
     const [elementRow, setElementRow] = useState(0)
     const [elementCol, setElementCol] = useState(0)
@@ -38,6 +37,8 @@ export default function BuildMatrix() {
         tmp[elementRow][elementCol].color = "grey";
         tmp[elementRow][elementCol].content = 0;
         setMat([...tmp])
+        setShow1(false)
+        setShow2(false)
 
 
     }
@@ -49,6 +50,8 @@ export default function BuildMatrix() {
         tmp[formData.enterance.row][formData.enterance.col].name = `door`;
         console.log("addDor", formData);
         setMat([...tmp])
+        setShow1(false)
+        setShow2(false)
     }
     const addStoreToMatrix = (formData) => {
         const tmp = mat;
@@ -76,9 +79,12 @@ export default function BuildMatrix() {
         for (let row = i; row < h; row++) {
             for (let col = j; col < w; col++) {
                 if (tmp[row][col].content == -1) {
-                    tmp[row][col].content = 1;
-                    tmp[row][col].color = color;
-                    tmp[row][col].name = formData.name;
+                    tmp[row][col] = {
+                        content: 1,
+                        color: color,
+                        name: formData.name,
+                    };
+
                     console.log("tmp", tmp);
                 } else {
                     console.error("the area is occupied please choose again");
