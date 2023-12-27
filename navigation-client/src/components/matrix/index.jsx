@@ -16,10 +16,10 @@ export default function Matrix({ matrix, setElementCol, setElementRow ,setShow1,
     return (
         <>
             {matrix.map((row, indexR) => {
-                return <Stack direction="row" >
+                return <Stack direction="row" key= {indexR} >
                     {row.map((col, indexC) => {
                         // console.log(`${indexR},${indexC}  ===>  ${matrix[indexR][indexC]}`);
-                        return <div onClick={() => {
+                        return <div key= {indexC} onClick={() => {
                             console.log("onclick", indexR, indexC);
                             setElementCol(indexC);
                             setElementRow(indexR)
