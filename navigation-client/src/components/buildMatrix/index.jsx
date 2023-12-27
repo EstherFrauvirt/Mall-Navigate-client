@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import Matrix from '../matrix'
 import Details from '../details'
 import { useLocation } from 'react-router-dom';
-import { useStepContext } from '@mui/material';
+import { Button, useStepContext } from '@mui/material';
+import {fetchData} from '../utils/servises'
 
 export default function BuildMatrix() {
     const location = useLocation();
@@ -19,27 +20,27 @@ export default function BuildMatrix() {
     const [elementCol, setElementCol] = useState(0)
     const [show1, setShow1] = useState()
     const [show2, setShow2] = useState()
- 
+
     function getRandomColor() {
         // Generate random values for RGB components
         const red = Math.floor(Math.random() * 256);
         const green = Math.floor(Math.random() * 256);
         const blue = Math.floor(Math.random() * 256);
-      
+
         // Construct the RGB color string
         const color = `rgb(${red}, ${green}, ${blue})`;
-      
+
         return color;
-      }
-const addPathToMatrix=(formData)=>{
-    const tmp = mat
-    tmp[elementRow][elementCol].name = formData.type;
-    tmp[elementRow][elementCol].color = "grey";
-    tmp[elementRow][elementCol].content = 0;
-    setMat([...tmp])
+    }
+    const addPathToMatrix = (formData) => {
+        const tmp = mat
+        tmp[elementRow][elementCol].name = formData.type;
+        tmp[elementRow][elementCol].color = "grey";
+        tmp[elementRow][elementCol].content = 0;
+        setMat([...tmp])
 
 
-}
+    }
     const addDorToMAtrix = (formData) => {
         const tmp = mat
         console.log(formData);
@@ -78,7 +79,7 @@ const addPathToMatrix=(formData)=>{
                     tmp[row][col].content = 1;
                     tmp[row][col].color = color;
                     tmp[row][col].name = formData.name;
-                    console.log("tmp",tmp);
+                    console.log("tmp", tmp);
                 } else {
                     console.error("the area is occupied please choose again");
                     return
@@ -101,23 +102,36 @@ const addPathToMatrix=(formData)=>{
         //     module = 10
         // }
         // console.log("build%", height, width);
-        const tmp=[];
+        const tmp = [];
         for (let index = 0; index < height; index++) {
             const tmp2 = [];
             for (let j = 0; j < width; j++) {
-                tmp2[j]={content : -1,name:"o"}
+                tmp2[j] = { content: -1, name: "o" }
             }
             tmp.push(tmp2);
         }
         setMat([...tmp])
-    }, [])
+    }, []);
 
-
+const addMap=()=>{
+    const requestOptions = {
+    method: 'POST', 
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: {map:mat,place_id:"g"}
+  };
+    fetchData("maps",)
+}
     console.log({ mat });
     return (
         <>
-            <Matrix matrix={mat} setElementRow={setElementRow} setElementCol={setElementCol} setShow1={setShow1} setShow2={setShow2}/>
-            <Details addStoreToMatrix={addStoreToMatrix} elementRow={elementRow} elementCol={elementCol} addDorToMAtrix={addDorToMAtrix} show1={show1} show2={show2} setShow1={setShow1} setShow2={setShow2} addPathToMatrix={addPathToMatrix}/>
+            <Matrix matrix={mat} setElementRow={setElementRow} setElementCol={setElementCol} setShow1={setShow1} setShow2={setShow2} />
+            <Details addStoreToMatrix={addStoreToMatrix} elementRow={elementRow} elementCol={elementCol} addDorToMAtrix={addDorToMAtrix} show1={show1} show2={show2} setShow1={setShow1} setShow2={setShow2} addPathToMatrix={addPathToMatrix} />
+            <Button variant="contained" color="primary" onClick={addMap()}>
+                Create
+            </Button>
         </>
     )
 }
