@@ -1,18 +1,23 @@
+import { Alert, Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react'
+import Data from './Data';
+import Path from './Path';
 
-export default function Deteils({ addElementToMatrix, elementRow, elementCol }) {
+export default function Deteils({ addStoreToMatrix, elementRow, elementCol, addDorToMAtrix, show1, show2, setShow1, setShow2, addPathToMatrix }) {
     const [formData, setFormData] = useState({
         height: '',
         width: '',
         name: '',
         location: { row: '', col: '' },
         enterance: { row: '', col: '' },
-        type: 'store', // Default type
+        type: '', // Default type
     });
     const [show, setShow] = useState()
-    const [firstClick, setFirsClick] = useState()
+
     const handleChange = (e) => {
+        console.log("hii");
         const { name, value } = e.target;
+        console.log(name);
         setFormData((prevData) => ({
             ...prevData,
             [name]: name === 'locationrow' || name === 'locationcol' ||
@@ -22,150 +27,80 @@ export default function Deteils({ addElementToMatrix, elementRow, elementCol }) 
         }));
     };
 
-    const handleChangeEL = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name.substring(0, name.length - 3)]: name === 'locationrow' || name === 'locationcol' ||
-                name === 'enterancerow' || name === 'enterancecol'
-                ? { ...prevData[name.substring(0, name.length - 3)], [name.slice(-3)]: value }
-                : value,
-        }));
-    };
-    const nowDor = () => {
-        // if(!firstClick){
-        setFormData((prevFormData) => ({
-            ...prevFormData,
-            location: {
-                ...prevFormData.location,
-                ["row"]: elementRow
-            }
-        }));
-        setFormData((prevFormData) => ({
-            ...prevFormData,
-            location: {
-                ...prevFormData.location,
-                ["col"]: elementCol
-            }
-        }));
-        // }
-        // else{
+    // const addPath = () => {
+    //     const tmpData = formData;
+    //     tmpData.location.row = elementRow
+    //     tmpData.location.col = elementCol
 
-        // }
-        setShow(true)
-
-    }
+    //     addPathToMatrix(tmpData)
+    // }
+    // const addStore = () => {
+    //     // setShow1(true)
+    //     // setShow2(true)
+    //     const tmpData = formData;
+    //     tmpData.location.row = elementRow
+    //     tmpData.location.col = elementCol
+    //     if (tmpData.location.row && tmpData.location.col && formData.name && formData.type) {
+    //         setShow(true)
+    //         addStoreToMatrix(tmpData);
+    //         setFormData(tmpData);
+    //     } else {
+    //         console.log(tmpData);
+    //         alert("Y R missing Something")
+    //     }
+    // }
+    // const addDor = () => {
+    //     const tmpData = formData;
+    //     tmpData.enterance.row = elementRow
+    //     tmpData.enterance.col = elementCol
+    //     console.log("dor", tmpData);
+    //     addDorToMAtrix(tmpData)
+    //     setFormData(tmpData)
+    // }
     const handleSubmit = (e) => {
         e.preventDefault();
-        setFormData((prevFormData) => ({
-            ...prevFormData,
-            enterance: {
-                ...prevFormData.enterance,
-                ["row"]: elementRow
-            }
-        }));
-        setFormData((prevFormData) => ({
-            ...prevFormData,
-            enterance: {
-                ...prevFormData.enterance,
-                ["col"]: elementCol
-            }
-        }));
         // Handle form submission, you can access form data from formData state
-        addElementToMatrix(formData);
+        const tmp = formData;
+        addDorToMAtrix(tmp);
+        for (let key in formData) {
+            if (formData.hasOwnProperty(key)) {
+                // Check if the property is not inherited from the prototype chain
+                formData[key] = null; // You can set the default value based on your requirements
+            }
+        }
         console.log('Form submitted:', formData);
     };
 
     return (
-        <>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Height:
-                    <input
-                        type="text"
-                        name="height"
-                        //   value={formData.height}
-                        onChange={handleChange}
-                    />
-                </label>
-                <br />
+        <> <FormControl style={{ width: "150px" }}>
+            <InputLabel id="demo-simple-select-label" >chose kind of area</InputLabel>
+            <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                name="type"
+                value={formData.type}
+                label="Age"
+                onChange={handleChange}
+            >
+                <MenuItem value={"store"}>store</MenuItem>
+                <MenuItem value={"path"}>path</MenuItem>
+            </Select>
+        </FormControl>
+            {formData.type == "store" && <Data
+                show1={show1}
+                show2={show2}
+                setShow={setShow}
+                setFormData={setFormData}
+                formData={formData}
+                elementRow={elementRow}
+                elementCol={elementCol}
+                addStoreToMatrix={addStoreToMatrix}
+                addDorToMAtrix={addDorToMAtrix} />}
+            {formData.type == "path" && <Path
+                addPathToMatrix={addPathToMatrix}
+                elementRow={elementRow}
+                elementCol={elementCol} />}
 
-                <label>
-                    Width:
-                    <input
-                        type="text"
-                        name="width"
-                        value={formData.width}
-                        onChange={handleChange}
-                    />
-                </label>
-                <br />
-
-                <label>
-                    Name:
-                    <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                    />
-                </label>
-                <br />
-
-                {/* <label>
-                    Location - Row:
-                    <input
-                        type="number"
-                        name="locationrow"
-                        value={formData.location?.row}
-                        onChange={handleChangeEL}
-                    />
-                </label>
-                <label>
-                    Location - Col:
-                    <input
-                        type="number"
-                        name="locationcol"
-                        value={formData.location?.col}
-                        onChange={handleChangeEL}
-                    />
-                </label>
-                <br /> */}
-
-                {/* <label>
-                    enterance - Row:
-                    <input
-                        type="number"
-                        name="enterancerow"
-                        value={formData.enterance.row}
-                        onChange={handleChangeEL}
-                    />
-                </label>
-                <label>
-                    enterance - Col:
-                    <input
-                        type="number"
-                        name="enterancecol"
-                        value={formData.enterance.col}
-                        onChange={handleChangeEL}
-                    />
-                </label> */}
-                <br />
-
-                <label>
-                    Type:
-                    <select name="type" value={formData.type} onChange={handleChange}>
-                        <option value="store">Store</option>
-                        <option value="transition">Transition</option>
-                    </select>
-                </label>
-                <br />
-                <button onClick={nowDor}>OK</button>
-
-                {show && <div><h3>choose dor</h3>
-                    <button type="submit">Submit</button>
-                </div>
-                }</form>
         </>
     )
 }
