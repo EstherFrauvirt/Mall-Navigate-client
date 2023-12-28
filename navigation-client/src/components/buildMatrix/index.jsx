@@ -9,7 +9,7 @@ import mallContext from '../context/mallContext'
 export default function BuildMatrix() {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
-const {mall}=useContext(mallContext);
+    const {mall}=useContext(mallContext);
     // Get the height and width from the query parameters
     let height = parseInt(searchParams.get('height'));
     let width = parseInt(searchParams.get('width'));
@@ -41,8 +41,6 @@ const {mall}=useContext(mallContext);
         setMat([...tmp])
         setShow1(false)
         setShow2(false)
-
-
     }
     const addDorToMAtrix = (formData) => {
         const tmp = mat
@@ -129,18 +127,27 @@ const addMap=()=>{
       'Content-Type': 'application/json',
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
-    body: {map:mat,place_id:mall.id}
+    body: JSON.stringify({map:mat, place_id:mall.placeId})
   };
     fetchData("maps",requestOptions)
     .then((data=>{console.log(data);}))
     .catch((err=>console.log(err)))
+}
+
+const addStoreArr=()=>{
+    
+}
+
+const addToDB=()=>{
+    addMap()
+    addStoreArr()
 }
     console.log({ mat });
     return (
         <>
             <Matrix matrix={mat} setElementRow={setElementRow} setElementCol={setElementCol} setShow1={setShow1} setShow2={setShow2} />
             <Details addStoreToMatrix={addStoreToMatrix} elementRow={elementRow} elementCol={elementCol} addDorToMAtrix={addDorToMAtrix} show1={show1} show2={show2} setShow1={setShow1} setShow2={setShow2} addPathToMatrix={addPathToMatrix} />
-            <Button variant="contained" color="primary" onClick={addMap}>
+            <Button variant="contained" color="primary" onClick={()=>{addToDB}}>
                 Create
             </Button>
         </>

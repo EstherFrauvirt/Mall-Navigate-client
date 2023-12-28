@@ -57,6 +57,9 @@ export default function Deteils({ addStoreToMatrix, elementRow, elementCol, addD
     //     addDorToMAtrix(tmpData)
     //     setFormData(tmpData)
     // }
+    const createMap = ()=>{
+
+    }
     const handleSubmit = (e) => {
         e.preventDefault();
         // Handle form submission, you can access form data from formData state
@@ -100,7 +103,7 @@ export default function Deteils({ addStoreToMatrix, elementRow, elementCol, addD
                 addPathToMatrix={addPathToMatrix}
                 elementRow={elementRow}
                 elementCol={elementCol} />}
-
+<Button onClick={createMap}/>
         </>
     )
 }

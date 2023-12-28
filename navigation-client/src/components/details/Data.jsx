@@ -1,5 +1,6 @@
 import { Alert, TextField, Button } from '@mui/material'
 import React from 'react'
+import { fetchData } from '../utils/servises';
 
 export default function Data({ show1, show2, setShow, setFormData, formData, elementCol, elementRow, addStoreToMatrix, addDorToMAtrix }) {
     const handleChange = (e) => {
@@ -38,6 +39,7 @@ export default function Data({ show1, show2, setShow, setFormData, formData, ele
         console.log("dor", tmpData);
         addDorToMAtrix(tmpData)
         setFormData(tmpData)
+        
     }
     return (
         <div>{console.log(show1, show2)}

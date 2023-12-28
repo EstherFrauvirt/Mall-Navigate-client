@@ -17,7 +17,6 @@ export default function Admin() {
 
   const handleClick=()=>{
     fetchData();
-
   }
   const fetchData = async () => {
     console.log(mall);
@@ -37,8 +36,8 @@ export default function Admin() {
         throw new Error('Make sure name is unique');
       }
       const result = await response.json();
-      console.log(result);
-      setMall(result)
+      console.log("result",result);
+      setMall({...mall, placeId: result.id})
     } catch (error) {
       console.log(error);
     }
