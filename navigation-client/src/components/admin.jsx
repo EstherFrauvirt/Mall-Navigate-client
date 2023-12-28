@@ -15,6 +15,7 @@ export default function Admin() {
 
 
   const handleClick=()=>{
+    console.log("handleClick");
     fetchData();
   }
   const fetchData = async () => {
