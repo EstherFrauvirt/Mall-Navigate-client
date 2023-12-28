@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Matrix from '../matrix'
 import Details from '../details'
 import { useLocation } from 'react-router-dom';
 import { Button, useStepContext } from '@mui/material';
 import {fetchData} from '../utils/servises'
+import mallContext from '../context/mallContext'
 
 export default function BuildMatrix() {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
-
+const {mall}=useContext(mallContext);
     // Get the height and width from the query parameters
     let height = parseInt(searchParams.get('height'));
     let width = parseInt(searchParams.get('width'));
+
     console.log("build", height, width);
     const [mat, setMat] = useState([[]]);
     let module = 1;
@@ -120,22 +122,25 @@ export default function BuildMatrix() {
     }, []);
 
 const addMap=()=>{
+    console.log(mall);
     const requestOptions = {
     method: 'POST', 
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
-    body: {map:mat,place_id:"g"}
+    body: {map:mat,place_id:mall.id}
   };
-    fetchData("maps",)
+    fetchData("maps",requestOptions)
+    .then((data=>{console.log(data);}))
+    .catch((err=>console.log(err)))
 }
     console.log({ mat });
     return (
         <>
             <Matrix matrix={mat} setElementRow={setElementRow} setElementCol={setElementCol} setShow1={setShow1} setShow2={setShow2} />
             <Details addStoreToMatrix={addStoreToMatrix} elementRow={elementRow} elementCol={elementCol} addDorToMAtrix={addDorToMAtrix} show1={show1} show2={show2} setShow1={setShow1} setShow2={setShow2} addPathToMatrix={addPathToMatrix} />
-            <Button variant="contained" color="primary" onClick={addMap()}>
+            <Button variant="contained" color="primary" onClick={addMap}>
                 Create
             </Button>
         </>
