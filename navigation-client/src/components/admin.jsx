@@ -11,8 +11,7 @@ export default function Admin() {
   const navigate=useNavigate();
   const searchParams = new URLSearchParams(location.search);
   const {mall,setMall}=useContext(mallContext)
-  let user = searchParams.get('res');
-  console.log("admin", user);
+
 
 
   const handleClick=()=>{
@@ -21,6 +20,7 @@ export default function Admin() {
   const fetchData = async () => {
     console.log(mall);
     try {
+      console.log("(hii fetch)");
       const response = await fetch(`${config.BASE_URL}mall`,
         {
           method: 'POST',

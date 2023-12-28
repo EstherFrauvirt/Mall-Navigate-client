@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Data from './Data';
 import Path from './Path';
 
-export default function Deteils({ addStoreToMatrix, elementRow, elementCol, addDorToMAtrix, show1, show2, setShow1, setShow2, addPathToMatrix }) {
+export default function Deteils({addStoreToMatrix, elementRow, elementCol, addDorToMAtrix, show1, show2, setShow1, setShow2, addPathToMatrix }) {
     const [formData, setFormData] = useState({
         height: '',
         width: '',
@@ -27,39 +27,7 @@ export default function Deteils({ addStoreToMatrix, elementRow, elementCol, addD
         }));
     };
 
-    // const addPath = () => {
-    //     const tmpData = formData;
-    //     tmpData.location.row = elementRow
-    //     tmpData.location.col = elementCol
 
-    //     addPathToMatrix(tmpData)
-    // }
-    // const addStore = () => {
-    //     // setShow1(true)
-    //     // setShow2(true)
-    //     const tmpData = formData;
-    //     tmpData.location.row = elementRow
-    //     tmpData.location.col = elementCol
-    //     if (tmpData.location.row && tmpData.location.col && formData.name && formData.type) {
-    //         setShow(true)
-    //         addStoreToMatrix(tmpData);
-    //         setFormData(tmpData);
-    //     } else {
-    //         console.log(tmpData);
-    //         alert("Y R missing Something")
-    //     }
-    // }
-    // const addDor = () => {
-    //     const tmpData = formData;
-    //     tmpData.enterance.row = elementRow
-    //     tmpData.enterance.col = elementCol
-    //     console.log("dor", tmpData);
-    //     addDorToMAtrix(tmpData)
-    //     setFormData(tmpData)
-    // }
-    const createMap = ()=>{
-
-    }
     const handleSubmit = (e) => {
         e.preventDefault();
         // Handle form submission, you can access form data from formData state
@@ -103,7 +71,6 @@ export default function Deteils({ addStoreToMatrix, elementRow, elementCol, addD
                 addPathToMatrix={addPathToMatrix}
                 elementRow={elementRow}
                 elementCol={elementCol} />}
-<Button onClick={createMap}/>
         </>
     )
 }

@@ -8,23 +8,39 @@ const MallProvider = ({ children }) => {
     name: "",
     placeId: ""
   })
-
-  const [storeArr, setStoreArr] = useState([{
+  const [store, setStore] = useState({
     name: "",
     leftCorner: {
       row: '',
       col: ''
     },
-    size: 0,
+    size: {
+      width:'',
+      height:''
+    },
     doorCord: {
       row: '',
       col: ''
     },
     color: "",
     place_id: ""
-  }])
+  })
+  const [storeArr, setStoreArr] = useState([
+    // name: "",
+    // leftCorner: {
+    //   row: '',
+    //   col: ''
+    // },
+    // size: 0,
+    // doorCord: {
+    //   row: '',
+    //   col: ''
+    // },
+    // color: "",
+    // place_id: ""
+  ])
 
-  const shared = { mall, setMall, storeArr, setStoreArr }
+  const shared = { mall, setMall, storeArr, setStoreArr, store, setStore }
   return (
     <MallContext.Provider value={shared}>
       {children}
