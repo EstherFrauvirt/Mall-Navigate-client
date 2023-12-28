@@ -1,7 +1,7 @@
 import { Alert, TextField, Button } from '@mui/material'
 import React from 'react'
 
-export default function Data({show1, show2,setShow, setFormData, formData, elementCol, elementRow,addStoreToMatrix,addDorToMAtrix}) {
+export default function Data({ show1, show2, setShow, setFormData, formData, elementCol, elementRow, addStoreToMatrix, addDorToMAtrix }) {
     const handleChange = (e) => {
         console.log("hii");
         const { name, value } = e.target;
@@ -45,6 +45,7 @@ export default function Data({show1, show2,setShow, setFormData, formData, eleme
             {show1 && <form >
                 <br />
                 <TextField
+                    margin="dense"
                     required
                     id="outlined-required"
                     label="Width"// טעות החלפתי בין משתנים
@@ -54,6 +55,7 @@ export default function Data({show1, show2,setShow, setFormData, formData, eleme
 
                 />
                 <TextField
+                    margin="dense"
                     required
                     id="outlined-required"
                     label="Height"// טעות החלפתי בין משתנים
@@ -64,6 +66,7 @@ export default function Data({show1, show2,setShow, setFormData, formData, eleme
                 />
                 <br />
                 <TextField
+                    margin="dense"
                     required
                     id="outlined-required"
                     label="Name"
