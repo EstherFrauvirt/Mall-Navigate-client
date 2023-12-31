@@ -1,7 +1,11 @@
 import { Alert, TextField, Button } from '@mui/material'
-import React from 'react'
+import React, { useContext, useState } from 'react'
+import { fetchData } from '../utils/servises';
+import mallContext from '../context/mallContext'
 
-export default function Data({show1, show2,setShow, setFormData, formData, elementCol, elementRow,addStoreToMatrix,addDorToMAtrix}) {
+export default function Data({ show1, show2, setShow, setFormData, formData, elementCol, elementRow, addStoreToMatrix, addDorToMAtrix }) {
+    const {mall,setStore,store,setStoreArr,storeArr}=useContext(mallContext);
+   const [showStore,setShowStore] = useState();
     const handleChange = (e) => {
         console.log("hii");
         const { name, value } = e.target;
@@ -17,8 +21,6 @@ export default function Data({show1, show2,setShow, setFormData, formData, eleme
 
 
     const addStore = () => {
-        // setShow1(true)
-        // setShow2(true)
         const tmpData = formData;
         tmpData.location.row = elementRow
         tmpData.location.col = elementCol
@@ -30,6 +32,7 @@ export default function Data({show1, show2,setShow, setFormData, formData, eleme
             console.log(tmpData);
             alert("Y R missing Something")
         }
+        
     }
     const addDor = () => {
         const tmpData = formData;
@@ -37,14 +40,25 @@ export default function Data({show1, show2,setShow, setFormData, formData, eleme
         tmpData.enterance.col = elementCol
         console.log("dor", tmpData);
         addDorToMAtrix(tmpData)
-        setFormData(tmpData)
+        setFormData(tmpData) 
+        setShowStore(true)       
     }
+
+    const updateStoreArr = (index, updatedObject) => {
+        setStoreArr((prevStoreArr) => {
+          const newStoreArr = [...prevStoreArr];
+          newStoreArr[index] = updatedObject;
+          return newStoreArr;
+        });
+      };
+
     return (
         <div>{console.log(show1, show2)}
-            {!show1 && <Alert severity="success" >chhose the left-top corner</Alert>}
-            {show1 && <form >
+            {!showStore&&!show1 && <Alert severity="success" >chhose the left-top corner</Alert>}
+            {!showStore&&show1 && <form >
                 <br />
                 <TextField
+                    margin="dense"
                     required
                     id="outlined-required"
                     label="Width"// טעות החלפתי בין משתנים
@@ -54,6 +68,7 @@ export default function Data({show1, show2,setShow, setFormData, formData, eleme
 
                 />
                 <TextField
+                    margin="dense"
                     required
                     id="outlined-required"
                     label="Height"// טעות החלפתי בין משתנים
@@ -64,6 +79,7 @@ export default function Data({show1, show2,setShow, setFormData, formData, eleme
                 />
                 <br />
                 <TextField
+                    margin="dense"
                     required
                     id="outlined-required"
                     label="Name"
@@ -89,10 +105,11 @@ export default function Data({show1, show2,setShow, setFormData, formData, eleme
                 <br />
                 <Button onClick={addStore} >OK</Button>
 
-                {show2 && show1 && <div><Alert severity="success" >chhose the dor</Alert>
+                {!showStore&&show2 && show1 && <div><Alert severity="success" >chhose the dor</Alert>
                     <Button onClick={addDor}>Submit</Button>
                 </div>}
             </form >}
+            {showStore&&<Button onClick={()=>{console.log(store); setStoreArr((prevStoreArr) => [...prevStoreArr,store]);setShowStore(false)}}>R U shure?</Button>}
         </div>
     )
 }

@@ -3,13 +3,14 @@ import Matrix from '../matrix'
 import Details from '../details'
 import { useLocation } from 'react-router-dom';
 import { Button, useStepContext } from '@mui/material';
-import {fetchData} from '../utils/servises'
+import { fetchData } from '../utils/servises'
 import mallContext from '../context/mallContext'
+import { StoreMallDirectory } from '@mui/icons-material';
 
 export default function BuildMatrix() {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
-const {mall}=useContext(mallContext);
+    const { mall, setStore, store, setStoreArr,storeArr } = useContext(mallContext);
     // Get the height and width from the query parameters
     let height = parseInt(searchParams.get('height'));
     let width = parseInt(searchParams.get('width'));
@@ -41,8 +42,6 @@ const {mall}=useContext(mallContext);
         setMat([...tmp])
         setShow1(false)
         setShow2(false)
-
-
     }
     const addDorToMAtrix = (formData) => {
         const tmp = mat
@@ -52,11 +51,20 @@ const {mall}=useContext(mallContext);
         tmp[formData.enterance.row][formData.enterance.col].name = `door`;
         console.log("addDor", formData);
         setMat([...tmp])
+        // const tmpDoor = {}
+        const doorCord = {}
+        doorCord.row = formData.enterance.row;
+        doorCord.col = formData.enterance.col;
+        // tmpDoor.doorCord = doorCord
+        setStore({...store,doorCord })
         setShow1(false)
         setShow2(false)
+        console.log(store);
+
     }
     const addStoreToMatrix = (formData) => {
         const tmp = mat;
+        const tmpStore = {}
         const color = getRandomColor();
         console.log("tmp", tmp);
         console.log("formData", formData);
@@ -65,8 +73,19 @@ const {mall}=useContext(mallContext);
         // i=i/module
         // j=j/module
         // console.log("module", module);
-        console.log("i+j%", i, j);
-        console.log("build%", height, width);
+        const size = {}
+        const leftCorner = {}
+        leftCorner.row = formData.location.row;
+        leftCorner.col = formData.location.col;
+        size.row = formData.height;
+        size.col = formData.width;
+        console.log(color, formData.name, formData.location.row, formData.location.col);
+        tmpStore.name = formData.name;
+        tmpStore.color = color;
+        tmpStore.leftCorner = leftCorner
+        tmpStore.size = size;
+        console.log("mall",mall);
+        tmpStore.place_id = mall.placeId;
 
         // Check if the starting point is within the matrix bounds
         if (i < 0 || i >= height || j < 0 || j > width) {
@@ -94,8 +113,11 @@ const {mall}=useContext(mallContext);
                 }
             }
         }
-        console.log(tmp);
+        // console.log(tmp);
         setMat([...tmp])
+        setStore({ ...tmpStore })
+        console.log("store", store);
+
         // console.log("mat",mat);
     }
 
@@ -121,28 +143,55 @@ const {mall}=useContext(mallContext);
         setMat([...tmp])
     }, []);
 
-const addMap=()=>{
-    console.log(mall);
-    const requestOptions = {
-    method: 'POST', 
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-    body: {map:mat,place_id:mall.id}
-  };
-    fetchData("maps",requestOptions)
-    .then((data=>{console.log(data);}))
-    .catch((err=>console.log(err)))
-}
+    const addMap = () => {
+        console.log(mall);
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+            body: JSON.stringify({ map: mat, place_id: mall.placeId })
+        };
+        fetchData("maps", requestOptions)
+            .then((data => { console.log(data); }))
+            .catch((err => console.log(err)))
+    }
+
+    const addStoreArr = () => {
+            console.log("storeArr",storeArr);
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+                body: JSON.stringify(storeArr)
+            };
+            fetchData("store", requestOptions)
+                .then((data => { console.log(data); }))
+                .catch((err => console.log(err)))
+        }
+    
+    
+
+    const addToDB = () => {
+        console.log("addMap");
+        addMap()
+        console.log("addStoreArr");
+
+        addStoreArr()
+        console.log("created");
+        
+    }
     console.log({ mat });
     return (
-        <>
-            <Matrix matrix={mat} setElementRow={setElementRow} setElementCol={setElementCol} setShow1={setShow1} setShow2={setShow2} />
-            <Details addStoreToMatrix={addStoreToMatrix} elementRow={elementRow} elementCol={elementCol} addDorToMAtrix={addDorToMAtrix} show1={show1} show2={show2} setShow1={setShow1} setShow2={setShow2} addPathToMatrix={addPathToMatrix} />
-            <Button variant="contained" color="primary" onClick={addMap}>
+        <> 
+        <Button variant="contained" color="primary" onClick={    addToDB}>
                 Create
             </Button>
+            <Matrix matrix={mat} setElementRow={setElementRow} setElementCol={setElementCol} setShow1={setShow1} setShow2={setShow2} />
+            <Details addStoreArr={addStoreArr} addStoreToMatrix={addStoreToMatrix} elementRow={elementRow} elementCol={elementCol} addDorToMAtrix={addDorToMAtrix} show1={show1} show2={show2} setShow1={setShow1} setShow2={setShow2} addPathToMatrix={addPathToMatrix} />          
         </>
     )
 }

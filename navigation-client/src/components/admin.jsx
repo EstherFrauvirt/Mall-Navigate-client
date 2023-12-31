@@ -11,17 +11,17 @@ export default function Admin() {
   const navigate=useNavigate();
   const searchParams = new URLSearchParams(location.search);
   const {mall,setMall}=useContext(mallContext)
-  let user = searchParams.get('res');
-  console.log("admin", user);
+
 
 
   const handleClick=()=>{
+    console.log("handleClick");
     fetchData();
-
   }
   const fetchData = async () => {
     console.log(mall);
     try {
+      console.log("(hii fetch)");
       const response = await fetch(`${config.BASE_URL}mall`,
         {
           method: 'POST',
@@ -37,8 +37,8 @@ export default function Admin() {
         throw new Error('Make sure name is unique');
       }
       const result = await response.json();
-      console.log(result);
-      setMall(result)
+      console.log("result",result);
+      setMall({...mall, placeId: result.id})
     } catch (error) {
       console.log(error);
     }

@@ -1,14 +1,46 @@
-import { createContext ,useState} from "react";
+import { createContext, useState } from "react";
 
 const MallContext = createContext()
 
 const MallProvider = ({ children }) => {
 
-    const [mall, setMall] = useState({
-        name: ""
-      })
+  const [mall, setMall] = useState({
+    name: "",
+    placeId: ""
+  })
+  const [store, setStore] = useState({
+    name: "",
+    leftCorner: {
+      row: '',
+      col: ''
+    },
+    size: {
+      width:'',
+      height:''
+    },
+    doorCord: {
+      row: '',
+      col: ''
+    },
+    color: "",
+    place_id: ""
+  })
+  const [storeArr, setStoreArr] = useState([
+    // name: "",
+    // leftCorner: {
+    //   row: '',
+    //   col: ''
+    // },
+    // size: 0,
+    // doorCord: {
+    //   row: '',
+    //   col: ''
+    // },
+    // color: "",
+    // place_id: ""
+  ])
 
-  const shared = { mall,setMall }
+  const shared = { mall, setMall, storeArr, setStoreArr, store, setStore }
   return (
     <MallContext.Provider value={shared}>
       {children}
@@ -16,6 +48,6 @@ const MallProvider = ({ children }) => {
   )
 }
 
-export { MallProvider }; 
+export { MallProvider };
 
 export default MallContext;
