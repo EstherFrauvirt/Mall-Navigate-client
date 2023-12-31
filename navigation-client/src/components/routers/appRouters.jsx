@@ -9,12 +9,14 @@ import CreatePath from '../../pages/CreatePath'
 import Home from '../../pages/Home'
 import Register from '../Register'
 import Login from '../Login'
+import Try from '../try'
 
 export default function AppRoutes() {
     return (
         <div>
             <Routes>
                 <Route path='/admin' element={<Admin/>}/>
+                <Route path='/try' element={<Try />} />
                 <Route path='/buildMatrix' element={<BuildMatrix />} />
                  <Route path='/campSize' element={<CampSize  />} />
                <Route path='/create' element={<CreatePath/>} />

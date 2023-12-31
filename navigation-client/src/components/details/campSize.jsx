@@ -40,6 +40,7 @@ export default function CampSize() {
       </label>
       <br />
      <Link to={`/buildMatrix?height=${height}&width=${width}&mall=${state}`}> <button >Submit</button></Link>
+     <Link to={`/try?height=${height}&width=${width}&mall=${state}`}> <button >try</button></Link>
     </form>
     </div>
   );

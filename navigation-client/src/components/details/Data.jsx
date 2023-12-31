@@ -3,7 +3,7 @@ import React, { useContext, useState } from 'react'
 import { fetchData } from '../utils/servises';
 import mallContext from '../context/mallContext'
 
-export default function Data({ show1, show2, setShow, setFormData, formData, elementCol, elementRow, addStoreToMatrix, addDorToMAtrix }) {
+export default function Data({ show1, show2, setShow, setFormData, formData, elementCol, elementRow, addStoreToMatrix, addDorToMAtrix ,addEntranceToMatrix}) {
     const {mall,setStore,store,setStoreArr,storeArr}=useContext(mallContext);
    const [showStore,setShowStore] = useState();
     const handleChange = (e) => {
@@ -24,7 +24,7 @@ export default function Data({ show1, show2, setShow, setFormData, formData, ele
         const tmpData = formData;
         tmpData.location.row = elementRow
         tmpData.location.col = elementCol
-        if (tmpData.location.row && tmpData.location.col && formData.name && formData.type) {
+        if (tmpData.location.row>-1 && tmpData.location.col>-1 && formData.name && formData.type) {
             setShow(true)
             addStoreToMatrix(tmpData);
             setFormData(tmpData);
@@ -34,6 +34,17 @@ export default function Data({ show1, show2, setShow, setFormData, formData, ele
         }
         
     }
+
+    const addEnter = () => {
+        const tmpData = formData;
+        tmpData.enterance.row = elementRow
+        tmpData.enterance.col = elementCol
+        console.log("dor", tmpData);
+        addEntranceToMatrix(tmpData)
+        setFormData(tmpData) 
+        // setShowStore(true)       
+    }
+
     const addDor = () => {
         const tmpData = formData;
         tmpData.enterance.row = elementRow
@@ -88,20 +99,7 @@ export default function Data({ show1, show2, setShow, setFormData, formData, ele
                     onChange={handleChange}
 
                 />
-                {/* <FormControl >
-                    <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        name="type"
-                        value={formData.type}
-                        label="Age"
-                        onChange={handleChange}
-                    >
-                        <MenuItem value={"store"}>store</MenuItem>
-                        <MenuItem value={"path"}>path</MenuItem>
-                    </Select>
-                </FormControl> */}
+               
                 <br />
                 <Button onClick={addStore} >OK</Button>
 
