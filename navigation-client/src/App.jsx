@@ -6,15 +6,20 @@ import { BrowserRouter, Link } from 'react-router-dom'
 import AppRoutes from './components/routers/appRouters'
 import Home from './components/admin'
 import { MallProvider } from './components/context/mallContext'
+import { ModalProvider } from './components/context/modalContext'
+
 
 function App() {
   return (
     <>
-      <MallProvider>
-        <BrowserRouter>
-          <AppRoutes />
-        </BrowserRouter>
-      </MallProvider>
+      <ModalProvider>
+        <MallProvider>
+          <BrowserRouter>
+            <AppRoutes />
+
+          </BrowserRouter>
+        </MallProvider>
+      </ModalProvider>
     </>
   )
 }

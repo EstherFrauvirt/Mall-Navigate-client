@@ -6,6 +6,8 @@ import config from '../config';
 
 export default function CreatePath() {
   const [currentPlace, setCurrentPlace] = useState([]);
+  const [currentMall, setCurrentMall] = useState();
+  const [startPoint, setStartPoint] = useState();
   const [placesToVisit, setPlacesToVisit] = useState([])
   const [malls, setMalls] = useState([]);
   const [stores, setStores] = useState([]);
@@ -39,13 +41,24 @@ export default function CreatePath() {
     setPlacesToVisit([...placesToVisit, currentPlace])
 
   }
+  const handleCreatePathClick=()=>{
+    const obj={
+      mall:currentMall,
+      stores:placesToVisit,
+      startPoint:startPoint
+    }
+    console.log(obj);
+  }
 
   const addPlaceToVisit = (place) => {
-    setCurrentPlace(place.name)
+    setCurrentPlace(place)
+  }
+  const chooseStartPointClick = (place) => {
+    setStartPoint(place)
   }
 
   const chooseMall = (value) => {
-    
+    setCurrentMall(value)
     fetchData(`store/${value.id}`);
     setPlaceFlag(true);
 
@@ -56,6 +69,7 @@ export default function CreatePath() {
       <div>
         <h2>Hei, We are happy to see you,<br /> here you can plan your way in the mall 😊🤑</h2>
         <AutocompleteSelect options={malls} zise='' title='mall' action={chooseMall} resetValue={false} />
+        {placeFlag && <AutocompleteSelect options={stores} size='200px' title='start point' action={chooseStartPointClick} resetValue={false} />}
         {placeFlag && <AutocompleteSelect options={stores} size='200px' title='place' action={addPlaceToVisit} resetValue={true} />}
 
         <Button variant="contained" color="primary" onClick={handleClick} sx={{ marginBottom: '20px' }}>
@@ -63,7 +77,7 @@ export default function CreatePath() {
         </Button>
 
         <StoreList stores={placesToVisit} />
-        <Button variant="contained" color="primary"  sx={{ marginBottom: '20px' }}>
+        <Button onClick={handleCreatePathClick} variant="contained" color="primary"  sx={{ marginBottom: '20px' }}>
           Create a path
         </Button>
 
