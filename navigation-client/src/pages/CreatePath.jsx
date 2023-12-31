@@ -3,6 +3,7 @@ import AutocompleteSelect from '../components/autocomplete';
 import { Button } from '@mui/material';
 import StoreList from '../components/storeList';
 import config from '../config';
+import { fetchData } from '../components/utils/servises';
 
 export default function CreatePath() {
   const [currentPlace, setCurrentPlace] = useState([]);
@@ -14,11 +15,11 @@ export default function CreatePath() {
   const [placeFlag, setPlaceFlag] = useState(false)
 
   useEffect(() => {
-    fetchData('mall');
+    myfetchData('mall');
   }, [])
 
 
-  const fetchData = async (type) => {
+  const myfetchData = async (type) => {
     try {
       const response = await fetch(`${config.BASE_URL}${type}`);
 
@@ -47,7 +48,18 @@ export default function CreatePath() {
       stores:placesToVisit,
       startPoint:startPoint
     }
+    const options={
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+         Authorization: `Bearer ${localStorage.getItem("token")}`
+      },
+      body:JSON.stringify(obj)
+    }
     console.log(obj);
+    fetchData(`${config.BASE_URL}path`,options)
+    .then((data=>console.log(data)))
+    .catch((err)=>console.log(err))
   }
 
   const addPlaceToVisit = (place) => {
@@ -59,7 +71,7 @@ export default function CreatePath() {
 
   const chooseMall = (value) => {
     setCurrentMall(value)
-    fetchData(`store/${value.id}`);
+    myfetchData(`store/${value.id}`);
     setPlaceFlag(true);
 
   }
