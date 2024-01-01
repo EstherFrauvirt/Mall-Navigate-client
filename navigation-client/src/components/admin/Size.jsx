@@ -4,7 +4,7 @@ import MallContext from '../context/mallContext';
 import {Button,Card,Box,Typography,CardContent,CardActions,TextField} from '@mui/material'
 import { Link } from 'react-router-dom'
 
-export default function CampSize() {
+export default function Size() {
   const { setHeight, setWidth, height, width } = useContext(MallContext);
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,12 +22,16 @@ export default function CampSize() {
           <form>
             <TextField
               style={{ width: '310px' }}
-              variant="outlined" type="number"
-              value={height}
-              onChange={(e) => setHeight(e.target.value)} />
+              variant="outlined" 
+              type="number"
+              onChange={(e) => setHeight(e.target.value)}
+              label="height"
+              
+              />
+              <br/><br/>
             <TextField
               type="number"
-              value={width}
+              label="width"
               onChange={(e) => setWidth(e.target.value)}
               style={{ width: '310px' }}
               variant="outlined" />

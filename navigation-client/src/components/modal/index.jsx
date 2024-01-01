@@ -17,7 +17,7 @@ const style = {
     p: 4,
   }; 
 export default function GlobalModal({}) {
-    const {open,handleClose}=useContext(ModalContext);
+    const {open,handleClose,setRole}=useContext(ModalContext);
   return (
 <Modal
   open={open}
@@ -37,6 +37,9 @@ export default function GlobalModal({}) {
   color: '#4a4cf5', // Set text color
   borderColor: '#4a4cf5', // Set border color
 }}
+onClick={()=>{
+  handleClose();
+  setRole('user')}}
  >
   <AccountCircleIcon sx={{fontSize:'40px'}}/>
   user
@@ -49,6 +52,9 @@ export default function GlobalModal({}) {
   color: '#4a4cf5', // Set text color
   borderColor: '#4a4cf5', // Set border color
 }}
+onClick={()=>{
+  handleClose();
+  setRole('admin')}}
  >
   <AdminPanelSettingsIcon sx={{fontSize:'40px'}}/>
  owner

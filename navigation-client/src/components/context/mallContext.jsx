@@ -3,7 +3,8 @@ import { createContext, useState } from "react";
 const MallContext = createContext()
 
 const MallProvider = ({ children }) => {
-
+  const [width, setWidth] = useState();
+  const [height, setHeight] = useState();
   const [mall, setMall] = useState({
     name: "",
     placeId: ""
@@ -29,7 +30,11 @@ const MallProvider = ({ children }) => {
   const [mallEnterArr, setMallEnterArr] = useState([])
   const [moduleH, setModuleH] = useState(1)
   const [moduleW, setModuleW] = useState(1)
-  const shared = { mall, setMall, storeArr, setStoreArr, store, setStore, mallEnterArr, setMallEnterArr, moduleH, setModuleH,moduleW, setModuleW }
+  const shared = { mall, setMall, 
+    storeArr, setStoreArr, store, setStore,
+     mallEnterArr, setMallEnterArr,
+      moduleH, setModuleH,moduleW, setModuleW,
+      width,height,setHeight,setWidth }
   return (
     <MallContext.Provider value={shared}>
       {children}

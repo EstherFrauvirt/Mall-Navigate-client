@@ -5,10 +5,11 @@ const ModalContext = createContext()
 const ModalProvider = ({ children }) => {
 
     const [open, setOpen] = useState(false);
+    const [role, setRole] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const shared = {handleClose,handleOpen,open }
+  const shared = {handleClose,handleOpen,open,role,setRole }
   return (
     <ModalContext.Provider value={shared}>
       {children}
