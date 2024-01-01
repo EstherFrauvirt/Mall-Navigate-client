@@ -21,7 +21,7 @@ export default function AppRoutes() {
 
             <Routes>
                 <Route path='/admin' element={<Admin/>}/>
-                <Route path='/try' element={<Try />} />
+                {/* <Route path='/try' element={<Try />} /> */}
                 <Route path='/buildMatrix' element={<BuildMatrix />} />
                  <Route path='/campSize' element={<CampSize  />} />
                  <Route path='/create' element={<CreatePath/>} />
