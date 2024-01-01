@@ -116,7 +116,7 @@ export default function BuildMatrix() {
                     tmp[row][col] = {
                         content: 1,
                         color: color,
-                        name: formData.name,
+                        name: " ",
                     };
 
                     // console.log("tmp", tmp);
@@ -126,117 +126,136 @@ export default function BuildMatrix() {
                 }
             }
         }
-        // console.log(tmp);
-        setMat([...tmp])
-        setStore({ ...tmpStore })
-        console.log("store", store);
+       const tmpName = formData.name
+       console.log("tmpName",tmpName);
 
-        // console.log("mat",mat);
-    }
+        const tmpRow =Math.floor( parseInt(i) + formData.height / 2);
+       const tmpCol =Math.floor( parseInt(j)+formData.width/2-tmpName.length/2)
+       let place =0;
 
-    useEffect(() => {
-        console.log("height+width", height, width);
-        const tmp = [];
-        for (let index = 0; index < height; index++) {
-            const tmp2 = [];
-            for (let j = 0; j < width; j++) {
-                tmp2[j] = { content: -1, name: "o" }
+        for (let x=tmpCol ; x < tmpCol+tmpName.length; x++) {
+            console.log("hiiiiiiiiiiush");
+                tmp[tmpRow][x] = {
+                    content: 1,
+                    color: color,
+                    name: tmpName[place],
+                };
+                console.log(x,tmpName[place])
+                place++;
+                console.log("zara",tmpRow,tmpCol,tmp[tmpRow][tmpCol])
             }
-            tmp.push(tmp2);
+                // console.log(tmp);
+                setMat([...tmp])
+                setStore({ ...tmpStore })
+                console.log("store", store);
+
+                // console.log("mat",mat);
+            }
+
+            useEffect(() => {
+                console.log("height+width", height, width);
+                const tmp = [];
+                for (let index = 0; index < height; index++) {
+                    const tmp2 = [];
+                    for (let j = 0; j < width; j++) {
+                        tmp2[j] = { content: -1, name: " " }
+                    }
+                    tmp.push(tmp2);
+                }
+                setMat([...tmp])
+            }, []);
+
+            const addMap = () => {
+                console.log(mall);
+                const requestOptions = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                    body: JSON.stringify({ mallMap: mat, place_id: mall.placeId, mallEnteranceArr: mallEnterArr })
+                };
+                fetchData("maps", requestOptions)
+                    .then((data => { console.log(data); }))
+                    .catch((err => console.log(err)))
+            }
+
+            const addStoreArr = () => {
+                console.log("storeArr", storeArr);
+                const requestOptions = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                    body: JSON.stringify(storeArr)
+                };
+                fetchData("store", requestOptions)
+                    .then((data => { console.log(data); }))
+                    .catch((err => console.log(err)))
+            }
+
+
+
+            const addToDB = () => {
+                console.log(mallEnterArr);
+                console.log("addMap");
+                addMap()
+                console.log("addStoreArr");
+
+                addStoreArr()
+                console.log("created");
+
+            }
+            console.log({ mat });
+            return (
+                <>
+
+                    <Stack
+                        direction="row"
+                        divider={<Divider orientation="vertical" flexItem />}
+                        spacing={2}
+                        alignItems="center"
+                        justifyContent="space-around"
+                    >
+                        <div>
+                            <Details
+                                addStoreArr={addStoreArr}
+                                addStoreToMatrix={addStoreToMatrix}
+                                addDorToMAtrix={addDorToMAtrix}
+                                addEntranceToMatrix={addEntranceToMatrix}
+                                addPathToMatrix={addPathToMatrix}
+                                elementRow={elementRow}
+                                elementCol={elementCol}
+                                show1={show1}
+                                show2={show2}
+                                setShow1={setShow1}
+                                setShow2={setShow2}
+                            />
+                            <Divider orientation="vertical" flexItem />
+
+                        </div>
+                        <div id='matrix'>
+                            <Stack alignItems="center">
+                                <div id='matrix' style={{ height: '100vh', width: '100vh' }}>
+                                    <Matrix
+                                        matrix={mat}
+                                        setElementRow={setElementRow}
+                                        setElementCol={setElementCol}
+                                        setShow1={setShow1}
+                                        setShow2={setShow2}
+                                        heightmat={height}
+                                        widthmat={width}
+                                        width="200hv"
+                                    /></div></Stack>
+                        </div>
+
+                    </Stack>
+                    <Stack alignItems="center">
+                        <Button variant="contained" color="primary" onClick={addToDB} >
+                            Create
+                        </Button>
+                    </Stack>
+                </>
+            )
         }
-        setMat([...tmp])
-    }, []);
-
-    const addMap = () => {
-        console.log(mall);
-        const requestOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-            body: JSON.stringify({ mallMap: mat, place_id: mall.placeId, mallEnteranceArr: mallEnterArr })
-        };
-        fetchData("maps", requestOptions)
-            .then((data => { console.log(data); }))
-            .catch((err => console.log(err)))
-    }
-
-    const addStoreArr = () => {
-        console.log("storeArr", storeArr);
-        const requestOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-            body: JSON.stringify(storeArr)
-        };
-        fetchData("store", requestOptions)
-            .then((data => { console.log(data); }))
-            .catch((err => console.log(err)))
-    }
-
-
-
-    const addToDB = () => {
-        console.log(mallEnterArr);
-        console.log("addMap");
-        addMap()
-        console.log("addStoreArr");
-
-        addStoreArr()
-        console.log("created");
-
-    }
-    console.log({ mat });
-    return (
-        <>
-            
-            <Stack
-                direction="row"
-                divider={<Divider orientation="vertical" flexItem />}
-                spacing={2}
-                alignItems="center"
-                justifyContent="space-around"
-            >
-<div>
-                <Details
-                    addStoreArr={addStoreArr}
-                    addStoreToMatrix={addStoreToMatrix}
-                    addDorToMAtrix={addDorToMAtrix}
-                    addEntranceToMatrix={addEntranceToMatrix}
-                    addPathToMatrix={addPathToMatrix}
-                    elementRow={elementRow}
-                    elementCol={elementCol}
-                    show1={show1}
-                    show2={show2}
-                    setShow1={setShow1}
-                    setShow2={setShow2}
-                />
-                <Divider orientation="vertical" flexItem />
-
-                </div>
-<div id='matrix'>
-    <Stack alignItems="center">
-    
-                <Matrix
-                    matrix={mat}
-                    setElementRow={setElementRow}
-                    setElementCol={setElementCol}
-                    setShow1={setShow1}
-                    setShow2={setShow2} 
-                    height={height}
-                    width={width}
-                    /></Stack>
-</div>
-
-            </Stack>
-            <Stack alignItems="center">
-            <Button variant="contained" color="primary" onClick={addToDB} >
-                Create
-            </Button>
-            </Stack>
-        </>
-    )
-}
