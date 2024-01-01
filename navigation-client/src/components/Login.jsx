@@ -84,17 +84,31 @@ export default function Login() {
   const handleEmailInput = (event) => {
     const value = event.target.value;
 
-    // Validate that the email contains '@gmail.com'
-    const isValidEmail = value.toLowerCase().includes('com');
+    // Updated email validation using a regular expression
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/;
+    const isValidEmail = emailRegex.test(value);
 
     setEmailError(!isValidEmail);
     setEmailValue(value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    fetchData();
-    console.log(res);
+
+    // Check the validity of the fields
+    if (!passError && !emailError) {
+      // Fields are valid, proceed with fetching data
+      try {
+        const res = await fetchData();
+        console.log(res);
+      } catch (error) {
+        // Handle any error that may occur during the fetch operation
+        console.error('Error fetching data:', error);
+      }
+    } else {
+      // Fields are not valid, display an error message or take appropriate action
+      console.log('Fields are not valid. Please correct the errors.');
+    }
   };
 
   return (
@@ -115,7 +129,7 @@ export default function Login() {
                 variant="outlined"
                 type='email'
                 onChange={(e) => {
-                  handleEmailInput()
+                  handleEmailInput(e)
                   setUser({ ...user, email: e.target.value })
                 }}
                 error={emailError}
@@ -124,7 +138,7 @@ export default function Login() {
               <br /><br />
               <TextField
                 onChange={(e) => {
-                  handlePasswordInput()
+                  handlePasswordInput(e)
                   setUser({ ...user, password: e.target.value })
                 }}
                 error={passError} // Setting the error prop based on the error state
