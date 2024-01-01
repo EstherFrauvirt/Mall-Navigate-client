@@ -56,7 +56,7 @@ export default function CampSize() {
 
   return (
     <div>
-      <h3>enter hi</h3>
+      <h5>enter hight & width </h5>
       <form onSubmit={handleSubmit}>
         <TextField
           margin="dense"
