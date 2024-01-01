@@ -2,8 +2,9 @@ import { Alert, Button, FormControl, InputLabel, MenuItem, Select, TextField } f
 import React, { useEffect, useState } from 'react'
 import Data from './Data';
 import Path from './Path';
+import Entrance from './Entrance';
 
-export default function Deteils({addStoreToMatrix, elementRow, elementCol, addDorToMAtrix, show1, show2, setShow1, setShow2, addPathToMatrix }) {
+export default function Deteils({ addStoreToMatrix, elementRow, elementCol, addDorToMAtrix, show1, show2, addPathToMatrix,addEntranceToMatrix }) {
     const [formData, setFormData] = useState({
         height: '',
         width: '',
@@ -55,6 +56,7 @@ export default function Deteils({addStoreToMatrix, elementRow, elementCol, addDo
             >
                 <MenuItem value={"store"}>store</MenuItem>
                 <MenuItem value={"path"}>path</MenuItem>
+                <MenuItem value={"entrance"}>entrance</MenuItem>
             </Select>
         </FormControl>
             {formData.type == "store" && <Data
@@ -71,6 +73,11 @@ export default function Deteils({addStoreToMatrix, elementRow, elementCol, addDo
                 addPathToMatrix={addPathToMatrix}
                 elementRow={elementRow}
                 elementCol={elementCol} />}
+            {formData.type == "entrance" && <Entrance
+                addEntranceToMatrix={addEntranceToMatrix}
+                elementRow={elementRow}
+                elementCol={elementCol} />}
+
         </>
     )
 }

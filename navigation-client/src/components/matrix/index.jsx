@@ -3,7 +3,7 @@ import Deteils from '../details';
 import Cube from './Cube';
 import { Button, Stack } from '@mui/material';
 
-export default function Matrix({ matrix, setElementCol, setElementRow ,setShow1,setShow2}) {
+export default function Matrix({ matrix, setElementCol, setElementRow ,setShow1,setShow2,moduleH,moduleW}) {
 
     //const [mat,setMat]=useState(mar)
 
