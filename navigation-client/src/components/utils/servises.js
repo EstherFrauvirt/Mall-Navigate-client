@@ -1,7 +1,5 @@
 import config from '../config'
 export const fetchData = async (url,requestOptions) => {
-      
-  
     return await  fetch(`${config.BASE_URL}${url}`, requestOptions)
         .then(response => {
           if (!response.ok) {
