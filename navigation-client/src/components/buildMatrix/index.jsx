@@ -2,15 +2,17 @@ import React, { useState, useEffect, useContext } from 'react'
 import Matrix from '../matrix'
 import Details from '../details'
 import { useLocation } from 'react-router-dom';
-import { Button, useStepContext } from '@mui/material';
+import { Button, Divider, Grid, useStepContext } from '@mui/material';
 import { fetchData } from '../utils/servises'
 import mallContext from '../context/mallContext'
 import { StoreMallDirectory } from '@mui/icons-material';
+import { Stack } from '@mui/system';
+import "./style.css"
 
 export default function BuildMatrix() {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
-    const { mall, setStore, store, setStoreArr, storeArr, mallEnterArr, setMallEnterArr, moduleH, setModuleH, moduleW, setModuleW } = useContext(mallContext);
+    const { mall, setStore, store, setStoreArr, storeArr, mallEnterArr, setMallEnterArr } = useContext(mallContext);
     // Get the height and width from the query parameters
     let height = parseInt(searchParams.get('height'));//גובה המטריצה
     let width = parseInt(searchParams.get('width'));//רוחב המטריצה
@@ -103,11 +105,10 @@ export default function BuildMatrix() {
             console.error('Starting point is outside the matrix bounds.');
             return;
         }
-        const h = parseInt(i) + parseInt(formData.height)/moduleH;
-        const w = parseInt(j) + parseInt(formData.width)/moduleW;
+        const h = parseInt(i) + parseInt(formData.height);
+        const w = parseInt(j) + parseInt(formData.width);
         console.log("ifi+j%", i, j);
         console.log("ifbuild%", height, width);
-        console.log("MOdule%", moduleH, moduleW);
         // Iterate through the rectangle and mark each square with 1
         for (let row = i; row < h; row++) {
             for (let col = j; col < w; col++) {
@@ -134,22 +135,16 @@ export default function BuildMatrix() {
     }
 
     useEffect(() => {
-        if (height > 12 || width > 12) {
-
-            setModuleH(height / 12)
-            setModuleW(height / 12)
-        }
-        console.log("build%", height, width);
+        console.log("height+width", height, width);
         const tmp = [];
-        for (let index = 0; index < height/moduleH; index++) {
+        for (let index = 0; index < height; index++) {
             const tmp2 = [];
-            for (let j = 0; j < width/moduleW; j++) {
+            for (let j = 0; j < width; j++) {
                 tmp2[j] = { content: -1, name: "o" }
             }
             tmp.push(tmp2);
         }
         setMat([...tmp])
-        console.log("build%", moduleH, moduleW);
     }, []);
 
     const addMap = () => {
@@ -160,7 +155,7 @@ export default function BuildMatrix() {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
-            body: JSON.stringify({ map: mat, place_id: mall.placeId, mallEnteranceArr: mallEnterArr })
+            body: JSON.stringify({ mallMap: mat, place_id: mall.placeId, mallEnteranceArr: mallEnterArr })
         };
         fetchData("maps", requestOptions)
             .then((data => { console.log(data); }))
@@ -197,28 +192,51 @@ export default function BuildMatrix() {
     console.log({ mat });
     return (
         <>
-            <Button variant="contained" color="primary" onClick={addToDB}>
+            
+            <Stack
+                direction="row"
+                divider={<Divider orientation="vertical" flexItem />}
+                spacing={2}
+                alignItems="center"
+                justifyContent="space-around"
+            >
+<div>
+                <Details
+                    addStoreArr={addStoreArr}
+                    addStoreToMatrix={addStoreToMatrix}
+                    addDorToMAtrix={addDorToMAtrix}
+                    addEntranceToMatrix={addEntranceToMatrix}
+                    addPathToMatrix={addPathToMatrix}
+                    elementRow={elementRow}
+                    elementCol={elementCol}
+                    show1={show1}
+                    show2={show2}
+                    setShow1={setShow1}
+                    setShow2={setShow2}
+                />
+                <Divider orientation="vertical" flexItem />
+
+                </div>
+<div id='matrix'>
+    <Stack alignItems="center">
+    
+                <Matrix
+                    matrix={mat}
+                    setElementRow={setElementRow}
+                    setElementCol={setElementCol}
+                    setShow1={setShow1}
+                    setShow2={setShow2} 
+                    height={height}
+                    width={width}
+                    /></Stack>
+</div>
+
+            </Stack>
+            <Stack alignItems="center">
+            <Button variant="contained" color="primary" onClick={addToDB} >
                 Create
             </Button>
-            <Matrix
-                matrix={mat}
-                setElementRow={setElementRow}
-                setElementCol={setElementCol}
-                setShow1={setShow1}
-                setShow2={setShow2} />
-            <Details
-                addStoreArr={addStoreArr}
-                addStoreToMatrix={addStoreToMatrix}
-                addDorToMAtrix={addDorToMAtrix}
-                addEntranceToMatrix={addEntranceToMatrix}
-                addPathToMatrix={addPathToMatrix}
-                elementRow={elementRow}
-                elementCol={elementCol}
-                show1={show1}
-                show2={show2}
-                setShow1={setShow1}
-                setShow2={setShow2}
-            />
+            </Stack>
         </>
     )
 }

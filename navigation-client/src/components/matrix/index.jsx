@@ -3,7 +3,7 @@ import Deteils from '../details';
 import Cube from './Cube';
 import { Button, Stack } from '@mui/material';
 
-export default function Matrix({ matrix, setElementCol, setElementRow ,setShow1,setShow2,moduleH,moduleW}) {
+export default function Matrix({ matrix, setElementCol, setElementRow ,setShow1,setShow2,height,width}) {
 
     //const [mat,setMat]=useState(mar)
 
@@ -27,7 +27,7 @@ export default function Matrix({ matrix, setElementCol, setElementRow ,setShow1,
                             setShow2(true)
 
                         }}>
-                                <Cube key={`${indexR},${indexC}`} title={matrix[indexR][indexC].name} color={matrix[indexR][indexC].color}/>                            
+                                <Cube key={`${indexR},${indexC}`} title={matrix[indexR][indexC].name} color={matrix[indexR][indexC].color} parcentH={100/height} parcentW={100/width}/>                            
                         </div>
                     })}
                 </Stack>

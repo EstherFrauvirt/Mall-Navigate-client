@@ -52,13 +52,15 @@ export default function CreatePath() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-         Authorization: `Bearer ${localStorage.getItem("token")}`
+         Authorization: ``
+        //  Authorization: `Bearer ${localStorage.getItem("token")}`
       },
       body:JSON.stringify(obj)
     }
     console.log(obj);
-    fetchData(`${config.BASE_URL}path`,options)
-    .then((data=>console.log(data)))
+    fetchData(`path`,options)
+    .then((data=>{
+      console.log(data)}))
     .catch((err)=>console.log(err))
   }
 

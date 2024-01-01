@@ -23,6 +23,15 @@ export default function Login() {
   });
   const [res, setRes] = useState("")
 
+
+  const [passError, setPassError] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+
+
+  const [emailValue, setEmailValue] = useState('');
+  const [emailError, setEmailError] = useState(false);
+
+
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
@@ -75,12 +84,47 @@ export default function Login() {
     }
   };
 
+  const handlePasswordInput = (e) => {
+    const value = event.target.value;
 
-  const handleSubmit = (e) => {
+    // Validate that the input is a string and has at least 6 characters
+    if (typeof value !== 'string' || value.length < 6) {
+      setPassError(true);
+    } else {
+      setPassError(false);
+    }
+
+    setInputValue(value);
+  };
+
+  const handleEmailInput = (event) => {
+    const value = event.target.value;
+
+    // Updated email validation using a regular expression
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/;
+    const isValidEmail = emailRegex.test(value);
+
+    setEmailError(!isValidEmail);
+    setEmailValue(value);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    fetchData();
-    console.log(res);
 
+    // Check the validity of the fields
+    if (!passError && !emailError) {
+      // Fields are valid, proceed with fetching data
+      try {
+        const res = await fetchData();
+        console.log(res);
+      } catch (error) {
+        // Handle any error that may occur during the fetch operation
+        console.error('Error fetching data:', error);
+      }
+    } else {
+      // Fields are not valid, display an error message or take appropriate action
+      console.log('Fields are not valid. Please correct the errors.');
+    }
   };
 
   return (
@@ -92,15 +136,30 @@ export default function Login() {
           <Box display="flex" flexDirection="column" alignItems="center">      <CardContent>
             <Typography sx={{ fontSize: 40 }} color="#4a4cf5" textAlign={'center'} >
               LOGIN
-            </Typography> <br /><br />
+        </Typography> <br /><br />
 
             <Form>
               <TextField
-                style={{ width: '310px' }}
-                label="Email address" variant="outlined" type='email' onChange={(e) => { setUser({ ...user, email: e.target.value }) }} />
+                label="Email address"
+                variant="outlined"
+                type='email'
+                onChange={(e) => {
+                  handleEmailInput(e)
+                  setUser({ ...user, email: e.target.value })
+                }}
+                error={emailError}
+                helperText={emailError ? 'Please enter a valid Email address' : ''}
+                value={emailValue} />
               <br /><br />
               <TextField
-                onChange={(e) => { setUser({ ...user, password: e.target.value }) }}
+                onChange={(e) => {
+                  handlePasswordInput(e)
+                  setUser({ ...user, password: e.target.value })
+                }}
+                error={passError} // Setting the error prop based on the error state
+                helperText={passError ? 'Please enter at least 6 characters' : ''}
+                value={inputValue}
+
                 style={{ width: '310px' }}
                 label="Password"
                 type={showPassword ? 'text' : 'password'}
