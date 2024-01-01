@@ -27,9 +27,7 @@ const MallProvider = ({ children }) => {
   })
   const [storeArr, setStoreArr] = useState([])
   const [mallEnterArr, setMallEnterArr] = useState([])
-  const [moduleH, setModuleH] = useState(1)
-  const [moduleW, setModuleW] = useState(1)
-  const shared = { mall, setMall, storeArr, setStoreArr, store, setStore, mallEnterArr, setMallEnterArr, moduleH, setModuleH,moduleW, setModuleW }
+  const shared = { mall, setMall, storeArr, setStoreArr, store, setStore, mallEnterArr, setMallEnterArr }
   return (
     <MallContext.Provider value={shared}>
       {children}
