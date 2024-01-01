@@ -59,7 +59,8 @@ export default function CreatePath() {
     }
     console.log(obj);
     fetchData(`path`,options)
-    .then((data=>console.log(data)))
+    .then((data=>{
+      console.log(data)}))
     .catch((err)=>console.log(err))
   }
 
