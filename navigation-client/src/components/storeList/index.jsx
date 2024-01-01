@@ -15,7 +15,7 @@ const StoreList = ({ stores }) => {
         <List>
           {stores.map((store, index) => (
             <ListItem key={index}>
-              <ListItemText primary={store} />
+              <ListItemText primary={store.name} />
             </ListItem>
           ))}
         </List>
