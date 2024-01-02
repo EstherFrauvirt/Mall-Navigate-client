@@ -4,11 +4,13 @@ import MallContext from '../context/mallContext';
 import {Button,Card,Box,Typography,CardContent,CardActions,TextField} from '@mui/material'
 import { Link } from 'react-router-dom'
 
-export default function Size() {
+export default function Size({handleClick}) {
   const { setHeight, setWidth, height, width } = useContext(MallContext);
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Height:', height, 'Width:', width);
+    handleClick();
+
   };
 
   return (
@@ -38,7 +40,7 @@ export default function Size() {
           </form>
         </CardContent>
           <CardActions>
-            <Link to={"/admin/campSize"}> <Button sx={{ color: '#4a4cf5' }} size="medium"  variant='outlined'>Continue</Button></Link>
+           <Button sx={{ color: '#4a4cf5' }} size="medium"  variant='outlined' onClick={handleSubmit}>Continue</Button>
           </CardActions>
         </Box>
       </Card>
