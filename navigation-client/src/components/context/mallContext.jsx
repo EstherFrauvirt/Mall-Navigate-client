@@ -5,6 +5,7 @@ const MallContext = createContext()
 const MallProvider = ({ children }) => {
   const [width, setWidth] = useState();
   const [height, setHeight] = useState();
+  const [showStore, setShowStore] = useState();
   const [mall, setMall] = useState({
     name: "",
     placeId: ""
@@ -34,7 +35,8 @@ const MallProvider = ({ children }) => {
     storeArr, setStoreArr, store, setStore,
      mallEnterArr, setMallEnterArr,
       moduleH, setModuleH,moduleW, setModuleW,
-      width,height,setHeight,setWidth }
+      width,height,setHeight,setWidth,
+      showStore, setShowStore }
   return (
     <MallContext.Provider value={shared}>
       {children}

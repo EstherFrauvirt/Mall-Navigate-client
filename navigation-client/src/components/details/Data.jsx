@@ -4,8 +4,7 @@ import { fetchData } from '../utils/servises';
 import mallContext from '../context/mallContext'
 
 export default function Data({ show1, show2, setShow, setFormData, formData, elementCol, elementRow, addStoreToMatrix, addDorToMAtrix, addEntranceToMatrix }) {
-    const { mall, setStore, store, setStoreArr, storeArr } = useContext(mallContext);
-    const [showStore, setShowStore] = useState();
+    const { mall, setStore, store, setStoreArr, storeArr ,showStore, setShowStore} = useContext(mallContext);
     const [width, setWidth] = useState('');
     const [widthError, setWidthError] = useState(false);
     const [hight, setHight] = useState('');
@@ -50,10 +49,10 @@ export default function Data({ show1, show2, setShow, setFormData, formData, ele
         const tmpData = formData;
         tmpData.location.row = elementRow
         tmpData.location.col = elementCol
-        if (!hightError){
+        if (hightError){
             alert("hight is not valid")
         }
-        else if (!widthError){
+        else if (widthError){
             alert("width is not valid")
         }
         else if (tmpData.location.row > -1 && tmpData.location.col > -1 && formData.name && formData.type) {
@@ -84,7 +83,6 @@ export default function Data({ show1, show2, setShow, setFormData, formData, ele
         console.log("dor", tmpData);
         addDorToMAtrix(tmpData)
         setFormData(tmpData)
-        setShowStore(true)
     }
 
     const updateStoreArr = (index, updatedObject) => {
@@ -104,7 +102,7 @@ export default function Data({ show1, show2, setShow, setFormData, formData, ele
                     margin="dense"
                     required
                     id="outlined-required"
-                    label="Width"// טעות החלפתי בין משתנים
+                    label="height"
                     name="height"
                     defaultValue=""
                     onChange={(e)=>{handleChange(e), handleHightChange(e)}}
@@ -116,7 +114,7 @@ export default function Data({ show1, show2, setShow, setFormData, formData, ele
                     margin="dense"
                     required
                     id="outlined-required"
-                    label="Height"// טעות החלפתי בין משתנים
+                    label="width"
                     defaultValue=""
                     name='width'
                     onChange={(e)=>{handleChange(e), handleWidthChange(e)}}

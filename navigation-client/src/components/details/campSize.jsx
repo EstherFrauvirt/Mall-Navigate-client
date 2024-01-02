@@ -19,19 +19,28 @@ export default function CampSize() {
             Size
           </Typography> <br /><br />
 
-          <form>
+        
             <TextField
+             margin="dense"
+             required
+             id="outlined-required"
+             label="Hight"// טעות החלפתי בין משתנים
+             name="height"
+             defaultValue=""
+             onChange={(e) => { setHeight(e.target.value), handleHightChange(e) }}
+             error={hightError}
+             helperText={hightError ? 'Please enter a valid integer' : ''}
               style={{ width: '310px' }}
               variant="outlined" type="number"
-              value={height}
-              onChange={(e) => setHeight(e.target.value)} />
+              value={height}></TextField>
+    
             <TextField
               type="number"
               value={width}
               onChange={(e) => setWidth(e.target.value)}
               style={{ width: '310px' }}
               variant="outlined" />
-          </form>
+    
         </CardContent>
           <CardActions>
             <Link to={"/admin/campSize"}> <Button sx={{ color: '#4a4cf5' }} size="medium"  variant='outlined'>Continue</Button></Link>
