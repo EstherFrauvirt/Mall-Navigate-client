@@ -186,6 +186,8 @@ export default function BuildMatrix() {
             console.error("You exceed the boundaries of the surface");
             return
         }
+        console.log("hereeeeee");
+        
         for (let row = i; row < h; row++) {
             for (let col = j; col < w; col++) {
                 if (tmp[row][col].content != -1) {

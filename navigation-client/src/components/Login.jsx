@@ -9,11 +9,12 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Box, Card, CardActions, CardContent, Button, Typography } from '@mui/material';
-
+import ModalContext from './context/modalContext';
 
 
 
 export default function Login() {
+  const { handleOpen, role,setRole } = useContext(ModalContext);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useState({
@@ -37,10 +38,25 @@ export default function Login() {
 
   useEffect(() => {
     if (res) {
-      navigate(`/admin?res=${res}`)
       localStorage.setItem("token", res.token)
+      handleOpen();
     }
   }, [res])
+
+  useEffect(() => {
+
+    if (role === 'admin'){
+       navigate(`/admin?res=${res}`)
+       setRole('')
+    }
+     
+    else if(role==='user'){
+      navigate(`/create`)
+      setRole('')
+
+    }
+
+  }, [role])
 
   const fetchData = async () => {
     let result;
@@ -124,7 +140,6 @@ export default function Login() {
 
             <Form>
               <TextField
-                style={{ width: '310px' }}
                 label="Email address"
                 variant="outlined"
                 type='email'

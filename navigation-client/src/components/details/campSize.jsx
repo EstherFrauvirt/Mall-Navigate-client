@@ -1,23 +1,30 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Alert, TextField, Button } from '@mui/material';
-// import { useNavigate } from 'react-router-dom';
-
-
+import MallContext from '../context/mallContext';
+import {Button,Card,Box,Typography,CardContent,CardActions,TextField} from '@mui/material'
+import { Link } from 'react-router-dom'
 
 export default function CampSize() {
-  const location = useLocation();
-  const { state } = location;
-  console.log(state);
+  const { setHeight, setWidth, height, width } = useContext(MallContext);
 
-  const [height, setHeight] = useState('');
   const [hightError, setHightError] = useState(false);
   const [widthError, setWidthError] = useState(false);
-  const [width, setWidth] = useState('');
 
-  const navigate = useNavigate();
-
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (hightError) {
+      alert("hight is not valid")
+    }
+    else if (widthError) {
+      alert("width is not valid")
+    }
+    else {
+      navigate(`/buildMatrix?height=${height}&width=${width}&mall=${state}`)
+      // You can use height and width values as needed (e.g., send them to the server, perform calculations, etc.)
+      console.log('Height:', height, 'Width:', width);
+    }
+    console.log('Height:', height, 'Width:', width);
+  };
 
   const handleWidthChange = (event) => {
     const value = event.target.value;
@@ -39,26 +46,16 @@ export default function CampSize() {
     setHeight(value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (hightError) {
-      alert("hi  hight is not valid")
-    }
-    else if (widthError) {
-      alert("width is not valid")
-    }
-    else {
-      navigate(`/buildMatrix?height=${height}&width=${width}&mall=${state}`)
-      // You can use height and width values as needed (e.g., send them to the server, perform calculations, etc.)
-      console.log('Height:', height, 'Width:', width);
-    }
-  };
-
   return (
-    <div>
-      <h5>enter hight & width </h5>
-      <form onSubmit={handleSubmit}>
-        <TextField
+    <>
+      <Card sx={{ minWidth: 275, width: "40%", left: '15%', marginTop: '', position: 'absolute', top: '25%', padding: '20px' }}>
+        <Box display="flex" flexDirection="column" alignItems="center">      <CardContent>
+          <Typography sx={{ fontSize: 40 }} color="#4a4cf5" textAlign={'center'} >
+            Size
+          </Typography> <br /><br />
+
+        
+          <TextField
           margin="dense"
           required
           id="outlined-required"
@@ -83,9 +80,20 @@ export default function CampSize() {
           helperText={widthError ? 'Please enter a valid integer' : ''}
 
         />
-        <br />
-        <button onClick={(e) => handleSubmit(e)}>Submit</button>
-      </form>
-    </div>
+    
+            {/* <TextField
+              type="number"
+              value={width}
+              onChange={(e) => setWidth(e.target.value)}
+              style={{ width: '310px' }}
+              variant="outlined" /> */}
+    
+        </CardContent>
+          <CardActions>
+            <Link to={"/admin/campSize"}> <Button sx={{ color: '#4a4cf5' }} size="medium"  variant='outlined' onClick={handleSubmit}>Continue</Button></Link>
+          </CardActions>
+        </Box>
+      </Card>
+    </>
   );
 }

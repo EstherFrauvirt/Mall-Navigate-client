@@ -49,6 +49,7 @@ export default function Data({ show1, show2, setShow, setFormData, formData, ele
         const tmpData = formData;
         tmpData.location.row = elementRow
         tmpData.location.col = elementCol
+        tmpData.place_id = mall.placeId
         if (hightError){
             alert("hight is not valid")
         }

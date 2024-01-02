@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Router, Routes } from 'react-router-dom'
 import BuildMatrix from '../buildMatrix'
 import App from '../../App'
-import Admin from '../admin'
+import Admin from '../admin/admin'
 import CampSize from '../details/campSize'
 import CreatePath from '../../pages/CreatePath'
 
@@ -20,9 +20,11 @@ export default function AppRoutes() {
         <Navbar></Navbar>
 
             <Routes>
-                <Route path='/admin' element={<Admin/>}/>
-                <Route path='/buildMatrix' element={<BuildMatrix />} />
-                 <Route path='/campSize' element={<CampSize  />} />
+                <Route path='/admin' element={<Admin/>}>
+                    <Route path='buildMatrix' element={<BuildMatrix />} />
+                   <Route path='campSize' element={<CampSize  />} />
+                </Route>
+                
                  <Route path='/create' element={<CreatePath/>} />
                  <Route path='/' element={<Home />}/>
                  <Route path='/register' element={<Register />}/>
