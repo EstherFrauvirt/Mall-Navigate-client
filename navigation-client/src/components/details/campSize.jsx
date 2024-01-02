@@ -42,7 +42,7 @@ export default function CampSize() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (hightError) {
-      alert("hight is not valid")
+      alert("hi  hight is not valid")
     }
     else if (widthError) {
       alert("width is not valid")

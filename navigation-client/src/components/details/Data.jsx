@@ -50,10 +50,10 @@ export default function Data({ show1, show2, setShow, setFormData, formData, ele
         const tmpData = formData;
         tmpData.location.row = elementRow
         tmpData.location.col = elementCol
-        if (!hightError){
+        if (hightError){
             alert("hight is not valid")
         }
-        else if (!widthError){
+        else if (widthError){
             alert("width is not valid")
         }
         else if (tmpData.location.row > -1 && tmpData.location.col > -1 && formData.name && formData.type) {

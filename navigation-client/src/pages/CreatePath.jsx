@@ -4,6 +4,8 @@ import { Button } from '@mui/material';
 import StoreList from '../components/storeList';
 import config from '../config';
 import { fetchData } from '../components/utils/servises';
+import { Container } from '@mui/system';
+import './CreatePath.css'
 
 export default function CreatePath() {
   const [currentPlace, setCurrentPlace] = useState([]);
@@ -30,7 +32,7 @@ export default function CreatePath() {
       if (type === 'mall') {
         setMalls(result);
       } else if (type.startsWith('store')) {
-       
+
         setStores(result);
       }
 
@@ -42,29 +44,33 @@ export default function CreatePath() {
     setPlacesToVisit([...placesToVisit, currentPlace])
 
   }
-  const handleCreatePathClick=()=>{
-    const obj={
-      mall:currentMall,
-      stores:placesToVisit,
-      startPoint:startPoint
+
+
+  const handleCreatePathClick = () => {
+    const obj = {
+      mall: currentMall,
+      stores: placesToVisit,
+      startPoint: startPoint
     }
-    const options={
+    const options = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-         Authorization: `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${localStorage.getItem("token")}`
       },
-      body:JSON.stringify(obj)
+      body: JSON.stringify(obj)
     }
     console.log(obj);
-    fetchData(`${config.BASE_URL}path`,options)
-    .then((data=>console.log(data)))
-    .catch((err)=>console.log(err))
+    fetchData(`${config.BASE_URL}path`, options)
+      .then((data => console.log(data)))
+      .catch((err) => console.log(err))
   }
 
   const addPlaceToVisit = (place) => {
     setCurrentPlace(place)
   }
+
+
   const chooseStartPointClick = (place) => {
     setStartPoint(place)
   }
@@ -77,22 +83,31 @@ export default function CreatePath() {
   }
   return (
     <>
+      <div style={{ height: "90vh" }}>
+        <div class="all">
+          <Container>
+            <h2 class="h2">Lets start shopping!<br /> </h2>
 
-      <div>
-        <h2>Hei, We are happy to see you,<br /> here you can plan your way in the mall 😊🤑</h2>
-        <AutocompleteSelect options={malls} zise='' title='mall' action={chooseMall} resetValue={false} />
-        {placeFlag && <AutocompleteSelect options={stores} size='200px' title='start point' action={chooseStartPointClick} resetValue={false} />}
-        {placeFlag && <AutocompleteSelect options={stores} size='200px' title='place' action={addPlaceToVisit} resetValue={true} />}
+            <br />
+            <div className="d-flex justify-content-center align-item-center">
+              <div>
+                <AutocompleteSelect options={malls} zise='' title='mall' action={chooseMall} resetValue={false} />
+                {placeFlag && <AutocompleteSelect options={stores} size='200px' title='start point' action={chooseStartPointClick} resetValue={false} />}
+                {placeFlag && <AutocompleteSelect options={stores} size='200px' title='place' action={addPlaceToVisit} resetValue={true} />}
+                <Button variant="contained" color="primary" onClick={handleClick} sx={{ marginBottom: '20px' }}>
+                  Add place
+        </Button>
+              </div>
+            </div>
 
-        <Button variant="contained" color="primary" onClick={handleClick} sx={{ marginBottom: '20px' }}>
-          Add place
+
+            <StoreList stores={placesToVisit} />
+            <Button onClick={handleCreatePathClick} variant="contained" color="primary" sx={{ marginBottom: '20px' }}>
+              Create a path
         </Button>
 
-        <StoreList stores={placesToVisit} />
-        <Button onClick={handleCreatePathClick} variant="contained" color="primary"  sx={{ marginBottom: '20px' }}>
-          Create a path
-        </Button>
-
+          </Container>
+        </div>
       </div>
     </>
   )
