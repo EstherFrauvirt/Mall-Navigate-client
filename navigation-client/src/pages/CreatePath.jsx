@@ -61,9 +61,10 @@ export default function CreatePath() {
       body: JSON.stringify(obj)
     }
     console.log(obj);
-    fetchData(`${config.BASE_URL}path`, options)
-      .then((data => console.log(data)))
-      .catch((err) => console.log(err))
+    fetchData(`path`,options)
+    .then((data=>{
+      console.log(data)}))
+    .catch((err)=>console.log(err))
   }
 
   const addPlaceToVisit = (place) => {
