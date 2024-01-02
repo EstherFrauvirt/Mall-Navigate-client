@@ -17,6 +17,7 @@ import { height } from '@mui/system';
 import Name from './name';
 import CampSize from '../details/campSize';
 import Size from './Size';
+import BuildMatrix from '../buildMatrix';
 
 const eventsArr= [
   {
@@ -57,33 +58,39 @@ export default function Admin() {
 
 
 useEffect(() => {
-  console.log('useeffctcgvxfdzs');
+
   setEvents(prevEvents => prevEvents.map(ev => {
-    console.log(ev.title.toLowerCase());
     if (flags[`${ev.title.toLowerCase()}`]) {
       ev.color = '#ff8b84';
     } else {
-      ev.color = 'secondary';
+      ev.color = 'grey';
     }
     return ev;
   }));
  
 }, [flags])
+
 useEffect(() => {
-  console.log('events');
-  
-}, [events])
+  return () => {
+    setEvents([...eventsArr])
+  }
+}, [])
 
 
   const handleNameClick = () => {
-    console.log("handleClick");
     fetchData();
+  
+  }
+  const handleSizeClick = () => {
+    setFlags((prevflags) => ({
+      ...prevflags,
+      size: false,draw:true
+    }))
   
   }
   const fetchData = async () => {
     console.log(mall);
     try {
-      console.log("(hii fetch)");
       const response = await fetch(`${config.BASE_URL}mall`,
         {
           method: 'POST',
@@ -119,7 +126,8 @@ useEffect(() => {
             <DynamicTimeline events={events} />
           </div>
           {flags.name && <Name handleClick={handleNameClick} />}
-          {flags.size && <Size />}
+          {flags.size && <Size handleClick={handleSizeClick} />}
+        { flags.draw && <BuildMatrix/>}
 
         </Container>
       </div>
