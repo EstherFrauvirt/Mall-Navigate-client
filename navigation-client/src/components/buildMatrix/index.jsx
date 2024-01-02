@@ -138,7 +138,8 @@ export default function BuildMatrix() {
             const doorCord = {}
             doorCord.row = formData.enterance.row;
             doorCord.col = formData.enterance.col;
-            setStore({ ...store, doorCord })
+            setStore({ ...store, doorCord: doorCord})
+            console.log("store:", store);
             setShow1(false)
             setShow2(false)
             setShowStore(true)
@@ -242,8 +243,8 @@ export default function BuildMatrix() {
         }
         // console.log(tmp);
         setMat([...tmp])
-        setStore({ ...tmpStore })
-        console.log("store", store);
+        setStore({...tmpStore});
+        console.log("store", tmpStore);
 
         // console.log("mat",mat);
     }
