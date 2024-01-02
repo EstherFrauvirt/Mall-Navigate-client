@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import Matrix from '../matrix'
 import Details from '../details'
 import { useLocation } from 'react-router-dom';
-import { Button, Divider, Grid, Snackbar, useStepContext } from '@mui/material';
+import { Button, Card, Divider, Grid, Snackbar, useStepContext } from '@mui/material';
 import { fetchData } from '../utils/servises'
 import mallContext from '../context/mallContext'
 import { StoreMallDirectory } from '@mui/icons-material';
@@ -18,10 +18,10 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 export default function BuildMatrix() {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
-    const { mall, setStore, store, setStoreArr, storeArr, mallEnterArr, setMallEnterArr, setShowStore } = useContext(mallContext);
+    const { mall, setStore, store, setStoreArr, storeArr, mallEnterArr, setMallEnterArr, setShowStore,width,height } = useContext(mallContext);
     // Get the height and width from the query parameters
-    let height = parseInt(searchParams.get('height'));//גובה המטריצה
-    let width = parseInt(searchParams.get('width'));//רוחב המטריצה
+    // let height = parseInt(searchParams.get('height'));//גובה המטריצה
+    // let width = parseInt(searchParams.get('width'));//רוחב המטריצה
 
     console.log("build", height, width);
     const [mat, setMat] = useState([[]]);//מטריצה
@@ -309,6 +309,7 @@ export default function BuildMatrix() {
     
     return (
         <>
+        <Card sx={{ minWidth: 275, width: "65%", left: '5%', marginTop: '', position: 'absolute', top: '25%', padding: '20px' }}>
 
             <Stack
                 direction="row"
@@ -370,6 +371,7 @@ export default function BuildMatrix() {
                     The door is not at the boundary of the store
                 </Alert>
             </Snackbar>
+            </Card>
         </>
     )
 }
