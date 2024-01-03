@@ -14,6 +14,9 @@ import Footer from '../footer'
 import Navbar from '../navBar';
 import GlobalModal from '../modal'
 
+import EmailComponent from '../../components/email'
+
+
 export default function AppRoutes() {
     return (
         <div>
@@ -29,6 +32,7 @@ export default function AppRoutes() {
                  <Route path='/' element={<Home />}/>
                  <Route path='/register' element={<Register />}/>
                  <Route path='/login' element={<Login />}/>
+                 <Route path='/email' element={<EmailComponent />}/>
 
 
                {/* <Route path='/cvList' element={<CvList />} /> */}
