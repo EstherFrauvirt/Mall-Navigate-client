@@ -15,7 +15,7 @@ export default function Size({handleClick}) {
 
   return (
     <>
-      <Card sx={{ minWidth: 275, width: "40%", left: '15%', marginTop: '', position: 'absolute', top: '25%', padding: '20px' }}>
+      <Card sx={{ minWidth: 275, width: "40%", left: '20%',minHeight:'50%', marginTop: '', position: 'absolute', top: '25%', padding: '20px' }}>
         <Box display="flex" flexDirection="column" alignItems="center">      <CardContent>
           <Typography sx={{ fontSize: 40 }} color="#4a4cf5" textAlign={'center'} >
             Size
