@@ -15,7 +15,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function BuildMatrix() {
+export default function BuildMatrix({handleCreateClick}) {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const { mall, setStore, store, setStoreArr, storeArr, mallEnterArr, setMallEnterArr, setShowStore, width, height } = useContext(mallContext);
@@ -333,51 +333,51 @@ export default function BuildMatrix() {
 
         addStoreArr()
         console.log("created");
-
+handleCreateClick();
     }
 
     return (
         <>
-            <Card sx={{ minWidth: 275, width: "65%", left: '5%', marginTop: '', position: 'absolute', top: '25%', padding: '20px' }}>
+        <Card sx={{ minWidth: 275, width: "80%", marginTop: '5%',marginBottom:'5%', paddingTop: '20px' }}>
 
-                <Stack
-                    direction="row"
-                    divider={<Divider orientation="vertical" flexItem />}
-                    spacing={2}
-                    alignItems="center"
-                    justifyContent="space-around"
-                >
-                    <div>
-                        <Details
-                            addStoreArr={addStoreArr}
-                            addStoreToMatrix={addStoreToMatrix}
-                            addDorToMAtrix={addDorToMAtrix}
-                            addEntranceToMatrix={addEntranceToMatrix}
-                            addPathToMatrix={addPathToMatrix}
-                            elementRow={elementRow}
-                            elementCol={elementCol}
-                            show1={show1}
-                            show2={show2}
-                            setShow1={setShow1}
-                            setShow2={setShow2}
-                        />
-                        <Divider orientation="vertical" flexItem />
+            <Stack
+                direction="row"
+                divider={<Divider orientation="vertical" flexItem />}
+                spacing={2}
+                alignItems="center"
+                justifyContent="space-around"
+            >
+                <div>
+                    <Details
+                        addStoreArr={addStoreArr}
+                        addStoreToMatrix={addStoreToMatrix}
+                        addDorToMAtrix={addDorToMAtrix}
+                        addEntranceToMatrix={addEntranceToMatrix}
+                        addPathToMatrix={addPathToMatrix}
+                        elementRow={elementRow}
+                        elementCol={elementCol}
+                        show1={show1}
+                        show2={show2}
+                        setShow1={setShow1}
+                        setShow2={setShow2}
+                    />
+                    <Divider orientation="vertical" flexItem />
 
-                    </div>
-                    <div id='matrix'>
-                        <Stack alignItems="center">
-                            <div id='matrix'>
-                                <Matrix
-                                    matrix={mat}
-                                    setElementRow={setElementRow}
-                                    setElementCol={setElementCol}
-                                    setShow1={setShow1}
-                                    setShow2={setShow2}
-                                    heightmat={height}
-                                    widthmat={width}
-                                // width="200hv"
-                                /></div></Stack>
-                    </div>
+                </div>
+                <div id='matrix'>
+                    <Stack alignItems="center">
+                        <div id='matrix' style={{ height: '100vh', width: '100vh' }}>
+                            <Matrix
+                                matrix={mat}
+                                setElementRow={setElementRow}
+                                setElementCol={setElementCol}
+                                setShow1={setShow1}
+                                setShow2={setShow2}
+                                heightmat={height}
+                                widthmat={width}
+                                width="200hv"
+                            /></div></Stack>
+                </div>
 
                 </Stack>
                 <Stack alignItems="center">

@@ -7,19 +7,22 @@ import AppRoutes from './components/routers/appRouters'
 import Home from './components/admin/admin'
 import { MallProvider } from './components/context/mallContext'
 import { ModalProvider } from './components/context/modalContext'
+import { UserProvider } from './components/context/userContext'
 
 
 function App() {
   return (
     <>
-      <ModalProvider>
-        <MallProvider>
-          <BrowserRouter>
-            <AppRoutes />
+      <UserProvider>
+        <ModalProvider>
+          <MallProvider>
+            <BrowserRouter>
+              <AppRoutes />
 
-          </BrowserRouter>
-        </MallProvider>
-      </ModalProvider>
+            </BrowserRouter>
+          </MallProvider>
+        </ModalProvider>
+      </UserProvider>
     </>
   )
 }

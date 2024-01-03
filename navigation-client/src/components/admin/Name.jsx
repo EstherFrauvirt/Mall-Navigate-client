@@ -6,7 +6,7 @@ import MallContext from '../context/mallContext'
 export default function Name({handleClick}) {
     const {mall,setMall}=useContext(MallContext);
   return (
-    <Card sx={{ minWidth: 275, width: "40%", left:'15%', marginTop: '', position: 'absolute', top: '25%', padding: '20px' }}>
+    <Card sx={{minHeight:'50%', minWidth: 275, width: "40%", left:'20%', marginTop: '', position: 'absolute', top: '25%', padding: '20px' }}>
     <Box display="flex" flexDirection="column" alignItems="center">      <CardContent>
       <Typography sx={{ fontSize: 40 }} color="#4a4cf5" textAlign={'center'} >
         Name
