@@ -13,6 +13,10 @@ import Footer from '../footer'
 
 import Navbar from '../navBar';
 import GlobalModal from '../modal'
+import Erase from '../details/erase'
+
+import EmailComponent from '../../components/email'
+
 
 export default function AppRoutes() {
     return (
@@ -25,10 +29,12 @@ export default function AppRoutes() {
                    <Route path='campSize' element={<CampSize  />} />
                 </Route>
                 
+                 <Route path='/erase' element={<Erase/>} />
                  <Route path='/create' element={<CreatePath/>} />
                  <Route path='/' element={<Home />}/>
                  <Route path='/register' element={<Register />}/>
                  <Route path='/login' element={<Login />}/>
+                 <Route path='/email' element={<EmailComponent />}/>
 
 
                {/* <Route path='/cvList' element={<CvList />} /> */}

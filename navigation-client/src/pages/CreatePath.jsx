@@ -5,6 +5,9 @@ import StoreList from '../components/storeList';
 import config from '../config';
 import { fetchData } from '../components/utils/servises';
 import UserContext from '../components/context/userContext';
+import { Container } from '@mui/system';
+import './CreatePath.css'
+import ShowPath from './ShowPath';
 
 export default function CreatePath() {
   const [currentPlace, setCurrentPlace] = useState([]);
@@ -15,6 +18,20 @@ export default function CreatePath() {
   const [stores, setStores] = useState([]);
   const [placeFlag, setPlaceFlag] = useState(false)
   const { user } = useContext(UserContext);
+  const [showColorMatrix, setShowColorMatrix] = useState(false);
+  const [pathCoordinates, setPathCoordinates] = useState([]);
+  const matrix = [
+    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
+    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
+    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
+    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
+    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
+    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
+    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
+    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
+    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
+    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
+];
 
   useEffect(() => {
     myfetchData('mall');
@@ -44,6 +61,8 @@ export default function CreatePath() {
     setPlacesToVisit([...placesToVisit, currentPlace])
 
   }
+
+
   const handleCreatePathClick = () => {
     const obj = {
       mall: currentMall,
@@ -61,9 +80,7 @@ export default function CreatePath() {
     }
     console.log(obj);
     fetchData(`path`, options)
-      .then((data => {
-        console.log(data)
-      }))
+      .then((data => { console.log(data); setPathCoordinates(data.path); createMat(data.mat); setShowColorMatrix(true) }))
       .catch((err) => console.log(err))
   }
 
@@ -80,6 +97,9 @@ export default function CreatePath() {
     const arr = [...placesToVisit];
     arr[0] = place;
     setPlacesToVisit(arr);
+  }
+  const createMat = (mat) => {
+    // setStartPoint(place)
   }
 
   const chooseMall = (value) => {

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Data from './Data';
 import Path from './Path';
 import Entrance from './Entrance';
+import { Link } from 'react-router-dom';
 
 export default function Deteils({ addStoreToMatrix, elementRow, elementCol, addDorToMAtrix, show1, show2, addPathToMatrix,addEntranceToMatrix }) {
     const [formData, setFormData] = useState({
@@ -85,6 +86,7 @@ export default function Deteils({ addStoreToMatrix, elementRow, elementCol, addD
                 addEntranceToMatrix={addEntranceToMatrix}
                 elementRow={elementRow}
                 elementCol={elementCol} />}
+                {/* <Link to="/erase"><Button>UNDO</Button></Link> */}
 
         </>
     )
