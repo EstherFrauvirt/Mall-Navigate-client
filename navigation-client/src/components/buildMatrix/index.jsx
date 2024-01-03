@@ -6,7 +6,7 @@ import { Button, Card, Divider, Grid, Snackbar, useStepContext } from '@mui/mate
 import { fetchData } from '../utils/servises'
 import mallContext from '../context/mallContext'
 import { StoreMallDirectory } from '@mui/icons-material';
-import { Stack } from '@mui/system';
+import { Stack, border } from '@mui/system';
 import "./style.css"
 import MuiAlert from '@mui/material/Alert';
 
@@ -18,7 +18,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 export default function BuildMatrix() {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
-    const { mall, setStore, store, setStoreArr, storeArr, mallEnterArr, setMallEnterArr, setShowStore,width,height } = useContext(mallContext);
+    const { mall, setStore, store, setStoreArr, storeArr, mallEnterArr, setMallEnterArr, setShowStore, width, height } = useContext(mallContext);
     // Get the height and width from the query parameters
     // let height = parseInt(searchParams.get('height'));//גובה המטריצה
     // let width = parseInt(searchParams.get('width'));//רוחב המטריצה
@@ -85,7 +85,7 @@ export default function BuildMatrix() {
         tmp[elementRow][elementCol].color = "gold";
         tmp[elementRow][elementCol].content = 0;
         setMat([...tmp])
-        console.log("final map",tmp);
+        console.log("final map", tmp);
         setShow1(false)
         setShow2(false)
         const doorCord = {
@@ -94,7 +94,34 @@ export default function BuildMatrix() {
         }
         setMallEnterArr([...mallEnterArr, { ...doorCord }]);
     }
-
+    const colorTheBorder = (borderStyle,formData) => {
+        console.log("borderStyle",borderStyle);
+        const tmpMat = mat;
+        for (let i = 0; i < height; i++) {
+            for (let j = 0; j < width; j++) {
+                if (( formData.location.row ==i &&//נמצא בשורה מינימום
+                    j >= formData.location.col &&//וגם הטור גדול מטור האפס
+                    j <= (parseInt(formData.location.col) + parseInt(formData.width)))//וגם הטור קטן מטור מקסימום
+                    ||
+                    (i == parseInt(formData.location.row) + parseInt(formData.height) - 1 &&//נמצא בשורת מקסימום
+                        j >= formData.location.col &&//וגם הטור גדול מטור האפס
+                        j <= (parseInt(formData.location.col) + parseInt(formData.width))) //וגם הטור קטן מטור מקסימום
+                    ||
+                    (j == formData.location.col &&//נמצא בטור מינמום
+                        i >= formData.location.row &&//וגם גדול משורה מינמום
+                        i < parseInt(formData.location.row) + parseInt(formData.height))//וגם קטן משורה מקסימום
+                    ||
+                    (j == parseInt(formData.location.col) + parseInt(formData.width) &&
+                        i >= formData.location.row &&//וגם גדול משורה מינמום
+                        i < parseInt(formData.location.row) + parseInt(formData.height))//וגם קטן משורה מקסימום
+                ) {
+                    // tmpMat[i][j].border = `10px ridge ${tmpMat[i][j].color}`
+                    tmpMat[i][j].border = borderStyle
+                    
+                }
+            }
+        }
+    }
     const addPathToMatrix = (formData) => {//הוספת מעבר למטריצה
         const tmp = mat
         tmp[elementRow][elementCol].name = formData.type;
@@ -122,14 +149,14 @@ export default function BuildMatrix() {
             (formData.enterance.col == parseInt(formData.location.col) + parseInt(formData.width) &&
                 formData.enterance.row >= formData.location.row &&//וגם גדול משורה מינמום
                 formData.enterance.row < parseInt(formData.location.row) + parseInt(formData.height))//וגם קטן משורה מקסימום
-            ) {
-                console.log(formData.enterance.row, "==", formData.location.row)// &&//נמצא בשורה מינימום
-                console.log( formData.enterance.col, ">=", formData.location.col)// &&//וגם הטור גדול מטור האפס
-                console.log(formData.enterance.col, "<", parseInt(formData.location.col) + parseInt(formData.width)-1)//וגם הטור קטן מטור מקסימום
-                console.log("or");
-                console.log(formData.enterance.row, "==", parseInt(formData.location.row) + parseInt(formData.height) - 1 )//&&//נמצא בשורת מקסימום
-                console.log(formData.enterance.col, ">=", formData.location.col)// &&//וגם הטור גדול מטור האפס
-                console.log(formData.enterance.col ,"<" ,(parseInt(formData.location.col) + parseInt(formData.width)-1));
+        ) {
+            console.log(formData.enterance.row, "==", formData.location.row)// &&//נמצא בשורה מינימום
+            console.log(formData.enterance.col, ">=", formData.location.col)// &&//וגם הטור גדול מטור האפס
+            console.log(formData.enterance.col, "<", parseInt(formData.location.col) + parseInt(formData.width) - 1)//וגם הטור קטן מטור מקסימום
+            console.log("or");
+            console.log(formData.enterance.row, "==", parseInt(formData.location.row) + parseInt(formData.height) - 1)//&&//נמצא בשורת מקסימום
+            console.log(formData.enterance.col, ">=", formData.location.col)// &&//וגם הטור גדול מטור האפס
+            console.log(formData.enterance.col, "<", (parseInt(formData.location.col) + parseInt(formData.width) - 1));
             console.log(formData);
             tmp[formData.enterance.row][formData.enterance.col].content = 0;
             tmp[formData.enterance.row][formData.enterance.col].name = `door`;
@@ -142,8 +169,8 @@ export default function BuildMatrix() {
             setShow1(false)
             setShow2(false)
             setShowStore(true)
-
             console.log(store);
+            colorTheBorder("none",formData)
         }
         else {
             handleClick2()
@@ -174,6 +201,7 @@ export default function BuildMatrix() {
         tmpStore.color = color;
         tmpStore.leftCorner = leftCorner
         tmpStore.size = size;
+        tmpStore.border = "none"
         console.log("mall", mall);
         tmpStore.place_id = mall.placeId;
 
@@ -203,6 +231,7 @@ export default function BuildMatrix() {
                         content: 1,
                         color: color,
                         name: " ",
+                        border: "none"
                     };
 
                     // console.log("tmp", tmp);
@@ -235,6 +264,7 @@ export default function BuildMatrix() {
                 content: 1,
                 color: color,
                 name: tmpName[place],
+                border: "none",
             };
             console.log(x, tmpName[place])
             place++;
@@ -244,6 +274,7 @@ export default function BuildMatrix() {
         setMat([...tmp])
         setStore({ ...tmpStore })
         console.log("store", store);
+        colorTheBorder(`5px ridge ${color}`,formData)
 
         // console.log("mat",mat);
     }
@@ -293,7 +324,8 @@ export default function BuildMatrix() {
 
 
 
-    const addToDB = () => {console.log({ mat });
+    const addToDB = () => {
+        console.log({ mat });
         console.log(mallEnterArr);
         console.log("addMap");
         addMap()
@@ -303,71 +335,71 @@ export default function BuildMatrix() {
         console.log("created");
 
     }
-    
+
     return (
         <>
-        <Card sx={{ minWidth: 275, width: "65%", left: '5%', marginTop: '', position: 'absolute', top: '25%', padding: '20px' }}>
+            <Card sx={{ minWidth: 275, width: "65%", left: '5%', marginTop: '', position: 'absolute', top: '25%', padding: '20px' }}>
 
-            <Stack
-                direction="row"
-                divider={<Divider orientation="vertical" flexItem />}
-                spacing={2}
-                alignItems="center"
-                justifyContent="space-around"
-            >
-                <div>
-                    <Details
-                        addStoreArr={addStoreArr}
-                        addStoreToMatrix={addStoreToMatrix}
-                        addDorToMAtrix={addDorToMAtrix}
-                        addEntranceToMatrix={addEntranceToMatrix}
-                        addPathToMatrix={addPathToMatrix}
-                        elementRow={elementRow}
-                        elementCol={elementCol}
-                        show1={show1}
-                        show2={show2}
-                        setShow1={setShow1}
-                        setShow2={setShow2}
-                    />
-                    <Divider orientation="vertical" flexItem />
+                <Stack
+                    direction="row"
+                    divider={<Divider orientation="vertical" flexItem />}
+                    spacing={2}
+                    alignItems="center"
+                    justifyContent="space-around"
+                >
+                    <div>
+                        <Details
+                            addStoreArr={addStoreArr}
+                            addStoreToMatrix={addStoreToMatrix}
+                            addDorToMAtrix={addDorToMAtrix}
+                            addEntranceToMatrix={addEntranceToMatrix}
+                            addPathToMatrix={addPathToMatrix}
+                            elementRow={elementRow}
+                            elementCol={elementCol}
+                            show1={show1}
+                            show2={show2}
+                            setShow1={setShow1}
+                            setShow2={setShow2}
+                        />
+                        <Divider orientation="vertical" flexItem />
 
-                </div>
-                <div id='matrix'>
-                    <Stack alignItems="center">
-                        <div id='matrix' style={{ height: '100vh', width: '100vh' }}>
-                            <Matrix
-                                matrix={mat}
-                                setElementRow={setElementRow}
-                                setElementCol={setElementCol}
-                                setShow1={setShow1}
-                                setShow2={setShow2}
-                                heightmat={height}
-                                widthmat={width}
-                                width="200hv"
-                            /></div></Stack>
-                </div>
+                    </div>
+                    <div id='matrix'>
+                        <Stack alignItems="center">
+                            <div id='matrix'>
+                                <Matrix
+                                    matrix={mat}
+                                    setElementRow={setElementRow}
+                                    setElementCol={setElementCol}
+                                    setShow1={setShow1}
+                                    setShow2={setShow2}
+                                    heightmat={height}
+                                    widthmat={width}
+                                // width="200hv"
+                                /></div></Stack>
+                    </div>
 
-            </Stack>
-            <Stack alignItems="center">
-                <Button variant="contained" color="primary" onClick={addToDB} >
-                    Create
-                </Button>
-            </Stack>
-            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-                    You exceed the boundaries of the surface
-                </Alert>
-            </Snackbar>
-            <Snackbar open={open1} autoHideDuration={6000} onClose={handleClose1}>
-                <Alert onClose={handleClose1} severity="error" sx={{ width: '100%' }}>
-                    the area is occupied please choose again
-                </Alert>
-            </Snackbar>
-            <Snackbar open={open2} autoHideDuration={6000} onClose={handleClose2}>
-                <Alert onClose={handleClose2} severity="error" sx={{ width: '100%' }}>
-                    The door is not at the boundary of the store
-                </Alert>
-            </Snackbar>
+                </Stack>
+                <Stack alignItems="center">
+                    <Button variant="contained" color="primary" onClick={addToDB} >
+                        Create
+                    </Button>
+                </Stack>
+                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                        You exceed the boundaries of the surface
+                    </Alert>
+                </Snackbar>
+                <Snackbar open={open1} autoHideDuration={6000} onClose={handleClose1}>
+                    <Alert onClose={handleClose1} severity="error" sx={{ width: '100%' }}>
+                        the area is occupied please choose again
+                    </Alert>
+                </Snackbar>
+                <Snackbar open={open2} autoHideDuration={6000} onClose={handleClose2}>
+                    <Alert onClose={handleClose2} severity="error" sx={{ width: '100%' }}>
+                        The door is not at the boundary of the store
+                    </Alert>
+                </Snackbar>
             </Card>
         </>
     )
