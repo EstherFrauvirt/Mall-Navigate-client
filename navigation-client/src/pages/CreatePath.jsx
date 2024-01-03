@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import AutocompleteSelect from '../components/autocomplete';
-import { Button } from '@mui/material';
+import { Button, Card, Box, CardContent, Typography, Grid } from '@mui/material';
 import StoreList from '../components/storeList';
 import config from '../config';
 import { fetchData } from '../components/utils/servises';
+import UserContext from '../components/context/userContext';
 
 export default function CreatePath() {
   const [currentPlace, setCurrentPlace] = useState([]);
@@ -13,6 +14,7 @@ export default function CreatePath() {
   const [malls, setMalls] = useState([]);
   const [stores, setStores] = useState([]);
   const [placeFlag, setPlaceFlag] = useState(false)
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     myfetchData('mall');
@@ -30,7 +32,7 @@ export default function CreatePath() {
       if (type === 'mall') {
         setMalls(result);
       } else if (type.startsWith('store')) {
-       
+
         setStores(result);
       }
 
@@ -42,33 +44,42 @@ export default function CreatePath() {
     setPlacesToVisit([...placesToVisit, currentPlace])
 
   }
-  const handleCreatePathClick=()=>{
-    const obj={
-      mall:currentMall,
-      stores:placesToVisit,
-      startPoint:startPoint
+  const handleCreatePathClick = () => {
+    const obj = {
+      mall: currentMall,
+      stores: placesToVisit,
+      startPoint: startPoint
     }
-    const options={
+    const options = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-         Authorization: ``
+        Authorization: ``
         //  Authorization: `Bearer ${localStorage.getItem("token")}`
       },
-      body:JSON.stringify(obj)
+      body: JSON.stringify(obj)
     }
     console.log(obj);
-    fetchData(`path`,options)
-    .then((data=>{
-      console.log(data)}))
-    .catch((err)=>console.log(err))
+    fetchData(`path`, options)
+      .then((data => {
+        console.log(data)
+      }))
+      .catch((err) => console.log(err))
   }
 
   const addPlaceToVisit = (place) => {
     setCurrentPlace(place)
   }
+  const handleDelete = (index) => {
+    const updatedPlacesToVisit = [...placesToVisit];
+    updatedPlacesToVisit.splice(index, 1);
+    setPlacesToVisit(updatedPlacesToVisit);
+  };
   const chooseStartPointClick = (place) => {
     setStartPoint(place)
+    const arr = [...placesToVisit];
+    arr[0] = place;
+    setPlacesToVisit(arr);
   }
 
   const chooseMall = (value) => {
@@ -79,23 +90,48 @@ export default function CreatePath() {
   }
   return (
     <>
+      <div style={{ minHeight: '90vh' }}>
+        <Card sx={{ minHeight: '50%', minWidth: 275, width: "60%", marginLeft: '20%', marginTop: '2%', padding: '9px' }}>
+          <Box display="flex" flexDirection="column" alignItems="center">
+            <CardContent>
 
-      <div>
-        <h2>Hei, We are happy to see you,<br /> here you can plan your way in the mall 😊🤑</h2>
-        <AutocompleteSelect options={malls} zise='' title='mall' action={chooseMall} resetValue={false} />
-        {placeFlag && <AutocompleteSelect options={stores} size='200px' title='start point' action={chooseStartPointClick} resetValue={false} />}
-        {placeFlag && <AutocompleteSelect options={stores} size='200px' title='place' action={addPlaceToVisit} resetValue={true} />}
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <Typography align='center' variant='h5'
+                  sx={{ color: '#4a4cf5', borderRadius: '25px', padding: '15px', minWidth: '400px', height: '100px' }}
+                >Hi {user.name}:)<br /> Here you can plan your way.
+                </Typography>
+                <img style={{ width: '250px' }} src={`../../images/path-user.jpg`} />
+              </div>
 
-        <Button variant="contained" color="primary" onClick={handleClick} sx={{ marginBottom: '20px' }}>
-          Add place
-        </Button>
+              <AutocompleteSelect options={malls} zise='' title='mall' action={chooseMall} resetValue={false} />
 
-        <StoreList stores={placesToVisit} />
-        <Button onClick={handleCreatePathClick} variant="contained" color="primary"  sx={{ marginBottom: '20px' }}>
-          Create a path
-        </Button>
+              {placeFlag && <div id="showAfterClick">
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
 
+                  <AutocompleteSelect options={stores} size='250px' title='start point' action={chooseStartPointClick} resetValue={false} />
+                  <AutocompleteSelect options={stores} size='250px' title='place' action={addPlaceToVisit} resetValue={true} />
+
+                  <Button variant="outlined" color="primary" onClick={handleClick} 
+                  color="primary" sx={{ marginBottom: '20px' ,borderColor:"#4a4cf5",color:"#4a4cf5"}}>
+                    Add place
+                  </Button></div>
+
+
+                <StoreList stores={placesToVisit} onDelete={handleDelete} />
+                <Grid container justifyContent="center">
+                  <Grid item>
+                    <Button size='large' onClick={handleCreatePathClick} variant="outlined" color="primary" sx={{ marginBottom: '20px' ,borderColor:"#4a4cf5",color:"#4a4cf5",height:'60px'}}>
+                      Create a path
+                    </Button>
+                </Grid>
+              </Grid></div>
+              }
+
+
+
+            </CardContent></Box> </Card>
       </div>
+
     </>
   )
 }
