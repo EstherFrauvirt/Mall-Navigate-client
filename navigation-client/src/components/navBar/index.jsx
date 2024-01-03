@@ -16,6 +16,9 @@ export default function NavBar() {
   const loginHandle=()=>{
 navigate('/login')
   }
+  const registerHandle=()=>{
+    navigate('/register')
+      }
   return (
     <>
 
@@ -28,7 +31,7 @@ navigate('/login')
           <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' } }}>
 
             <Button
-            onClick={handleOpen}
+            onClick={registerHandle}
               variant="outlined"
               sx={{
                 my: 2, color: 'white', marginLeft: "40px", display: 'block', "&:hover": {

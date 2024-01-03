@@ -1,8 +1,9 @@
-import { Alert, Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { Alert, Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import Data from './Data';
 import Path from './Path';
 import Entrance from './Entrance';
+import { Link } from 'react-router-dom';
 
 export default function Deteils({ addStoreToMatrix, elementRow, elementCol, addDorToMAtrix, show1, show2, addPathToMatrix,addEntranceToMatrix }) {
     const [formData, setFormData] = useState({
@@ -43,10 +44,18 @@ export default function Deteils({ addStoreToMatrix, elementRow, elementCol, addD
         console.log('Form submitted:', formData);
     };
 
-    return (
-        <> <FormControl style={{ width: "150px" }}>
-            <InputLabel id="demo-simple-select-label" >chose kind of area</InputLabel>
+    return ( <> <Typography style={{  fontSize: '20px',
+    color: '#4a4cf5',
+    maxWidth: '400px',
+    wordWrap: 'break-word', // Ensures the text doesn't overflow the container
+    textAlign: 'left'}}>welcom to draw and design your mall map
+                <br/> choose what do you want to draw first:
+            </Typography>
+         <FormControl style={{ width: "150px" }}>
+          
+            <InputLabel >choose</InputLabel>
             <Select
+            sx={{width:'200px'}}
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 name="type"
@@ -77,6 +86,7 @@ export default function Deteils({ addStoreToMatrix, elementRow, elementCol, addD
                 addEntranceToMatrix={addEntranceToMatrix}
                 elementRow={elementRow}
                 elementCol={elementCol} />}
+                {/* <Link to="/erase"><Button>UNDO</Button></Link> */}
 
         </>
     )

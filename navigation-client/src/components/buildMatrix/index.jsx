@@ -2,11 +2,11 @@ import React, { useState, useEffect, useContext } from 'react'
 import Matrix from '../matrix'
 import Details from '../details'
 import { useLocation } from 'react-router-dom';
-import { Button, Divider, Grid, Snackbar, useStepContext } from '@mui/material';
+import { Button, Card, Divider, Grid, Snackbar, useStepContext } from '@mui/material';
 import { fetchData } from '../utils/servises'
 import mallContext from '../context/mallContext'
 import { StoreMallDirectory } from '@mui/icons-material';
-import { Stack } from '@mui/system';
+import { Stack, border } from '@mui/system';
 import "./style.css"
 import MuiAlert from '@mui/material/Alert';
 
@@ -15,13 +15,13 @@ const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function BuildMatrix() {
+export default function BuildMatrix({handleCreateClick}) {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
-    const { mall, setStore, store, setStoreArr, storeArr, mallEnterArr, setMallEnterArr, setShowStore } = useContext(mallContext);
+    const { mall, setStore, store, setStoreArr, storeArr, mallEnterArr, setMallEnterArr, setShowStore, width, height } = useContext(mallContext);
     // Get the height and width from the query parameters
-    let height = parseInt(searchParams.get('height'));//גובה המטריצה
-    let width = parseInt(searchParams.get('width'));//רוחב המטריצה
+    // let height = parseInt(searchParams.get('height'));//גובה המטריצה
+    // let width = parseInt(searchParams.get('width'));//רוחב המטריצה
 
     console.log("build", height, width);
     const [mat, setMat] = useState([[]]);//מטריצה
@@ -85,7 +85,7 @@ export default function BuildMatrix() {
         tmp[elementRow][elementCol].color = "gold";
         tmp[elementRow][elementCol].content = 0;
         setMat([...tmp])
-        console.log("final map",tmp);
+        console.log("final map", tmp);
         setShow1(false)
         setShow2(false)
         const doorCord = {
@@ -94,7 +94,34 @@ export default function BuildMatrix() {
         }
         setMallEnterArr([...mallEnterArr, { ...doorCord }]);
     }
-
+    const colorTheBorder = (borderStyle,formData) => {
+        console.log("borderStyle",borderStyle);
+        const tmpMat = mat;
+        for (let i = 0; i < height; i++) {
+            for (let j = 0; j < width; j++) {
+                if (( formData.location.row ==i &&//נמצא בשורה מינימום
+                    j >= formData.location.col &&//וגם הטור גדול מטור האפס
+                    j <= (parseInt(formData.location.col) + parseInt(formData.width)))//וגם הטור קטן מטור מקסימום
+                    ||
+                    (i == parseInt(formData.location.row) + parseInt(formData.height) - 1 &&//נמצא בשורת מקסימום
+                        j >= formData.location.col &&//וגם הטור גדול מטור האפס
+                        j <= (parseInt(formData.location.col) + parseInt(formData.width))) //וגם הטור קטן מטור מקסימום
+                    ||
+                    (j == formData.location.col &&//נמצא בטור מינמום
+                        i >= formData.location.row &&//וגם גדול משורה מינמום
+                        i < parseInt(formData.location.row) + parseInt(formData.height))//וגם קטן משורה מקסימום
+                    ||
+                    (j == parseInt(formData.location.col) + parseInt(formData.width) &&
+                        i >= formData.location.row &&//וגם גדול משורה מינמום
+                        i < parseInt(formData.location.row) + parseInt(formData.height))//וגם קטן משורה מקסימום
+                ) {
+                    // tmpMat[i][j].border = `10px ridge ${tmpMat[i][j].color}`
+                    tmpMat[i][j].border = borderStyle
+                    
+                }
+            }
+        }
+    }
     const addPathToMatrix = (formData) => {//הוספת מעבר למטריצה
         const tmp = mat
         tmp[elementRow][elementCol].name = formData.type;
@@ -122,14 +149,14 @@ export default function BuildMatrix() {
             (formData.enterance.col == parseInt(formData.location.col) + parseInt(formData.width) &&
                 formData.enterance.row >= formData.location.row &&//וגם גדול משורה מינמום
                 formData.enterance.row < parseInt(formData.location.row) + parseInt(formData.height))//וגם קטן משורה מקסימום
-            ) {
-                console.log(formData.enterance.row, "==", formData.location.row)// &&//נמצא בשורה מינימום
-                console.log( formData.enterance.col, ">=", formData.location.col)// &&//וגם הטור גדול מטור האפס
-                console.log(formData.enterance.col, "<", parseInt(formData.location.col) + parseInt(formData.width)-1)//וגם הטור קטן מטור מקסימום
-                console.log("or");
-                console.log(formData.enterance.row, "==", parseInt(formData.location.row) + parseInt(formData.height) - 1 )//&&//נמצא בשורת מקסימום
-                console.log(formData.enterance.col, ">=", formData.location.col)// &&//וגם הטור גדול מטור האפס
-                console.log(formData.enterance.col ,"<" ,(parseInt(formData.location.col) + parseInt(formData.width)-1));
+        ) {
+            console.log(formData.enterance.row, "==", formData.location.row)// &&//נמצא בשורה מינימום
+            console.log(formData.enterance.col, ">=", formData.location.col)// &&//וגם הטור גדול מטור האפס
+            console.log(formData.enterance.col, "<", parseInt(formData.location.col) + parseInt(formData.width) - 1)//וגם הטור קטן מטור מקסימום
+            console.log("or");
+            console.log(formData.enterance.row, "==", parseInt(formData.location.row) + parseInt(formData.height) - 1)//&&//נמצא בשורת מקסימום
+            console.log(formData.enterance.col, ">=", formData.location.col)// &&//וגם הטור גדול מטור האפס
+            console.log(formData.enterance.col, "<", (parseInt(formData.location.col) + parseInt(formData.width) - 1));
             console.log(formData);
             tmp[formData.enterance.row][formData.enterance.col].content = 0;
             tmp[formData.enterance.row][formData.enterance.col].name = `door`;
@@ -143,8 +170,8 @@ export default function BuildMatrix() {
             setShow1(false)
             setShow2(false)
             setShowStore(true)
-
             console.log(store);
+            colorTheBorder("none",formData)
         }
         else {
             handleClick2()
@@ -175,6 +202,7 @@ export default function BuildMatrix() {
         tmpStore.color = color;
         tmpStore.leftCorner = leftCorner
         tmpStore.size = size;
+        tmpStore.border = "none"
         console.log("mall", mall);
         tmpStore.place_id = mall.placeId;
 
@@ -204,6 +232,7 @@ export default function BuildMatrix() {
                         content: 1,
                         color: color,
                         name: " ",
+                        border: "none"
                     };
 
                     // console.log("tmp", tmp);
@@ -236,6 +265,7 @@ export default function BuildMatrix() {
                 content: 1,
                 color: color,
                 name: tmpName[place],
+                border: "none",
             };
             console.log(x, tmpName[place])
             place++;
@@ -243,8 +273,9 @@ export default function BuildMatrix() {
         }
         // console.log(tmp);
         setMat([...tmp])
-        setStore({...tmpStore});
-        console.log("store", tmpStore);
+        setStore({ ...tmpStore })
+        console.log("store", tmpStore );
+        colorTheBorder(`5px ridge ${color}`,formData)
 
         // console.log("mat",mat);
     }
@@ -294,7 +325,8 @@ export default function BuildMatrix() {
 
 
 
-    const addToDB = () => {console.log({ mat });
+    const addToDB = () => {
+        console.log({ mat });
         console.log(mallEnterArr);
         console.log("addMap");
         addMap()
@@ -302,11 +334,12 @@ export default function BuildMatrix() {
 
         addStoreArr()
         console.log("created");
-
+handleCreateClick();
     }
-    
+
     return (
         <>
+        <Card sx={{ minWidth: 275, width: "80%", marginTop: '5%',marginBottom:'5%', paddingTop: '20px' }}>
 
             <Stack
                 direction="row"
@@ -347,27 +380,28 @@ export default function BuildMatrix() {
                             /></div></Stack>
                 </div>
 
-            </Stack>
-            <Stack alignItems="center">
-                <Button variant="contained" color="primary" onClick={addToDB} >
-                    Create
-                </Button>
-            </Stack>
-            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-                    You exceed the boundaries of the surface
-                </Alert>
-            </Snackbar>
-            <Snackbar open={open1} autoHideDuration={6000} onClose={handleClose1}>
-                <Alert onClose={handleClose1} severity="error" sx={{ width: '100%' }}>
-                    the area is occupied please choose again
-                </Alert>
-            </Snackbar>
-            <Snackbar open={open2} autoHideDuration={6000} onClose={handleClose2}>
-                <Alert onClose={handleClose2} severity="error" sx={{ width: '100%' }}>
-                    The door is not at the boundary of the store
-                </Alert>
-            </Snackbar>
+                </Stack>
+                <Stack alignItems="center">
+                    <Button variant="contained" color="primary" onClick={addToDB} >
+                        Create
+                    </Button>
+                </Stack>
+                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                        You exceed the boundaries of the surface
+                    </Alert>
+                </Snackbar>
+                <Snackbar open={open1} autoHideDuration={6000} onClose={handleClose1}>
+                    <Alert onClose={handleClose1} severity="error" sx={{ width: '100%' }}>
+                        the area is occupied please choose again
+                    </Alert>
+                </Snackbar>
+                <Snackbar open={open2} autoHideDuration={6000} onClose={handleClose2}>
+                    <Alert onClose={handleClose2} severity="error" sx={{ width: '100%' }}>
+                        The door is not at the boundary of the store
+                    </Alert>
+                </Snackbar>
+            </Card>
         </>
     )
 }

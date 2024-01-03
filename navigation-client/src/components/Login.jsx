@@ -9,14 +9,17 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Box, Card, CardActions, CardContent, Button, Typography } from '@mui/material';
-
+import ModalContext from './context/modalContext';
+import userContext from './context/userContext';
 
 
 
 export default function Login() {
+  const { handleOpen, role,setRole } = useContext(ModalContext);
+  let {user,setUser}  = useContext(userContext);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [user, setUser] = useState({
+  const [userState, setuserState] = useState({
     email: '',
     password: ''
   });
@@ -37,10 +40,27 @@ export default function Login() {
 
   useEffect(() => {
     if (res) {
-      navigate(`/admin?res=${res}`)
-      localStorage.setItem("token", res.token)
+      localStorage.setItem("token", res.token);
+      setUser({...res.user})
+      handleOpen();
     }
   }, [res])
+  
+
+  useEffect(() => {
+
+    if (role === 'admin'){
+       navigate(`/admin?res=${res}`)
+       setRole('')
+    }
+     
+    else if(role==='user'){
+      navigate(`/create`)
+      setRole('')
+
+    }
+
+  }, [role])
 
   const fetchData = async () => {
     let result;
@@ -52,7 +72,7 @@ export default function Login() {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(user),
+          body: JSON.stringify(userState),
         });
 
       if (!response.ok) {
@@ -124,13 +144,13 @@ export default function Login() {
 
             <Form>
               <TextField
-                style={{ width: '310px' }}
+              style={{ width: '310px' }}
                 label="Email address"
                 variant="outlined"
                 type='email'
                 onChange={(e) => {
                   handleEmailInput(e)
-                  setUser({ ...user, email: e.target.value })
+                  setuserState({ ...userState, email: e.target.value })
                 }}
                 error={emailError}
                 helperText={emailError ? 'Please enter a valid Email address' : ''}
@@ -139,7 +159,7 @@ export default function Login() {
               <TextField
                 onChange={(e) => {
                   handlePasswordInput(e)
-                  setUser({ ...user, password: e.target.value })
+                  setuserState({ ...userState, password: e.target.value })
                 }}
                 error={passError} // Setting the error prop based on the error state
                 helperText={passError ? 'Please enter at least 6 characters' : ''}

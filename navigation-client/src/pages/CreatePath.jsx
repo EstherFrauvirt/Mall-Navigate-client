@@ -74,7 +74,7 @@ export default function CreatePath() {
     }
     console.log(obj);
     fetchData(`path`, options)
-      .then((data => { console.log(data); setPathCoordinates(data.path); setShowColorMatrix(true) }))
+      .then((data => { console.log(data); setPathCoordinates(data.path); createMat(data.mat); setShowColorMatrix(true) }))
       .catch((err) => console.log(err))
   }
 
@@ -83,6 +83,9 @@ export default function CreatePath() {
   }
   const chooseStartPointClick = (place) => {
     setStartPoint(place)
+  }
+  const createMat = (mat) => {
+    // setStartPoint(place)
   }
 
   const chooseMall = (value) => {

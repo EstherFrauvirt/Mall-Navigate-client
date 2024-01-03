@@ -4,6 +4,7 @@ import { Modal ,Box, Typography, Button} from '@mui/material';
 import {  Paper,Grid} from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import UserContext from '../context/userContext';
 
 const style = {
     position: 'absolute',
@@ -17,7 +18,9 @@ const style = {
     p: 4,
   }; 
 export default function GlobalModal({}) {
-    const {open,handleClose}=useContext(ModalContext);
+    const {open,handleClose,setRole}=useContext(ModalContext);
+    const {user}=useContext(UserContext);
+    console.log(user);
   return (
 <Modal
   open={open}
@@ -27,7 +30,7 @@ export default function GlobalModal({}) {
 >   
   <Box sx={style}>
     <Typography sx={{ textAlign: 'center',padding:'20px', color:'#4a4cf5' }}>
-      Who Are You?
+      Who Are You {user.name}?
     </Typography>
   
  <div style={{display:'flex',justifyContent:'space-evenly',padding:'50px'}}>
@@ -37,9 +40,14 @@ export default function GlobalModal({}) {
   color: '#4a4cf5', // Set text color
   borderColor: '#4a4cf5', // Set border color
 }}
- >
+onClick={()=>{
+  handleClose();
+  setRole('user')}}
+ ><div>
   <AccountCircleIcon sx={{fontSize:'40px'}}/>
+  
   user
+  <p style={{fontSize:'10px'}}>choose and create<br/> your ways in the mall</p></div>
   </Button>
 
     
@@ -49,9 +57,17 @@ export default function GlobalModal({}) {
   color: '#4a4cf5', // Set text color
   borderColor: '#4a4cf5', // Set border color
 }}
+onClick={()=>{
+  handleClose();
+  setRole('admin')}}
  >
-  <AdminPanelSettingsIcon sx={{fontSize:'40px'}}/>
+  <div>
+    <AdminPanelSettingsIcon sx={{fontSize:'50px'}}/>
  owner
+ <p style={{fontSize:'10px'}}>join us<br/> in 4 simple steps</p>
+  </div>
+  
+
   </Button>
 
    </div>
