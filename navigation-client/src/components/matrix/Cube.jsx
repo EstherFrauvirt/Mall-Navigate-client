@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import DoorSlidingTwoToneIcon from '@mui/icons-material/DoorSlidingTwoTone';
 import { height } from '@mui/system';
 
-export default function Cube({ title, color,width,height,index }) {
+export default function Cube({ title, color,width,height,index,isClicked ,border}) {
   const [hovered, setHovered] = useState(false);
 
   const handleMouseEnter = () => {
@@ -15,15 +15,19 @@ export default function Cube({ title, color,width,height,index }) {
   };
 
   const cubeStyle = {
-    background: hovered ? 'red' : color, // Change the color on hover
+    background: hovered ? 'rgb(252 202 200)' : color, // Change the color on hover
     border: '1px solid black',
     width: `${600 * width / 100}px`,
     height: `${600 * height / 100}px`,
+    zIndex:'999'
   };
 
   return (
     <div
-      style={cubeStyle}
+      style={{ background: hovered ? 'red' : color, 
+      border: border,
+      width: `${600 * width / 100}px`,
+      height: `${600 * height / 100}px`,}}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >

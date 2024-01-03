@@ -6,6 +6,7 @@ import config from '../config';
 import { fetchData } from '../components/utils/servises';
 import { Container } from '@mui/system';
 import './CreatePath.css'
+import ShowPath from './ShowPath';
 
 export default function CreatePath() {
   const [currentPlace, setCurrentPlace] = useState([]);
@@ -15,6 +16,20 @@ export default function CreatePath() {
   const [malls, setMalls] = useState([]);
   const [stores, setStores] = useState([]);
   const [placeFlag, setPlaceFlag] = useState(false)
+  const [showColorMatrix, setShowColorMatrix] = useState(false);
+  const [pathCoordinates, setPathCoordinates] = useState([]);
+  const matrix = [
+    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
+    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
+    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
+    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
+    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
+    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
+    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
+    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
+    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
+    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
+];
 
   useEffect(() => {
     myfetchData('mall');
@@ -56,15 +71,15 @@ export default function CreatePath() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem("token")}`
+        Authorization: ``
+        //  Authorization: `Bearer ${localStorage.getItem("token")}`
       },
       body: JSON.stringify(obj)
     }
     console.log(obj);
-    fetchData(`path`,options)
-    .then((data=>{
-      console.log(data)}))
-    .catch((err)=>console.log(err))
+    fetchData(`path`, options)
+      .then((data => { console.log(data); setPathCoordinates(data.path); createMat(data.mat); setShowColorMatrix(true) }))
+      .catch((err) => console.log(err))
   }
 
   const addPlaceToVisit = (place) => {
@@ -74,6 +89,9 @@ export default function CreatePath() {
 
   const chooseStartPointClick = (place) => {
     setStartPoint(place)
+  }
+  const createMat = (mat) => {
+    // setStartPoint(place)
   }
 
   const chooseMall = (value) => {
@@ -86,7 +104,7 @@ export default function CreatePath() {
     <>
       <div style={{ height: "90vh" }}>
         <div class="all">
-          <Container>
+          <Container></Container>
             <h2 class="h2">Lets start shopping!<br /> </h2>
 
             <br />
@@ -101,14 +119,18 @@ export default function CreatePath() {
               </div>
             </div>
 
-
-            <StoreList stores={placesToVisit} />
-            <Button onClick={handleCreatePathClick} variant="contained" color="primary" sx={{ marginBottom: '20px' }}>
-              Create a path
+        <Button variant="contained" color="primary" onClick={handleClick} sx={{ marginBottom: '20px' }}>
+          Add place
         </Button>
 
-          </Container>
-        </div>
+        <StoreList stores={placesToVisit} />
+        <Button onClick={handleCreatePathClick} variant="contained" color="primary" sx={{ marginBottom: '20px' }}>
+          Create a path
+        </Button>
+
+        {showColorMatrix && (
+          <ShowPath matrix={matrix} coordinates={pathCoordinates}/>)}
+      </div>
       </div>
     </>
   )
