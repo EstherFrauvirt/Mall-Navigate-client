@@ -49,6 +49,12 @@ const eventsArr= [
 export default function Admin() {
   const { mall, setMall } = useContext(mallContext)
   const [events, setEvents] = useState(eventsArr);
+  const [timeline, setTimeline] = useState({
+    name: true,
+    size: false,
+    draw: false,
+    create: false
+  });
   const [flags, setFlags] = useState({
     name: true,
     size: false,
@@ -60,7 +66,7 @@ export default function Admin() {
 useEffect(() => {
 
   setEvents(prevEvents => prevEvents.map(ev => {
-    if (flags[`${ev.title.toLowerCase()}`]) {
+    if (timeline[`${ev.title.toLowerCase()}`]) {
       ev.color = '#ff8b84';
     } else {
       ev.color = 'grey';
@@ -81,10 +87,25 @@ useEffect(() => {
     fetchData();
   
   }
+  const handleCreateClick=()=>{
+    setFlags((prevflags) => ({
+      ...prevflags,
+      create:true,draw:false
+      
+    }))
+    setTimeline((prev) => ({
+      ...prev,
+      create:true
+    }))
+  }
   const handleSizeClick = () => {
     setFlags((prevflags) => ({
       ...prevflags,
-      size: false,draw:true
+      draw:true,size:false
+      
+    }))
+    setTimeline((prev) => ({
+      ...prev,draw:true
     }))
   
   }
@@ -110,7 +131,12 @@ useEffect(() => {
       setMall({ ...mall, placeId: result.id })
       setFlags((prevflags) => ({
         ...prevflags,
-        name: false,size:true
+         size:true,name:false
+        
+      }))
+      setTimeline((prev) => ({
+        ...prev,
+       size:true
       }))
     } catch (error) {
       console.log(error);
@@ -119,15 +145,14 @@ useEffect(() => {
   return (
 
     <>
-      <div style={{ height: '90vh' }}>
+      <div style={{ minHeight: '90vh' }}>
         <Container>
-
-          <div style={{ position: 'absolute', top: '15%', right: '15%' }}>
+          <div style={{ position: 'absolute', top: '15%', right:'7%' }}>
             <DynamicTimeline events={events} />
           </div>
           {flags.name && <Name handleClick={handleNameClick} />}
           {flags.size && <Size handleClick={handleSizeClick} />}
-        { flags.draw && <BuildMatrix/>}
+        { flags.draw && <BuildMatrix handleCreateClick={handleCreateClick}/>}
 
         </Container>
       </div>

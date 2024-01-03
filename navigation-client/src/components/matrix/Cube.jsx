@@ -15,10 +15,11 @@ export default function Cube({ title, color,width,height,index }) {
   };
 
   const cubeStyle = {
-    background: hovered ? 'red' : color, // Change the color on hover
+    background: hovered ? 'rgb(252 202 200)' : color, // Change the color on hover
     border: '1px solid black',
     width: `${600 * width / 100}px`,
     height: `${600 * height / 100}px`,
+    zIndex:'999'
   };
 
   return (
