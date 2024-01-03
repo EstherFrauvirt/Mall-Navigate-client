@@ -111,7 +111,7 @@ export default function CreatePath() {
   return (
     <>
       <div style={{ minHeight: '90vh' }}>
-        <Card sx={{ minHeight: '50%', minWidth: 275, width: "60%", marginLeft: '20%', marginTop: '2%', padding: '9px' }}>
+        <Card sx={{ minHeight: '50%', minWidth: 275, width: "60%", marginLeft: '20%', marginTop: '2%', padding: '9px' ,marginBottom:'2%'}}>
           <Box display="flex" flexDirection="column" alignItems="center">
             <CardContent>
 
@@ -132,7 +132,7 @@ export default function CreatePath() {
                   <AutocompleteSelect options={stores} size='250px' title='place' action={addPlaceToVisit} resetValue={true} />
 
                   <Button variant="outlined" color="primary" onClick={handleClick} 
-                  color="primary" sx={{ marginBottom: '20px' ,borderColor:"#4a4cf5",color:"#4a4cf5"}}>
+                   sx={{ marginBottom: '20px' ,borderColor:"#4a4cf5",color:"#4a4cf5"}}>
                     Add place
                   </Button></div>
 
