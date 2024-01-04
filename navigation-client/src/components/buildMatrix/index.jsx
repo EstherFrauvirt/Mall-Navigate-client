@@ -101,17 +101,17 @@ export default function BuildMatrix({handleCreateClick}) {
             for (let j = 0; j < width; j++) {
                 if (( formData.location.row ==i &&//נמצא בשורה מינימום
                     j >= formData.location.col &&//וגם הטור גדול מטור האפס
-                    j <= (parseInt(formData.location.col) + parseInt(formData.width)))//וגם הטור קטן מטור מקסימום
+                    j <= (parseInt(formData.location.col) + parseInt(formData.width)-1))//וגם הטור קטן מטור מקסימום
                     ||
                     (i == parseInt(formData.location.row) + parseInt(formData.height) - 1 &&//נמצא בשורת מקסימום
                         j >= formData.location.col &&//וגם הטור גדול מטור האפס
-                        j <= (parseInt(formData.location.col) + parseInt(formData.width))) //וגם הטור קטן מטור מקסימום
+                        j <= (parseInt(formData.location.col) + parseInt(formData.width)-1)) //וגם הטור קטן מטור מקסימום
                     ||
                     (j == formData.location.col &&//נמצא בטור מינמום
                         i >= formData.location.row &&//וגם גדול משורה מינמום
                         i < parseInt(formData.location.row) + parseInt(formData.height))//וגם קטן משורה מקסימום
                     ||
-                    (j == parseInt(formData.location.col) + parseInt(formData.width) &&
+                    (j == parseInt(formData.location.col) + parseInt(formData.width)-1 &&
                         i >= formData.location.row &&//וגם גדול משורה מינמום
                         i < parseInt(formData.location.row) + parseInt(formData.height))//וגם קטן משורה מקסימום
                 ) {
@@ -136,17 +136,17 @@ export default function BuildMatrix({handleCreateClick}) {
         const tmp = mat
         if ((formData.enterance.row == formData.location.row &&//נמצא בשורה מינימום
             formData.enterance.col >= formData.location.col &&//וגם הטור גדול מטור האפס
-            formData.enterance.col < (parseInt(formData.location.col) + parseInt(formData.width)))//וגם הטור קטן מטור מקסימום
+            formData.enterance.col <= (parseInt(formData.location.col) + parseInt(formData.width)))//וגם הטור קטן מטור מקסימום
             ||
             (formData.enterance.row == parseInt(formData.location.row) + parseInt(formData.height) - 1 &&//נמצא בשורת מקסימום
                 formData.enterance.col >= formData.location.col &&//וגם הטור גדול מטור האפס
-                formData.enterance.col < (parseInt(formData.location.col) + parseInt(formData.width))) //וגם הטור קטן מטור מקסימום
+                formData.enterance.col <= (parseInt(formData.location.col) + parseInt(formData.width))) //וגם הטור קטן מטור מקסימום
             ||
             (formData.enterance.col == formData.location.col &&//נמצא בטור מינמום
                 formData.enterance.row >= formData.location.row &&//וגם גדול משורה מינמום
                 formData.enterance.row < parseInt(formData.location.row) + parseInt(formData.height))//וגם קטן משורה מקסימום
             ||
-            (formData.enterance.col == parseInt(formData.location.col) + parseInt(formData.width) &&
+            (formData.enterance.col == parseInt(formData.location.col) + parseInt(formData.width)-1 &&
                 formData.enterance.row >= formData.location.row &&//וגם גדול משורה מינמום
                 formData.enterance.row < parseInt(formData.location.row) + parseInt(formData.height))//וגם קטן משורה מקסימום
         ) {
