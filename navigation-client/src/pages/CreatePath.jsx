@@ -133,7 +133,6 @@ export default function CreatePath() {
               {placeFlag && <div id="showAfterClick">
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
 
-
                   <AutocompleteSelect options={stores} size='250px' title='start point' action={chooseStartPointClick} resetValue={false} />
                   <AutocompleteSelect options={stores} size='250px' title='place' action={addPlaceToVisit} resetValue={true} />
 
