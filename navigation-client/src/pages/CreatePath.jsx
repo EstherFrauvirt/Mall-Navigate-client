@@ -5,14 +5,25 @@ import StoreList from '../components/storeList';
 import config from '../config';
 import { fetchData } from '../components/utils/servises';
 import UserContext from '../components/context/userContext';
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Container } from '@mui/system';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import './CreatePath.css'
 import ShowPath from './ShowPath';
 import MatrixForShow from '../components/matrix/matrixForShow';
+// import { makeStyles } from '@mui/system';
+
+// const useStyles = makeStyles({
+//   noHover: {
+//     '&:hover': {
+//       backgroundColor: 'inherit', // or any other styles you want to override
+//     },
+//   },
+// });
 
 export default function CreatePath() {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [currentPlace, setCurrentPlace] = useState([]);
   const [currentMall, setCurrentMall] = useState();
   const [startPoint, setStartPoint] = useState();
@@ -24,18 +35,8 @@ export default function CreatePath() {
   const [showColorMatrix, setShowColorMatrix] = useState(false);
   const [pathCoordinates, setPathCoordinates] = useState([]);
   const [mat, setMat] = useState([[]]);
-  const matrix = [
-    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
-    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
-    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
-    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
-    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
-    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
-    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
-    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
-    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
-    ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
-];
+  const [storePathArr, setStorePathArr] = useState([]);
+
 
   useEffect(() => {
     myfetchData('mall');
@@ -84,9 +85,9 @@ export default function CreatePath() {
     }
     console.log(obj);
     fetchData(`path`, options)
-      .then((data => { console.log(data); setPathCoordinates(data.path); setMat(data.mat); console.log(data.mat); setShowColorMatrix(true) }))
+      .then((data => { console.log(data); setPathCoordinates(data.path); setMat(data.mat); setStorePathArr(data.storePathArr); setShowColorMatrix(true) }))
       .catch((err) => console.log(err))
-      navigate('/path')
+    // navigate('/path')
   }
 
   const addPlaceToVisit = (place) => {
@@ -103,9 +104,6 @@ export default function CreatePath() {
     arr[0] = place;
     setPlacesToVisit(arr);
   }
-  // const createMat = (mat) => {
-  //   // setStartPoint(place)
-  // }
 
   const chooseMall = (value) => {
     setCurrentMall(value)
@@ -113,10 +111,12 @@ export default function CreatePath() {
     setPlaceFlag(true);
 
   }
+  // const classes = useStyles();
   return (
+    
     <>
       <div style={{ minHeight: '90vh' }}>
-        <Card sx={{ minHeight: '50%', minWidth: 275, width: "60%", marginLeft: '20%', marginTop: '2%', padding: '9px' ,marginBottom:'2%'}}>
+        <Card sx={{ minHeight: '50%', minWidth: 275, width: "60%", marginLeft: '20%', marginTop: '2%', padding: '9px', marginBottom: '2%' }}>
           <Box display="flex" flexDirection="column" alignItems="center">
             <CardContent>
 
@@ -136,24 +136,36 @@ export default function CreatePath() {
                   <AutocompleteSelect options={stores} size='250px' title='start point' action={chooseStartPointClick} resetValue={false} />
                   <AutocompleteSelect options={stores} size='250px' title='place' action={addPlaceToVisit} resetValue={true} />
 
-                  <Button variant="outlined" color="primary" onClick={handleClick} 
-                   sx={{ marginBottom: '20px' ,borderColor:"#4a4cf5",color:"#4a4cf5"}}>
+                  <Button variant="outlined" color="primary" onClick={handleClick}
+                    sx={{ marginBottom: '20px', borderColor: "#4a4cf5", color: "#4a4cf5" }}>
                     Add place
                   </Button></div>
-
-
                 <StoreList stores={placesToVisit} onDelete={handleDelete} />
                 <Grid container justifyContent="center">
                   <Grid item>
-                    <Button size='large' onClick={handleCreatePathClick} variant="outlined" color="primary" sx={{ marginBottom: '20px' ,borderColor:"#4a4cf5",color:"#4a4cf5",height:'60px'}}>
+                    <Button size='large' onClick={handleCreatePathClick} variant="outlined" color="primary" sx={{ marginBottom: '20px', borderColor: "#4a4cf5", color: "#4a4cf5", height: '60px' }}>
                       Create a path
                     </Button>
-                </Grid>
-              </Grid></div>
+                  </Grid>
+                </Grid></div>
               }
-
-
-
+              <div style={{ display: 'flex' }}>
+                {storePathArr.map((store, index) => (
+                  <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
+                    <Button
+                      // disableRipple = {true}
+                      // disableTouchRipple = {true}
+                      endIcon={index !== storePathArr.length - 1 ? <ArrowForwardIcon /> : ''}
+                      // className={classes.noHover}
+                    >
+                      <h5>{store.name}</h5>
+                    </Button>
+                  </div>
+                ))}
+              </div>
+              {showColorMatrix && (
+                <MatrixForShow matrix={mat} heightmat={mat[0].length} widthmat={mat.length} path={pathCoordinates} />
+              )}
             </CardContent></Box> </Card>
       </div>
 

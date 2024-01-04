@@ -11,10 +11,12 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Box, Card, CardActions, CardContent, Button, Typography } from '@mui/material';
 import ModalContext from './context/modalContext';
 import userContext from './context/userContext';
+import LoginContext from './context/loginContext';
 
 
 
 export default function Login() {
+  const { setIsLogin} = useContext(LoginContext);
   const { handleOpen, role,setRole } = useContext(ModalContext);
   let {user,setUser}  = useContext(userContext);
   const navigate = useNavigate();
@@ -43,6 +45,7 @@ export default function Login() {
       localStorage.setItem("token", res.token);
       setUser({...res.user})
       handleOpen();
+      setIsLogin(true)
     }
   }, [res])
   
@@ -81,7 +84,6 @@ export default function Login() {
       result = await response.json();
       console.log(result);
       setRes(result);
-
       console.log(result);
     } catch (error) {
       console.log(error);
@@ -120,6 +122,7 @@ export default function Login() {
       // Fields are valid, proceed with fetching data
       try {
         const res = await fetchData();
+
         console.log(res);
       } catch (error) {
         // Handle any error that may occur during the fetch operation
