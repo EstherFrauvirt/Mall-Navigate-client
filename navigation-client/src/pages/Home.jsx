@@ -6,6 +6,8 @@ import Container from '@mui/material/Container';
 import { Typography, styled, Stack, Modal, Button } from '@mui/material';
 import { Col, Row } from 'react-bootstrap';
 import AddUser from '../components/addUser';
+import useEnhancedEffect from '@mui/material/utils/useEnhancedEffect';
+import { useEffect } from 'react';
 
 
 
@@ -22,8 +24,6 @@ export default function Home() {
   return (
 
     <>
-    
-      
       <Box>
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={4} justifyContent={'space-around'} >
           <div className='col-12 col-sm-6'>
