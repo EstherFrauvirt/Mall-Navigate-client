@@ -8,20 +8,23 @@ import Home from './components/admin/admin'
 import { MallProvider } from './components/context/mallContext'
 import { ModalProvider } from './components/context/modalContext'
 import { UserProvider } from './components/context/userContext'
+import { EmailProvider } from './components/context/emailContext'
 
 
 function App() {
   return (
     <>
       <UserProvider>
-        <ModalProvider>
-          <MallProvider>
-            <BrowserRouter>
-              <AppRoutes />
+        <EmailProvider>
+          <ModalProvider>
+            <MallProvider>
+              <BrowserRouter>
+                <AppRoutes />
 
-            </BrowserRouter>
-          </MallProvider>
-        </ModalProvider>
+              </BrowserRouter>
+            </MallProvider>
+          </ModalProvider>
+        </EmailProvider>
       </UserProvider>
     </>
   )

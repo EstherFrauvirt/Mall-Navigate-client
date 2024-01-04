@@ -16,7 +16,7 @@ import GlobalModal from '../modal'
 import Erase from '../details/erase'
 import { getUserLocation } from '../utils/map'
 import { findClosestCoordinate } from '../utils/map'
-
+import Path from '../path'
 import EmailComponent from '../../components/email'
 import Maps from '../../components/Maps'
 
@@ -51,7 +51,7 @@ export default function AppRoutes() {
                 <Route path='/login' element={<Login />} />
                 <Route path='/email' element={<EmailComponent />} />
                 <Route path='/maps' element={<Maps startCoords={startCoord} endCoords={endCoord} />} />
-
+                <Route path='/path' element={<Path />}/>
 
 
                 {/* <Route path='/cvList' element={<CvList />} /> */}
