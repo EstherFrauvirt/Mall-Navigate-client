@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import DoorSlidingTwoToneIcon from '@mui/icons-material/DoorSlidingTwoTone';
 import { height } from '@mui/system';
 
-export default function Cube({ title, color,width,height,index,isClicked ,border}) {
+export default function Cube({ title, color, width, height, border, path, icon = false }) {
   const [hovered, setHovered] = useState(false);
 
   const handleMouseEnter = () => {
@@ -19,20 +19,25 @@ export default function Cube({ title, color,width,height,index,isClicked ,border
     border: '1px solid black',
     width: `${600 * width / 100}px`,
     height: `${600 * height / 100}px`,
-    zIndex:'999'
+    zIndex: '999'
   };
 
   return (
     <div
-      style={{ background: hovered ? 'red' : color, 
-      border: border,
-      width: `${600 * width / 100}px`,
-      height: `${600 * height / 100}px`,}}
+      style={{
+        background: hovered ? 'red' : color,
+        border: border,
+        width: `${600 * width / 100}px`,
+        height: `${600 * height / 100}px`,
+      }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       <div>
         {(title === "door" || title === "enter") ? <DoorSlidingTwoToneIcon /> : title}
+      </div>
+      <div>
+         {icon && icon}
       </div>
     </div>
   );

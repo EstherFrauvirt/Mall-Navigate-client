@@ -165,7 +165,8 @@ export default function BuildMatrix({handleCreateClick}) {
             const doorCord = {}
             doorCord.row = formData.enterance.row;
             doorCord.col = formData.enterance.col;
-            setStore({ ...store, doorCord })
+            setStore({ ...store, doorCord: doorCord})
+            console.log("store:", store);
             setShow1(false)
             setShow2(false)
             setShowStore(true)
@@ -214,6 +215,8 @@ export default function BuildMatrix({handleCreateClick}) {
             console.error("You exceed the boundaries of the surface");
             return
         }
+        console.log("hereeeeee");
+        
         for (let row = i; row < h; row++) {
             for (let col = j; col < w; col++) {
                 if (tmp[row][col].content != -1) {
@@ -230,7 +233,7 @@ export default function BuildMatrix({handleCreateClick}) {
                     tmp[row][col] = {
                         content: 1,
                         color: color,
-                        name: " ",
+                        name: formData.name,
                         border: "none"
                     };
 
@@ -266,14 +269,13 @@ export default function BuildMatrix({handleCreateClick}) {
                 name: tmpName[place],
                 border: "none",
             };
-            console.log(x, tmpName[place])
+            console.log(x, tmpName)
             place++;
-            console.log("zara", tmpRow, tmpCol, tmp[tmpRow][tmpCol])
         }
         // console.log(tmp);
         setMat([...tmp])
         setStore({ ...tmpStore })
-        console.log("store", store);
+        console.log("store", tmpStore );
         colorTheBorder(`5px ridge ${color}`,formData)
 
         // console.log("mat",mat);
@@ -293,7 +295,8 @@ export default function BuildMatrix({handleCreateClick}) {
     }, []);
 
     const addMap = () => {
-        console.log(mall);
+        console.log("mall:", mall);
+        console.log("mat:"+ mat);
         const requestOptions = {
             method: 'POST',
             headers: {
