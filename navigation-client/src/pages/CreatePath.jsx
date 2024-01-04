@@ -133,12 +133,6 @@ export default function CreatePath() {
               {placeFlag && <div id="showAfterClick">
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
 
-<<<<<<< HEAD
-        {showColorMatrix && (
-          // <ShowPath matrix={matrix} coordinates={pathCoordinates}/>
-          <MatrixForShow matrix={mat} heightmat={mat[0].length} widthmat={mat.length} path= {pathCoordinates}/>
-          )}
-=======
                   <AutocompleteSelect options={stores} size='250px' title='start point' action={chooseStartPointClick} resetValue={false} />
                   <AutocompleteSelect options={stores} size='250px' title='place' action={addPlaceToVisit} resetValue={true} />
 
@@ -161,7 +155,6 @@ export default function CreatePath() {
 
 
             </CardContent></Box> </Card>
->>>>>>> 518b90f9db59f642ecf0fcf032b5f0cda71b2633
       </div>
 
     </>

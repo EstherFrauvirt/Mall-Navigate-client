@@ -79,6 +79,7 @@ export default function BuildMatrix({handleCreateClick}) {
     }
 
     const addEntranceToMatrix = (formData) => { //הוספץ כניסת קניון למטריצה
+        if(tmp[elementRow][elementCol]==-1){
         console.log("enter formData", formData.location);
         const tmp = mat
         tmp[elementRow][elementCol].name = formData.type;
@@ -93,6 +94,11 @@ export default function BuildMatrix({handleCreateClick}) {
             col: formData.location.col
         }
         setMallEnterArr([...mallEnterArr, { ...doorCord }]);
+    }
+    else{
+        handleClick1();
+
+    }
     }
     const colorTheBorder = (borderStyle,formData) => {
         console.log("borderStyle",borderStyle);
@@ -124,6 +130,7 @@ export default function BuildMatrix({handleCreateClick}) {
     }
     const addPathToMatrix = (formData) => {//הוספת מעבר למטריצה
         const tmp = mat
+        if( tmp[elementRow][elementCol]==-1){
         tmp[elementRow][elementCol].name = formData.type;
         tmp[elementRow][elementCol].color = "grey";
         tmp[elementRow][elementCol].content = 0;
@@ -131,6 +138,10 @@ export default function BuildMatrix({handleCreateClick}) {
         setShow1(false)
         setShow2(false)
         console.log("mallEnterArr", mallEnterArr);
+    }else{
+        handleClick1();
+
+    }
     }
     const addDorToMAtrix = (formData) => {// הוספת דלת לחנות
         const tmp = mat
