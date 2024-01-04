@@ -5,6 +5,7 @@ import StoreList from '../components/storeList';
 import config from '../config';
 import { fetchData } from '../components/utils/servises';
 import ShowPath from './ShowPath';
+import MatrixForShow from '../components/matrix/matrixForShow';
 
 export default function CreatePath() {
   const [currentPlace, setCurrentPlace] = useState([]);
@@ -16,6 +17,7 @@ export default function CreatePath() {
   const [placeFlag, setPlaceFlag] = useState(false)
   const [showColorMatrix, setShowColorMatrix] = useState(false);
   const [pathCoordinates, setPathCoordinates] = useState([]);
+  const [mat, setMat] = useState([[]]);
   const matrix = [
     ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
     ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
@@ -74,7 +76,7 @@ export default function CreatePath() {
     }
     console.log(obj);
     fetchData(`path`, options)
-      .then((data => { console.log(data); setPathCoordinates(data.path); createMat(data.mat); setShowColorMatrix(true) }))
+      .then((data => { console.log(data); setPathCoordinates(data.path); setMat(data.mat); console.log(data.mat); setShowColorMatrix(true) }))
       .catch((err) => console.log(err))
   }
 
@@ -84,9 +86,9 @@ export default function CreatePath() {
   const chooseStartPointClick = (place) => {
     setStartPoint(place)
   }
-  const createMat = (mat) => {
-    // setStartPoint(place)
-  }
+  // const createMat = (mat) => {
+  //   // setStartPoint(place)
+  // }
 
   const chooseMall = (value) => {
     setCurrentMall(value)
@@ -113,7 +115,9 @@ export default function CreatePath() {
         </Button>
 
         {showColorMatrix && (
-          <ShowPath matrix={matrix} coordinates={pathCoordinates}/>)}
+          // <ShowPath matrix={matrix} coordinates={pathCoordinates}/>
+          <MatrixForShow matrix={mat} heightmat={mat[0].length} widthmat={mat.length} path= {pathCoordinates}/>
+          )}
       </div>
     </>
   )

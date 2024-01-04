@@ -231,7 +231,7 @@ export default function BuildMatrix({handleCreateClick}) {
                     tmp[row][col] = {
                         content: 1,
                         color: color,
-                        name: " ",
+                        name: formData.name,
                         border: "none"
                     };
 
@@ -267,9 +267,8 @@ export default function BuildMatrix({handleCreateClick}) {
                 name: tmpName[place],
                 border: "none",
             };
-            console.log(x, tmpName[place])
+            console.log(x, tmpName)
             place++;
-            console.log("zara", tmpRow, tmpCol, tmp[tmpRow][tmpCol])
         }
         // console.log(tmp);
         setMat([...tmp])

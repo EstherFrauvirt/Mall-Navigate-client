@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+
 
 
 export default function ShowPath({ matrix, coordinates }) {
@@ -59,27 +64,4 @@ export default function ShowPath({ matrix, coordinates }) {
     );
 };
 
-// Example usage:
-const App = () => {
-    const matrix = [
-        ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
-        ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
-        ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
-        ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
-        ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
-        ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
-        ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
-        ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
-        ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
-        ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
-    ];
-
-    const coordinates = [
-        [0, 0],
-        [1, 1],
-        [2, 2],
-    ];
-
-    // return <ColorMatrix matrix={matrix} coordinates={coordinates} />;
-};
 
