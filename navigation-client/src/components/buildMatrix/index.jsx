@@ -215,6 +215,8 @@ export default function BuildMatrix({handleCreateClick}) {
             console.error("You exceed the boundaries of the surface");
             return
         }
+        console.log("hereeeeee");
+        
         for (let row = i; row < h; row++) {
             for (let col = j; col < w; col++) {
                 if (tmp[row][col].content != -1) {
@@ -293,7 +295,8 @@ export default function BuildMatrix({handleCreateClick}) {
     }, []);
 
     const addMap = () => {
-        console.log(mall);
+        console.log("mall:", mall);
+        console.log("mat:"+ mat);
         const requestOptions = {
             method: 'POST',
             headers: {

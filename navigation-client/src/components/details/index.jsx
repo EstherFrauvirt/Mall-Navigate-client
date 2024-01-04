@@ -55,7 +55,7 @@ export default function Deteils({ addStoreToMatrix, elementRow, elementCol, addD
           
             <InputLabel >choose</InputLabel>
             <Select
-            sx={{width:'200px'}}
+            sx={{width:'200spx'}}
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 name="type"

@@ -4,7 +4,7 @@ import { fetchData } from '../utils/servises';
 import mallContext from '../context/mallContext'
 
 export default function Data({ show1, show2, setShow, setFormData, formData, elementCol, elementRow, addStoreToMatrix, addDorToMAtrix, addEntranceToMatrix }) {
-    const { mall, setStore, store, setStoreArr, storeArr ,showStore, setShowStore} = useContext(mallContext);
+    const { mall, setStore, store, setStoreArr, storeArr, showStore, setShowStore } = useContext(mallContext);
     const [width, setWidth] = useState('');
     const [widthError, setWidthError] = useState(false);
     const [hight, setHight] = useState('');
@@ -45,14 +45,58 @@ export default function Data({ show1, show2, setShow, setFormData, formData, ele
     };
 
 
+
+
+
+
+
+    const isNameUnique = (name) => {
+        return !storeArr.includes(name);
+    };
+
+
+    const handleNameValidation = () => {
+        const { name } = formData;
+
+        if (name.trim() === '') {
+            // Name is empty
+            // Handle validation error (e.g., show error message)
+            console.log('Name is required');
+            return false;
+        }
+
+        if (!isNameUnique(name)) {
+            // Name is not unique
+            // Handle validation error (e.g., show error message)
+            console.log('Name must be unique');
+            return false;
+        }
+
+        // Name is valid
+        return true;
+    };
+
+
+
+
+
+
+
+
+
+
     const addStore = () => {
+        if (!handleNameValidation()){
+            alert ("name is not unique")
+        }
         const tmpData = formData;
         tmpData.location.row = elementRow
         tmpData.location.col = elementCol
-        if (hightError){
+        tmpData.place_id = mall.placeId
+        if (hightError) {
             alert("hight is not valid")
         }
-        else if (widthError){
+        else if (widthError) {
             alert("width is not valid")
         }
         else if (tmpData.location.row > -1 && tmpData.location.col > -1 && formData.name && formData.type) {
@@ -105,7 +149,7 @@ export default function Data({ show1, show2, setShow, setFormData, formData, ele
                     label="height"
                     name="height"
                     defaultValue=""
-                    onChange={(e)=>{handleChange(e), handleHightChange(e)}}
+                    onChange={(e) => { handleChange(e), handleHightChange(e) }}
                     error={hightError}
                     helperText={hightError ? 'Please enter a valid integer' : ''}
 
@@ -117,7 +161,7 @@ export default function Data({ show1, show2, setShow, setFormData, formData, ele
                     label="width"
                     defaultValue=""
                     name='width'
-                    onChange={(e)=>{handleChange(e), handleWidthChange(e)}}
+                    onChange={(e) => { handleChange(e), handleWidthChange(e) }}
                     error={widthError}
                     helperText={widthError ? 'Please enter a valid integer' : ''}
 
