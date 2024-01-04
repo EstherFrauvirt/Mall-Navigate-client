@@ -41,7 +41,7 @@ export default function AdminMaps() {
                 <MapClickHandler onClick={handleClick} />
             </MapContainer>
 
-            <div id="map" style={{ height: '500px', width: '100%' }}></div>
+            <div id="map" style={{ minHeight: '20px', width: '100%' }}></div>
         </div>
     );
 };

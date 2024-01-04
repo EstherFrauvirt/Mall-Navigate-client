@@ -10,8 +10,8 @@ export default function Place({handleClick}) {
     const {mall,setMall}=useContext(MallContext);
     const [coords, setCoords] = useState();
   return (
-    <Card sx={{minHeight:'50%', minWidth: 275, width: "40%", left:'20%', marginTop: '', position: '', top: '25%', padding: '20px' }}>
-    <Box display="flex" flexDirection="column" alignItems="center">      <CardContent>
+    <Card sx={{ minWidth: 275, width: "60%", marginLeft: '10%',minHeight:'400px', marginTop: '2%', position: '', marginBottom: '2%', padding: '20px' }}>
+    <Box display="flex" flexDirection="column" alignItems="center" width={'100%'}>      <CardContent sx={{width:'100%'}}>
       <Typography sx={{ fontSize: 40 }} color="#4a4cf5" textAlign={'center'} >
 Location
       </Typography> <br /><br />

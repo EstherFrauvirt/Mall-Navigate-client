@@ -5,6 +5,7 @@ const FooterBox=styled('div')({
   backgroundColor:'#91b3fa',
   height:'80px',
   color:'white',
+  marginTop: 'auto'
 
 })
 export default function Footer() {
