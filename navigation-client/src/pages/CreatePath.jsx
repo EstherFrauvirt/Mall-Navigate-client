@@ -5,11 +5,13 @@ import StoreList from '../components/storeList';
 import config from '../config';
 import { fetchData } from '../components/utils/servises';
 import UserContext from '../components/context/userContext';
+import {useNavigate} from 'react-router-dom'
 import { Container } from '@mui/system';
 import './CreatePath.css'
 import ShowPath from './ShowPath';
 
 export default function CreatePath() {
+  const navigate=useNavigate();
   const [currentPlace, setCurrentPlace] = useState([]);
   const [currentMall, setCurrentMall] = useState();
   const [startPoint, setStartPoint] = useState();
@@ -82,6 +84,7 @@ export default function CreatePath() {
     fetchData(`path`, options)
       .then((data => { console.log(data); setPathCoordinates(data.path); createMat(data.mat); setShowColorMatrix(true) }))
       .catch((err) => console.log(err))
+      navigate('/path')
   }
 
   const addPlaceToVisit = (place) => {

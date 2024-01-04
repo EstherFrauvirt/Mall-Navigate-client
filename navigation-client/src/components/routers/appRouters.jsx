@@ -15,7 +15,8 @@ import Navbar from '../navBar';
 import GlobalModal from '../modal'
 import Erase from '../details/erase'
 
-import EmailComponent from '../../components/email'
+import EmailComponent from '../context/emailContext'
+import Path from '../path'
 
 
 export default function AppRoutes() {
@@ -35,6 +36,7 @@ export default function AppRoutes() {
                  <Route path='/register' element={<Register />}/>
                  <Route path='/login' element={<Login />}/>
                  <Route path='/email' element={<EmailComponent />}/>
+                 <Route path='/path' element={<Path />}/>
 
 
                {/* <Route path='/cvList' element={<CvList />} /> */}
