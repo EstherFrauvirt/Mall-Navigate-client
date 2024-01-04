@@ -1,3 +1,6 @@
+import axios from 'axios';
+
+
 export const getUserLocation = async () => {
     return new Promise((resolve, reject) => {
         // Check if the geolocation API is available
@@ -65,3 +68,29 @@ export const findClosestCoordinate = (userLocation, coordinateList) => {
 
     return closestCoordinate;
 };
+
+
+export const geocodeAddress = async (address) => {
+  try {
+    const apiKey = 'YOUR_OPENCAGE_API_KEY'; // Replace with your API key
+    const apiUrl = `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(address)}&key=${apiKey}`;
+
+    const response = await axios.get(apiUrl);
+    const { results } = response.data;
+
+    if (results.length > 0) {
+      const { geometry } = results[0];
+      return { lat: geometry.lat, lng: geometry.lng };
+    } else {
+      throw new Error('Location not found');
+    }
+  } catch (error) {
+    throw new Error(`Error geocoding address: ${error.message}`);
+  }
+};
+
+
+
+
+
+

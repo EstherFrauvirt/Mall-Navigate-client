@@ -19,12 +19,18 @@ import { findClosestCoordinate } from '../utils/map'
 
 import EmailComponent from '../../components/email'
 import Maps from '../../components/Maps'
+import ScreenShot from '../../components/ScreenShot'
+
+import Place from '../admin/Place'
+
 
 
 const mallCoords = [
 
 [31.0981, 34.8783],
-[31.7380, 34.6943]
+[31.7380, 34.6943],
+[30.7380, 35.6943]
+
 
 ];
 
@@ -51,6 +57,8 @@ export default function AppRoutes() {
                 <Route path='/login' element={<Login />} />
                 <Route path='/email' element={<EmailComponent />} />
                 <Route path='/maps' element={<Maps startCoords={startCoord} endCoords={endCoord} />} />
+                <Route path='/place' element={<Place />} />
+                <Route path='/screenShot' element={<ScreenShot />} />
 
 
 

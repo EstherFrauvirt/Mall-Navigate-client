@@ -9,6 +9,7 @@ import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import AbcRoundedIcon from '@mui/icons-material/AbcRounded';
 import AspectRatioRoundedIcon from '@mui/icons-material/AspectRatioRounded';
 import ShapeLineRoundedIcon from '@mui/icons-material/ShapeLineRounded';
+import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
 
 
 import DynamicTimeline from '../dynamicTimeLine';
@@ -18,13 +19,20 @@ import Name from './name';
 import CampSize from '../details/campSize';
 import Size from './Size';
 import BuildMatrix from '../buildMatrix';
+import Place from './Place';
 
 const eventsArr= [
+  {
+    icon: <LocationOnRoundedIcon />,
+    title: 'Location',
+    description: 'Choose a location in the map',
+    color: '#ff8b84'
+  },
   {
     icon: <AbcRoundedIcon />,
     title: 'Name',
     description: 'Choose name to your mall',
-    color: '#ff8b84'
+    color: 'primary'
   },
   {
     icon: <AspectRatioRoundedIcon />,
@@ -50,13 +58,15 @@ export default function Admin() {
   const { mall, setMall } = useContext(mallContext)
   const [events, setEvents] = useState(eventsArr);
   const [timeline, setTimeline] = useState({
-    name: true,
+    location:true,
+    name: false,
     size: false,
     draw: false,
     create: false
   });
   const [flags, setFlags] = useState({
-    name: true,
+    location:true,
+    name: false,
     size: false,
     draw: false,
     create: false
@@ -150,6 +160,7 @@ useEffect(() => {
           <div style={{ position: 'absolute', top: '15%', right:'7%' }}>
             <DynamicTimeline events={events} />
           </div>
+          {flags.location && <Place />}
           {flags.name && <Name handleClick={handleNameClick} />}
           {flags.size && <Size handleClick={handleSizeClick} />}
         { flags.draw && <BuildMatrix handleCreateClick={handleCreateClick}/>}
