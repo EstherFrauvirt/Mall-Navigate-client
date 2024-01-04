@@ -79,6 +79,7 @@ export default function BuildMatrix({handleCreateClick}) {
     }
 
     const addEntranceToMatrix = (formData) => { //הוספץ כניסת קניון למטריצה
+        if(tmp[elementRow][elementCol]==-1){
         console.log("enter formData", formData.location);
         const tmp = mat
         tmp[elementRow][elementCol].name = formData.type;
@@ -94,6 +95,11 @@ export default function BuildMatrix({handleCreateClick}) {
         }
         setMallEnterArr([...mallEnterArr, { ...doorCord }]);
     }
+    else{
+        handleClick1();
+
+    }
+    }
     const colorTheBorder = (borderStyle,formData) => {
         console.log("borderStyle",borderStyle);
         const tmpMat = mat;
@@ -101,17 +107,17 @@ export default function BuildMatrix({handleCreateClick}) {
             for (let j = 0; j < width; j++) {
                 if (( formData.location.row ==i &&//נמצא בשורה מינימום
                     j >= formData.location.col &&//וגם הטור גדול מטור האפס
-                    j <= (parseInt(formData.location.col) + parseInt(formData.width)))//וגם הטור קטן מטור מקסימום
+                    j <= (parseInt(formData.location.col) + parseInt(formData.width)-1))//וגם הטור קטן מטור מקסימום
                     ||
                     (i == parseInt(formData.location.row) + parseInt(formData.height) - 1 &&//נמצא בשורת מקסימום
                         j >= formData.location.col &&//וגם הטור גדול מטור האפס
-                        j <= (parseInt(formData.location.col) + parseInt(formData.width))) //וגם הטור קטן מטור מקסימום
+                        j <= (parseInt(formData.location.col) + parseInt(formData.width)-1)) //וגם הטור קטן מטור מקסימום
                     ||
                     (j == formData.location.col &&//נמצא בטור מינמום
                         i >= formData.location.row &&//וגם גדול משורה מינמום
                         i < parseInt(formData.location.row) + parseInt(formData.height))//וגם קטן משורה מקסימום
                     ||
-                    (j == parseInt(formData.location.col) + parseInt(formData.width) &&
+                    (j == parseInt(formData.location.col) + parseInt(formData.width)-1 &&
                         i >= formData.location.row &&//וגם גדול משורה מינמום
                         i < parseInt(formData.location.row) + parseInt(formData.height))//וגם קטן משורה מקסימום
                 ) {
@@ -124,6 +130,7 @@ export default function BuildMatrix({handleCreateClick}) {
     }
     const addPathToMatrix = (formData) => {//הוספת מעבר למטריצה
         const tmp = mat
+        if( tmp[elementRow][elementCol]==-1){
         tmp[elementRow][elementCol].name = formData.type;
         tmp[elementRow][elementCol].color = "grey";
         tmp[elementRow][elementCol].content = 0;
@@ -131,22 +138,26 @@ export default function BuildMatrix({handleCreateClick}) {
         setShow1(false)
         setShow2(false)
         console.log("mallEnterArr", mallEnterArr);
+    }else{
+        handleClick1();
+
+    }
     }
     const addDorToMAtrix = (formData) => {// הוספת דלת לחנות
         const tmp = mat
         if ((formData.enterance.row == formData.location.row &&//נמצא בשורה מינימום
             formData.enterance.col >= formData.location.col &&//וגם הטור גדול מטור האפס
-            formData.enterance.col < (parseInt(formData.location.col) + parseInt(formData.width)))//וגם הטור קטן מטור מקסימום
+            formData.enterance.col <= (parseInt(formData.location.col) + parseInt(formData.width)))//וגם הטור קטן מטור מקסימום
             ||
             (formData.enterance.row == parseInt(formData.location.row) + parseInt(formData.height) - 1 &&//נמצא בשורת מקסימום
                 formData.enterance.col >= formData.location.col &&//וגם הטור גדול מטור האפס
-                formData.enterance.col < (parseInt(formData.location.col) + parseInt(formData.width))) //וגם הטור קטן מטור מקסימום
+                formData.enterance.col <= (parseInt(formData.location.col) + parseInt(formData.width))) //וגם הטור קטן מטור מקסימום
             ||
             (formData.enterance.col == formData.location.col &&//נמצא בטור מינמום
                 formData.enterance.row >= formData.location.row &&//וגם גדול משורה מינמום
                 formData.enterance.row < parseInt(formData.location.row) + parseInt(formData.height))//וגם קטן משורה מקסימום
             ||
-            (formData.enterance.col == parseInt(formData.location.col) + parseInt(formData.width) &&
+            (formData.enterance.col == parseInt(formData.location.col) + parseInt(formData.width)-1 &&
                 formData.enterance.row >= formData.location.row &&//וגם גדול משורה מינמום
                 formData.enterance.row < parseInt(formData.location.row) + parseInt(formData.height))//וגם קטן משורה מקסימום
         ) {
@@ -233,7 +244,7 @@ export default function BuildMatrix({handleCreateClick}) {
                     tmp[row][col] = {
                         content: 1,
                         color: color,
-                        name: " ",
+                        name: formData.name,
                         border: "none"
                     };
 
@@ -269,9 +280,8 @@ export default function BuildMatrix({handleCreateClick}) {
                 name: tmpName[place],
                 border: "none",
             };
-            console.log(x, tmpName[place])
+            console.log(x, tmpName)
             place++;
-            console.log("zara", tmpRow, tmpCol, tmp[tmpRow][tmpCol])
         }
         // console.log(tmp);
         setMat([...tmp])

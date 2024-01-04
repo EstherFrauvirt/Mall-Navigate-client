@@ -17,7 +17,7 @@ const StoreList = ({ stores, onDelete }) => {
         <List sx={{width:'400px', display:'flex',flexWrap:'wrap'}}>
           {stores.map((store, index) => (
             <ListItem key={index}
-            sx={{minWidth:'50px',maxWidth:'120px',border:'solid #4a4cf5 2px', borderRadius:'35px',background:'#f5f8ff',color:'#616675',marginLeft:'5px',marginBottom:'5px'}}
+            sx={{minWidth:'50px',maxWidth:'120px',border:'solid #4a4cf5 1px', borderRadius:'35px',background:'#f5f8ff',color:'#616675',marginLeft:'5px',marginBottom:'5px'}}
             >
               <ListItemText  primary={store.name} />
               <IconButton sx={{color:'#4a4cf5'}} onClick={() => onDelete(index)} edge="end" aria-label="delete">

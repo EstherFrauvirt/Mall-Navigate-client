@@ -5,11 +5,14 @@ import StoreList from '../components/storeList';
 import config from '../config';
 import { fetchData } from '../components/utils/servises';
 import UserContext from '../components/context/userContext';
+import {useNavigate} from 'react-router-dom'
 import { Container } from '@mui/system';
 import './CreatePath.css'
 import ShowPath from './ShowPath';
+import MatrixForShow from '../components/matrix/matrixForShow';
 
 export default function CreatePath() {
+  const navigate=useNavigate();
   const [currentPlace, setCurrentPlace] = useState([]);
   const [currentMall, setCurrentMall] = useState();
   const [startPoint, setStartPoint] = useState();
@@ -20,6 +23,7 @@ export default function CreatePath() {
   const { user } = useContext(UserContext);
   const [showColorMatrix, setShowColorMatrix] = useState(false);
   const [pathCoordinates, setPathCoordinates] = useState([]);
+  const [mat, setMat] = useState([[]]);
   const matrix = [
     ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
     ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
@@ -80,8 +84,9 @@ export default function CreatePath() {
     }
     console.log(obj);
     fetchData(`path`, options)
-      .then((data => { console.log(data); setPathCoordinates(data.path); createMat(data.mat); setShowColorMatrix(true) }))
+      .then((data => { console.log(data); setPathCoordinates(data.path); setMat(data.mat); console.log(data.mat); setShowColorMatrix(true) }))
       .catch((err) => console.log(err))
+      navigate('/path')
   }
 
   const addPlaceToVisit = (place) => {
@@ -98,9 +103,9 @@ export default function CreatePath() {
     arr[0] = place;
     setPlacesToVisit(arr);
   }
-  const createMat = (mat) => {
-    // setStartPoint(place)
-  }
+  // const createMat = (mat) => {
+  //   // setStartPoint(place)
+  // }
 
   const chooseMall = (value) => {
     setCurrentMall(value)
