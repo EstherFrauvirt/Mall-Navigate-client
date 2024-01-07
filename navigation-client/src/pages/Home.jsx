@@ -1,13 +1,10 @@
-import React from 'react';
-import Login from '../components/Login';
-import CssBaseline from '@mui/material/CssBaseline';
+import React, { useContext } from 'react';
 import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
 import { Typography, styled, Stack, Modal, Button } from '@mui/material';
-import { Col, Row } from 'react-bootstrap';
-import AddUser from '../components/addUser';
-import useEnhancedEffect from '@mui/material/utils/useEnhancedEffect';
-import { useEffect } from 'react';
+import {  useNavigate } from "react-router-dom";
+import LoginContext from '../components/context/loginContext';
+import ModalContext from '../components/context/modalContext';
+
 
 
 
@@ -18,9 +15,21 @@ const Item = styled('div')(({ theme }) => ({
   textAlign: 'center',
   borderRadius: 4,
 }));
+
 export default function Home() {
+  const navigate=useNavigate();
+  const {isLogin}=useContext(LoginContext);
+  const {handleOpen}=useContext(ModalContext);
 
+  const letsStartHandle=()=>{
+    if(isLogin){
+      handleOpen();
+    }
+    else{
+      navigate('/login')
+    }
 
+  }
   return (
 
     <>
@@ -33,6 +42,18 @@ export default function Home() {
             <div className='text-center'>
               <Typography color="#4a4cf5" variant="h1">Lorem ipsum </Typography>
               <Typography color='#4a4cf5' variant="h2">Lorem ipsum dolor sit.</Typography>
+              <Button variant="outlined" size='large'
+               sx={{
+                color:"#ff8e88",border:'solid 1px #ff8e88', marginTop:'20px',
+                "&:hover": {
+                  backgroundColor: '#ff8e88',
+                  color: 'white',
+                  border:'none'
+
+                }
+              }}
+              onClick={letsStartHandle}
+                >Let's Start</Button>
             </div>
 
           </div>
