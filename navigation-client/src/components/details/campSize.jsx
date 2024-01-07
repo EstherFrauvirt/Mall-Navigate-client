@@ -59,7 +59,7 @@ export default function CampSize() {
           margin="dense"
           required
           id="outlined-required"
-          label="Hight"// טעות החלפתי בין משתנים
+          label="Hight"
           name="height"
           defaultValue=""
           onChange={(e) => { setHeight(e.target.value), handleHightChange(e) }}
@@ -72,7 +72,7 @@ export default function CampSize() {
           margin="dense"
           required
           id="outlined-required"
-          label="Width"// טעות החלפתי בין משתנים
+          label="Width"
           name="width"
           defaultValue=""
           onChange={(e) => { setWidth(e.target.value), handleWidthChange(e) }}

@@ -24,7 +24,7 @@ const DynamicTimeline = ({events}) => {
   return (<> 
   
  
-   <Timeline >
+   <Timeline  >
       {events.map((event, index) => (
         <TimelineItem key={index}>
           <TimelineSeparator>

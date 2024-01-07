@@ -169,14 +169,14 @@ useEffect(() => {
     <>
       <div style={{ minHeight: '120vh' }}>
         <Container>
-          <div style={{ position: 'absolute', top: '15%', right:'7%' }}>
-            <DynamicTimeline events={events} />
-          </div>
+          
           {flags.location && <Place handleClick={handlePlaceClick}/>}
           {flags.name && <Name handleClick={handleNameClick} />}
           {flags.size && <Size handleClick={handleSizeClick} />}
         { flags.draw && <BuildMatrix handleCreateClick={handleCreateClick}/>}
-
+        <div style={{ position: 'absolute', top: '15%', right:'0%',maxWidth:"40%" }}>
+            <DynamicTimeline  events={events} />
+          </div>
         </Container>
       </div>
     </>

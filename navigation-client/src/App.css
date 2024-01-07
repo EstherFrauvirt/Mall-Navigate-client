@@ -1,3 +1,17 @@
 * {
     box-sizing: border-box;
   }
+
+.MuiTimelineItem-missingOppositeContent::before{
+  display: none;
+  padding-top: 100px !important;
+
+}
+.MuiTimeline-root{
+  margin-left: none;
+  max-width:60% ;
+}
+/* .css-1oqqzyl-MuiContainer-root{
+  padding-left: 0;
+  padding-right: 0;
+} */
