@@ -30,7 +30,7 @@ import AlternateEmailRoundedIcon from '@mui/icons-material/AlternateEmailRounded
 // });
 
 export default function CreatePath() {
-  const {handleOpen1}=useContext(ModalContext)
+  const { handleOpen1 } = useContext(ModalContext)
   const navigate = useNavigate();
   const [currentPlace, setCurrentPlace] = useState([]);
   const [currentMall, setCurrentMall] = useState();
@@ -45,18 +45,18 @@ export default function CreatePath() {
   const [mat, setMat] = useState([[]]);
   const [storePathArr, setStorePathArr] = useState([]);
   const [nearestMall, setNearestMall] = useState(null);
-      const [startCoord,setStartCoord]=useState();
-    const [endCoord,setEndCoord]=useState();
+  const [startCoord, setStartCoord] = useState();
+  const [endCoord, setEndCoord] = useState();
 
 
 
   useEffect(() => {
     myfetchData('mall');
-    
+
   }, [])
   useEffect(() => {
     console.log(malls);
-    
+
   }, [malls])
 
 
@@ -83,7 +83,7 @@ export default function CreatePath() {
     setPlacesToVisit([...placesToVisit, currentPlace])
 
   }
-  const handleTakeMeToTheMallClick=()=>{
+  const handleTakeMeToTheMallClick = () => {
     handleOpen1();
 
   }
@@ -114,23 +114,30 @@ export default function CreatePath() {
   const addPlaceToVisit = (place) => {
     setCurrentPlace(place)
   }
-  const handleChooseTheClosetClick=async()=>{
-    const mallCoords = malls.filter(item => item.coords.length !== 0).map(item => item.coords);
+  const handleChooseTheClosetClick = async () => {
+
+    const mallCoords = malls.filter(item => item.coords && item.coords.length !== 0).map(item => item.coords);
+
 
     console.log(mallCoords);
-const startCoord = await getUserLocation();
-setStartCoord(startCoord);
-const endCoord =  findClosestCoordinate(startCoord, mallCoords);
-setEndCoord(endCoord);
-console.log(endCoord);
-const closestMall = malls
-.filter(item => item.coords[0]==endCoord[0] && item.coords[1]==endCoord[1]);
-setNearestMall({...closestMall})
-setCurrentMall({...closestMall})
-setPlaceFlag(true);
+    const startCoord = await getUserLocation();
+    setStartCoord(startCoord);
+    const endCoord = findClosestCoordinate(startCoord, mallCoords);
+    setEndCoord(endCoord);
+    console.log(endCoord);
+    const closestMall = malls.filter(item => {
+      if (item.coords)
+        if (item.coords[0] == endCoord[0] && item.coords[1] == endCoord[1])
+          return item
+    });
+    setNearestMall({ ...closestMall })
+    setCurrentMall({ ...closestMall })
+    setPlaceFlag(true);
 
-console.log(closestMall[0]);
-handleOpen1();
+    console.log(closestMall[0]);
+    handleOpen1();
+
+
 
 
   }
@@ -154,7 +161,7 @@ handleOpen1();
   }
   // const classes = useStyles();
   return (
-    
+
     <>
       <div style={{ minHeight: '90vh' }}>
         <Card sx={{ minHeight: '50%', minWidth: 275, width: "60%", marginLeft: '20%', marginTop: '2%', padding: '9px', marginBottom: '2%' }}>
@@ -170,27 +177,27 @@ handleOpen1();
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <AutocompleteSelect options={malls} size='400px' title='mall' action={chooseMall} resetValue={false} closestValue={nearestMall}/>
-              {/* <Button variant="outlined" color="primary" onClick={handleTakeMeToTheMallClick}
+                <AutocompleteSelect options={malls} size='400px' title='mall' action={chooseMall} resetValue={false} closestValue={nearestMall} />
+                {/* <Button variant="outlined" color="primary" onClick={handleTakeMeToTheMallClick}
                     sx={{ marginBottom: '20px', borderColor: "#4a4cf5", color: "#4a4cf5" }}>
                     Take me to the mall
                   </Button> */}
-                  <Typography
+                <Typography
                   sx={{
-                    textAlign:'center',
-                    padding:'11px',
-                    color:'#4a4cf5'
+                    textAlign: 'center',
+                    padding: '11px',
+                    color: '#4a4cf5'
                   }}
-                  >or</Typography>
-                  <Button variant="outlined" color="primary" onClick={handleChooseTheClosetClick}
-                    sx={{ marginBottom: '20px', borderColor: "#4a4cf5", color: "#4a4cf5" }}>
-                    get the nearest mall
-                  </Button></div>
+                >or</Typography>
+                <Button variant="outlined" color="primary" onClick={handleChooseTheClosetClick}
+                  sx={{ marginBottom: '20px', borderColor: "#4a4cf5", color: "#4a4cf5" }}>
+                  get the nearest mall
+                </Button></div>
 
               {placeFlag && <div id="showAfterClick">
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
 
-                  <AutocompleteSelect options={stores} size='250px' title='start point' action={chooseStartPointClick} resetValue={false} closestValue={null}/>
+                  <AutocompleteSelect options={stores} size='250px' title='start point' action={chooseStartPointClick} resetValue={false} closestValue={null} />
                   <AutocompleteSelect options={stores} size='250px' title='place' action={addPlaceToVisit} resetValue={true} losestValue={null} />
 
                   <Button variant="outlined" color="primary" onClick={handleClick}
@@ -210,30 +217,30 @@ handleOpen1();
                 {storePathArr.map((store, index) => (
                   <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
                     <Button
-                    sx={{color:'#4a4cf5'}}
+                      sx={{ color: '#4a4cf5' }}
                       // disableRipple = {true}
                       // disableTouchRipple = {true}
                       endIcon={index !== storePathArr.length - 1 ? <ArrowForwardIcon /> : ''}
-                      // className={classes.noHover}
+                    // className={classes.noHover}
                     >
                       <h5>{store.name}</h5>
                     </Button>
                   </div>
                 ))}
               </div>
-             
+
               {showColorMatrix && (
                 <>
-              {/* <Box display="flex" justifyContent="space-between" alignItems="center"> */}
-              
-                <SendEmailButton/>
-                <MatrixForShow matrix={mat} heightmat={mat[0].length} widthmat={mat.length} path={pathCoordinates} />
-          {/* </Box> */}  
+                  {/* <Box display="flex" justifyContent="space-between" alignItems="center"> */}
+
+                  <SendEmailButton />
+                  <MatrixForShow matrix={mat} heightmat={mat[0].length} widthmat={mat.length} path={pathCoordinates} />
+                  {/* </Box> */}
                 </>
               )}
             </CardContent></Box> </Card>
       </div>
-<MapModal endCoord={endCoord} startCoord={startCoord}/>
+      <MapModal endCoord={endCoord} startCoord={startCoord} />
     </>
   )
 }
