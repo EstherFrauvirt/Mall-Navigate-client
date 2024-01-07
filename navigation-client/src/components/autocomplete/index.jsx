@@ -2,10 +2,10 @@ import React, { useState,useEffect } from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 
-const AutocompleteSelect = ({ options ,size,title,action,resetValue}) => {
+const AutocompleteSelect = ({ options ,size,title,action,resetValue,closestValue}) => {
 
     
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState(closestValue);
 
   return (
     <Autocomplete

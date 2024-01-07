@@ -10,7 +10,7 @@ import { useMapEvents, Marker, Popup } from 'react-leaflet';
 
 const MapWithRoute = ({ startCoords, endCoords }) => {
   useEffect(() => {
-    const map = L.map('map').setView(startCoords, 13);
+    const map = L.map('map1').setView(startCoords, 13);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
@@ -26,9 +26,9 @@ const MapWithRoute = ({ startCoords, endCoords }) => {
   }, [startCoords, endCoords]);
 
   return (
-    <div>
+    <div style={{width:'100%'}}>
 
-      <div id="map" style={{ height: '500px', width: '100%' }}></div>
+      <div id="map1" style={{ height: '500px', width: '100%' }}></div>
     </div>
   );
 };
