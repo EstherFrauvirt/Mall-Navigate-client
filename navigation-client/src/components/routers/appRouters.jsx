@@ -66,7 +66,6 @@ export default function AppRoutes() {
                 <Route path='/maps' element={<Maps startCoords={startCoord} endCoords={endCoord} />} />
                 <Route path='/place' element={<Place />} />
                 <Route path='/screenShot' element={<ScreenShot />} />
-
                 <Route path='/path' element={<Path />}/>
                 <Route path='/contact' element={<ContactUs />}/>
 
