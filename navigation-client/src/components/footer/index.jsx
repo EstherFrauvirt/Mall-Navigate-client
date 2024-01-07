@@ -1,5 +1,6 @@
-import { Box, styled } from '@mui/material'
+import { Box, Button, styled } from '@mui/material'
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 const FooterBox=styled('div')({
   width:'100%',
   backgroundColor:'#91b3fa',
@@ -9,9 +10,30 @@ const FooterBox=styled('div')({
 
 })
 export default function Footer() {
+
+  const navigate= useNavigate()
+
+  const contactHandle = () => {
+    navigate("/contact")
+  }
+
   return (
     <FooterBox>
-    <div>Footer</div>
+    <div>
+    <Button
+                onClick={contactHandle}
+                variant="outlined"
+                sx={{
+                  my: 2, color: 'white', marginLeft: "40px", display: 'block', "&:hover": {
+                    backgroundColor: 'white',
+                    color: '#ff8e88',
+
+                  }
+                }}
+              >
+                {"Contact Us"}
+              </Button>
+    </div>
     </FooterBox>
 
   )
