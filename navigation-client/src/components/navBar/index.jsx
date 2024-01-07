@@ -40,7 +40,7 @@ export default function NavBar() {
       <AppBar position='sticky' sx={{ backgroundColor: '#4a4cf5', height: '10vh' }}>
         <Toolbar>
           <RouteIcon sx={{ fontSize: '42px', marginRight: '7px', display: { xs: "block", sm: "block" } }}></RouteIcon>
-          <Typography variant='h5' sx={{ display: { xs: "none", sm: "block" } }}>NAV</Typography>
+          <Typography variant='h5' sx={{ display: { xs: "none", sm: "block" } }}>NAVit</Typography>
 
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' } }}>

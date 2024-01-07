@@ -16,9 +16,9 @@ import LoginContext from './context/loginContext';
 
 
 export default function Login() {
-  const { setIsLogin} = useContext(LoginContext);
-  const { handleOpen, role,setRole } = useContext(ModalContext);
-  let {user,setUser}  = useContext(userContext);
+  const { setIsLogin } = useContext(LoginContext);
+  const { handleOpen, role, setRole } = useContext(ModalContext);
+  let { user, setUser } = useContext(userContext);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [userState, setuserState] = useState({
@@ -35,6 +35,8 @@ export default function Login() {
   const [emailValue, setEmailValue] = useState('');
   const [emailError, setEmailError] = useState(false);
 
+  const [validUser, setValidUser] = useState(true);
+
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
@@ -43,21 +45,21 @@ export default function Login() {
   useEffect(() => {
     if (res) {
       localStorage.setItem("token", res.token);
-      setUser({...res.user})
+      setUser({ ...res.user })
       handleOpen();
       setIsLogin(true)
     }
   }, [res])
-  
+
 
   useEffect(() => {
 
-    if (role === 'admin'){
-       navigate(`/admin?res=${res}`)
-       setRole('')
+    if (role === 'admin') {
+      navigate(`/admin`)
+      setRole('')
     }
-     
-    else if(role==='user'){
+
+    else if (role === 'user') {
       navigate(`/create`)
       setRole('')
 
@@ -79,7 +81,9 @@ export default function Login() {
         });
 
       if (!response.ok) {
+        setValidUser(false)
         throw new Error('Network response was not ok');
+        
       }
       result = await response.json();
       console.log(result);
@@ -143,11 +147,11 @@ export default function Login() {
           <Box display="flex" flexDirection="column" alignItems="center">      <CardContent>
             <Typography sx={{ fontSize: 40 }} color="#4a4cf5" textAlign={'center'} >
               LOGIN
-        </Typography> <br /><br />
+            </Typography> <br /><br />
 
             <Form>
               <TextField
-              style={{ width: '310px' }}
+                style={{ width: '310px' }}
                 label="Email address"
                 variant="outlined"
                 type='email'
@@ -193,6 +197,10 @@ export default function Login() {
             <CardActions>
               <Button sx={{ color: '#4a4cf5' }} size="medium" onClick={handleSubmit} variant='outlined'>Submit</Button>
             </CardActions>
+            {!validUser && (
+              <div style={{ color: 'red', marginTop: '8px' }}>
+                Email or password are wrong, please try again
+              </div>)}
           </Box>
         </Card>
       </div>

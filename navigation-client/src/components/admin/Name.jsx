@@ -3,14 +3,14 @@ import { Button, Card, Box, Typography, CardContent, CardActions, TextField } fr
 import { Link } from 'react-router-dom'
 import MallContext from '../context/mallContext'
 
-export default function Name({ handleClick }) {
+export default function Name({ handleClick, isValidName }) {
   const { mall, setMall } = useContext(MallContext);
   return (
     <Card sx={{ minHeight: '50%', minWidth: 275, width: "40%", left: '20%', marginTop: '', position: 'absolute', top: '25%', padding: '20px' }}>
       <Box display="flex" flexDirection="column" alignItems="center">      <CardContent>
         <Typography sx={{ fontSize: 40 }} color="#4a4cf5" textAlign={'center'} >
           Name
-        </Typography> <br /><br />
+      </Typography> <br /><br />
 
         <form>
           <TextField
@@ -22,6 +22,10 @@ export default function Name({ handleClick }) {
           <Button sx={{ color: '#4a4cf5' }} size="medium" onClick={handleClick} variant='outlined'>Create</Button>
         </CardActions>
       </Box>
+      {!isValidName && (
+        <div style={{ color: 'red', marginTop: '8px' }}>
+          this mall already exists
+              </div>)}
     </Card>
   )
 }
