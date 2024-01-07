@@ -213,6 +213,7 @@ export default function CreatePath() {
                   </Grid>
                 </Grid></div>
               }
+              <div style={{display:'flex',justifyContent:'space-between'}}>
               <div style={{ display: 'flex' }}>
                 {storePathArr.map((store, index) => (
                   <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
@@ -228,12 +229,14 @@ export default function CreatePath() {
                   </div>
                 ))}
               </div>
+              {showColorMatrix && <SendEmailButton />}
+              </div>
 
               {showColorMatrix && (
                 <>
                   {/* <Box display="flex" justifyContent="space-between" alignItems="center"> */}
 
-                  <SendEmailButton />
+                 
                   <MatrixForShow matrix={mat} heightmat={mat[0].length} widthmat={mat.length} path={pathCoordinates} />
                   {/* </Box> */}
                 </>
