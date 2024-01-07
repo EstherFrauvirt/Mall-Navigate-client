@@ -100,7 +100,7 @@ useEffect(() => {
   const handleCreateClick=()=>{
     setFlags((prevflags) => ({
       ...prevflags,
-      create:true,draw:false
+      create:true
       
     }))
     setTimeline((prev) => ({
@@ -116,6 +116,18 @@ useEffect(() => {
     }))
     setTimeline((prev) => ({
       ...prev,draw:true
+    }))
+  
+  }
+
+  const handlePlaceClick = () => {
+    setFlags((prevflags) => ({
+      ...prevflags,
+      name:true,location:false
+      
+    }))
+    setTimeline((prev) => ({
+      ...prev,name:true
     }))
   
   }
@@ -155,12 +167,12 @@ useEffect(() => {
   return (
 
     <>
-      <div style={{ minHeight: '90vh' }}>
+      <div style={{ minHeight: '120vh' }}>
         <Container>
           <div style={{ position: 'absolute', top: '15%', right:'7%' }}>
             <DynamicTimeline events={events} />
           </div>
-          {flags.location && <Place />}
+          {flags.location && <Place handleClick={handlePlaceClick}/>}
           {flags.name && <Name handleClick={handleNameClick} />}
           {flags.size && <Size handleClick={handleSizeClick} />}
         { flags.draw && <BuildMatrix handleCreateClick={handleCreateClick}/>}

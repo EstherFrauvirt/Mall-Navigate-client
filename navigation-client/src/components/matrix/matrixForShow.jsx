@@ -85,34 +85,30 @@ export default function MatrixForShow({ matrix, heightmat, widthmat, path }) {
 
 
     const createMatrixPath = () => {
-        let indexInPath;
         for (let i = 0; i < heightmat; i++) {
             const row = [];
-
+    
             for (let j = 0; j < widthmat; j++) {
-                indexInPath = path.findIndex(([pathX, pathY]) => pathX === i && pathY === j);
+                const indexInPath = path.findIndex(([pathX, pathY]) => pathX === i && pathY === j);
+    
                 if (indexInPath !== -1 && indexInPath !== path.length - 1) {
                     let [nextX, nextY] = path[indexInPath + 1];
-                    if (nextX === i) {
+                    if (matrix[i][j].name === 'door'){
+                        row.push(null);
+                    }else if (nextX === i) {
                         j > nextY ? row.push(<KeyboardArrowLeftIcon />) : row.push(<KeyboardArrowRightIcon />);
-                    } else if (nextY === j) {
+                    } else{
                         i > nextX ? row.push(<KeyboardArrowUpIcon />) : row.push(<KeyboardArrowDownIcon />);
                     }
-                }
-                else if (indexInPath !== -1 && indexInPath == path.length - 1) {
-                    let [prevX, prevY] = path[indexInPath - 1];
-                    if (prevX === i) {
-                        j > prevY ? row.push(<KeyboardArrowRightIcon />) : row.push(<KeyboardArrowLeftIcon />);
-                    } else if (prevY === j) {
-                        i > prevX ? row.push(<KeyboardArrowDownIcon />) : row.push(<KeyboardArrowUpIcon />);
-                    }
-                } else {
-                    row.push(null)
+                }else {
+                    row.push(null);
                 }
             }
             pathMatrix.push(row);
-        };
-    }
+        }
+        console.log(pathMatrix);
+    };
+    
 
     createMatrixPath()
 
@@ -133,7 +129,7 @@ export default function MatrixForShow({ matrix, heightmat, widthmat, path }) {
                                 width={100 / widthmat}
                                 height={100 / heightmat}
                                 index={indexC}
-                                icon={pathMatrix[indexR, indexC]}
+                                icon={pathMatrix[indexR] [indexC]}
                             />
                         </div>
                     ))}

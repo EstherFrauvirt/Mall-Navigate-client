@@ -9,12 +9,14 @@ import { MallProvider } from './components/context/mallContext'
 import { ModalProvider } from './components/context/modalContext'
 import { UserProvider } from './components/context/userContext'
 import { EmailProvider } from './components/context/emailContext'
+import { LoginProvider } from './components/context/loginContext'
 
 
 function App() {
   return (
     <>
       <UserProvider>
+        <LoginProvider>
         <EmailProvider>
           <ModalProvider>
             <MallProvider>
@@ -25,6 +27,7 @@ function App() {
             </MallProvider>
           </ModalProvider>
         </EmailProvider>
+        </LoginProvider>
       </UserProvider>
     </>
   )

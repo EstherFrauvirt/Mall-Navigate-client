@@ -33,6 +33,11 @@ const mallCoords = [
 
 
 ];
+// const Container = styled('div')({
+//     display: 'flex',
+//     flexDirection: 'column',
+//     minHeight: '100vh', // Ensure the container takes at least the full height of the viewport
+//   });
 
 const startCoord = await getUserLocation();
 const endCoord = await findClosestCoordinate(startCoord, mallCoords);
@@ -42,6 +47,7 @@ console.log(endCoord);
 export default function AppRoutes() {
     return (
         <div>
+            
             <Navbar></Navbar>
 
             <Routes>
@@ -68,6 +74,7 @@ export default function AppRoutes() {
             </Routes>
             <GlobalModal></GlobalModal>
             <Footer></Footer>
+            
         </div>
     )
 }
