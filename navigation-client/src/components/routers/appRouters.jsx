@@ -57,13 +57,10 @@ export default function AppRoutes() {
                 <Route path='/login' element={<Login />} />
                 {/* <Route path='/email' element={<EmailComponent />} /> */}
                 <Route path='/maps' element={<Maps startCoords={startCoord} endCoords={endCoord} />} />
-<<<<<<< HEAD
                 <Route path='/place' element={<Place />} />
                 <Route path='/screenShot' element={<ScreenShot />} />
-
-=======
                 <Route path='/path' element={<Path />}/>
->>>>>>> e165e36013b1fba5d571368bc678fd717e36e624
+
 
 
                 {/* <Route path='/cvList' element={<CvList />} /> */}
