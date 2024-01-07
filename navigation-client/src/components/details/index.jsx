@@ -6,7 +6,7 @@ import Entrance from './Entrance';
 import { Link } from 'react-router-dom';
 import { Label } from '@mui/icons-material';
 
-export default function Deteils({showDoor,setShowDoor ,show, setShow, setShowLeftCorner, showLeftCorner, addStoreToMatrix, elementRow, elementCol, addDorToMAtrix, show1, show2, addPathToMatrix, addEntranceToMatrix }) {
+export default function Deteils({removeStore, setShowRU, showRU, showDoor, setShowDoor, show, setShow, setShowLeftCorner, showLeftCorner, addStoreToMatrix, elementRow, elementCol, addDorToMAtrix, show1, show2, addPathToMatrix, addEntranceToMatrix }) {
     const [formData, setFormData] = useState({
         height: '',
         width: '',
@@ -75,7 +75,10 @@ export default function Deteils({showDoor,setShowDoor ,show, setShow, setShowLef
                 elementRow={elementRow}
                 elementCol={elementCol}
                 addStoreToMatrix={addStoreToMatrix}
-                addDorToMAtrix={addDorToMAtrix} />}
+                addDorToMAtrix={addDorToMAtrix}
+                showRU={showRU}
+                setShowRU={setShowRU} 
+                removeStore={removeStore}/>}
             {formData.type == "path" && <Path
                 addPathToMatrix={addPathToMatrix}
                 elementRow={elementRow}
