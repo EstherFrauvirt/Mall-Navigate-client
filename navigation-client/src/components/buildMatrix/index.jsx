@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import Matrix from '../matrix'
 import Details from '../details'
-import { useLocation } from 'react-router-dom';
+import { useLocation ,useNavigate} from 'react-router-dom';
 import { Button, Card, Divider, Grid, Snackbar, Typography, useStepContext } from '@mui/material';
 import { fetchData } from '../utils/servises'
 import mallContext from '../context/mallContext'
@@ -16,6 +16,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 export default function BuildMatrix({ handleCreateClick }) {
+    const navigate = useNavigate()
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const { mall, setStore, store, setStoreArr, storeArr, mallEnterArr, setMallEnterArr, setShowStore, width, height } = useContext(mallContext);
@@ -382,15 +383,21 @@ export default function BuildMatrix({ handleCreateClick }) {
 
 
     const addToDB = () => {
-        console.log({ mat });
-        console.log(mallEnterArr);
-        console.log("addMap");
-        addMap()
-        console.log("addStoreArr");
-
-        addStoreArr()
-        console.log("created");
-        handleCreateClick();
+        try{
+            console.log({ mat });
+            console.log(mallEnterArr);
+            console.log("addMap");
+            addMap()
+            console.log("addStoreArr");
+    
+            addStoreArr()
+            console.log("created");
+            handleCreateClick();
+            navigate("/created")
+        }catch{
+            alert("error")
+        }
+        
     }
 
     return (
@@ -453,6 +460,7 @@ export default function BuildMatrix({ handleCreateClick }) {
 
                 </Stack>
                 <Stack alignItems="center">
+                    
                     <Button variant="contained" color="primary" onClick={addToDB} >
                         Create
                     </Button>
