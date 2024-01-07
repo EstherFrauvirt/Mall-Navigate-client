@@ -33,7 +33,6 @@ import LoginContext from '../components/context/loginContext';
 
 export default function CreatePath() {
   const { handleOpen1 } = useContext(ModalContext)
-  const { setStringPath } = useContext(LoginContext)
   const navigate = useNavigate();
   const [currentPlace, setCurrentPlace] = useState([]);
   const [currentMall, setCurrentMall] = useState();
@@ -126,7 +125,9 @@ export default function CreatePath() {
     setCurrentPlace(place)
   }
   const handleChooseTheClosetClick = async () => {
-    const mallCoords = malls.filter(item => item.coords?.length !== 0).map(item => item.coords);
+
+    const mallCoords = malls.filter(item => item.coords && item.coords.length !== 0).map(item => item.coords);
+
 
     console.log(mallCoords);
     const startCoord = await getUserLocation();
@@ -134,14 +135,19 @@ export default function CreatePath() {
     const endCoord = findClosestCoordinate(startCoord, mallCoords);
     setEndCoord(endCoord);
     console.log(endCoord);
-    const closestMall = malls
-      .filter(item => item.coords[0] == endCoord[0] && item.coords[1] == endCoord[1]);
+    const closestMall = malls.filter(item => {
+      if (item.coords)
+        if (item.coords[0] == endCoord[0] && item.coords[1] == endCoord[1])
+          return item
+    });
     setNearestMall({ ...closestMall })
     setCurrentMall({ ...closestMall })
     setPlaceFlag(true);
 
     console.log(closestMall[0]);
     handleOpen1();
+
+
 
 
   }
@@ -198,7 +204,7 @@ export default function CreatePath() {
                 <Button variant="outlined" color="primary" onClick={handleChooseTheClosetClick}
                   sx={{ marginBottom: '20px', borderColor: "#4a4cf5", color: "#4a4cf5" }}>
                   get the nearest mall
-                  </Button></div>
+                </Button></div>
 
               {placeFlag && <div id="showAfterClick">
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -239,7 +245,7 @@ export default function CreatePath() {
                 <>
                   {/* <Box display="flex" justifyContent="space-between" alignItems="center"> */}
 
-                  <SendEmailButton/>
+                  <SendEmailButton />
                   <MatrixForShow matrix={mat} heightmat={mat[0].length} widthmat={mat.length} path={pathCoordinates} />
                   {/* </Box> */}
                 </>

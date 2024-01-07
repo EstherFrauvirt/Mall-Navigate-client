@@ -57,7 +57,7 @@ export default function Home() {
           </div>
           <div className='col-12 col-sm-6 d-flex align-items-center' style={{ backgroundColor: '', boxSizing: 'border-box' }}>
             <div className='text-center'>
-              <Typography color="#4a4cf5" variant="h1">NAVit </Typography>
+              <Typography color="#4a4cf5" variant="h1">NAV<span  style={{ fontFamily:'Mansalva, sans-serif' }}>it</span> </Typography>
               <Typography color='#4a4cf5' variant="h4">Plan Smarter - Shop Faster</Typography>
               <Button variant="outlined" size='large'
                sx={{
