@@ -1,4 +1,3 @@
-
 import { createContext } from "react";
 import React, { useState } from 'react';
 import axios from 'axios';
@@ -40,9 +39,3 @@ console.log('i send email now');
 export { EmailProvider }; 
 
 export default EmailContext;
-
-
-
-
-
-

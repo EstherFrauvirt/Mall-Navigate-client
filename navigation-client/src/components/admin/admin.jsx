@@ -21,6 +21,7 @@ import Size from './Size';
 import BuildMatrix from '../buildMatrix';
 import Place from './Place';
 
+
 const eventsArr= [
   {
     icon: <LocationOnRoundedIcon />,
@@ -55,6 +56,7 @@ const eventsArr= [
 ];
 
 export default function Admin() {
+  const {isValidName, setIsValidName} = useState(true);
   const { mall, setMall } = useContext(mallContext)
   const [events, setEvents] = useState(eventsArr);
   const [timeline, setTimeline] = useState({
@@ -94,7 +96,7 @@ useEffect(() => {
 
 
   const handleNameClick = () => {
-    fetchData();
+    fetchData();   
   
   }
   const handleCreateClick=()=>{
@@ -146,6 +148,7 @@ useEffect(() => {
 
       if (!response.ok) {
         console.log(response);
+        setIsValidName(false)
         throw new Error('Make sure name is unique');
       }
       const result = await response.json();
@@ -173,7 +176,7 @@ useEffect(() => {
             <DynamicTimeline events={events} />
           </div>
           {flags.location && <Place handleClick={handlePlaceClick}/>}
-          {flags.name && <Name handleClick={handleNameClick} />}
+          {flags.name && <Name isValidName={isValidName} handleClick={handleNameClick} />}
           {flags.size && <Size handleClick={handleSizeClick} />}
         { flags.draw && <BuildMatrix handleCreateClick={handleCreateClick}/>}
 
