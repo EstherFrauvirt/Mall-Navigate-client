@@ -4,8 +4,9 @@ import Data from './Data';
 import Path from './Path';
 import Entrance from './Entrance';
 import { Link } from 'react-router-dom';
+import { Label } from '@mui/icons-material';
 
-export default function Deteils({ addStoreToMatrix, elementRow, elementCol, addDorToMAtrix, show1, show2, addPathToMatrix,addEntranceToMatrix }) {
+export default function Deteils({showDoor,setShowDoor ,show, setShow, setShowLeftCorner, showLeftCorner, addStoreToMatrix, elementRow, elementCol, addDorToMAtrix, show1, show2, addPathToMatrix, addEntranceToMatrix }) {
     const [formData, setFormData] = useState({
         height: '',
         width: '',
@@ -14,8 +15,6 @@ export default function Deteils({ addStoreToMatrix, elementRow, elementCol, addD
         enterance: { row: '', col: '' },
         type: '', // Default type
     });
-    const [show, setShow] = useState()
-
     const handleChange = (e) => {
         console.log("hii");
         const { name, value } = e.target;
@@ -44,33 +43,32 @@ export default function Deteils({ addStoreToMatrix, elementRow, elementCol, addD
         console.log('Form submitted:', formData);
     };
 
-    return ( <> <Typography style={{  fontSize: '20px',
-    color: '#4a4cf5',
-    maxWidth: '400px',
-    wordWrap: 'break-word', // Ensures the text doesn't overflow the container
-    textAlign: 'left'}}>welcom to draw and design your mall map
-                <br/> choose what do you want to draw first:
-            </Typography>
-         <FormControl style={{ width: "150px" }}>
-          
-            <InputLabel >choose</InputLabel>
-            <Select
-            sx={{width:'200spx'}}
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                name="type"
-                value={formData.type}
-                label="Age"
-                onChange={handleChange}
-            >
-                <MenuItem value={"store"}>store</MenuItem>
-                <MenuItem value={"path"}>path</MenuItem>
-                <MenuItem value={"entrance"}>entrance</MenuItem>
-            </Select>
-        </FormControl>
+    return (
+        <div style={{ textAlign: "center" }}>
+            <Typography>choose what do you want to draw first:</Typography>
+
+            <FormControl style={{ width: "150px" }}>
+                <InputLabel >choose</InputLabel>
+                <Select
+                    sx={{ width: '200spx' }}
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    name="type"
+                    value={formData.type}
+                    label="Age"
+                    onChange={handleChange}
+                >
+                    <MenuItem value={"store"}>store</MenuItem>
+                    <MenuItem value={"path"}>path</MenuItem>
+                    <MenuItem value={"entrance"}>entrance</MenuItem>
+                </Select>
+            </FormControl>
             {formData.type == "store" && <Data
-                show1={show1}
-                show2={show2}
+                show={show}
+                showLeftCorner={showLeftCorner}
+                setShowLeftCorner={setShowLeftCorner}
+                showDoor={showDoor}
+                setShowDoor={setShowDoor}
                 setShow={setShow}
                 setFormData={setFormData}
                 formData={formData}
@@ -86,8 +84,8 @@ export default function Deteils({ addStoreToMatrix, elementRow, elementCol, addD
                 addEntranceToMatrix={addEntranceToMatrix}
                 elementRow={elementRow}
                 elementCol={elementCol} />}
-                {/* <Link to="/erase"><Button>UNDO</Button></Link> */}
+            {/* <Link to="/erase"><Button>UNDO</Button></Link> */}
 
-        </>
+        </div>
     )
 }

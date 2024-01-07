@@ -1,9 +1,10 @@
-import { Alert, TextField, Button } from '@mui/material'
+import { Alert, TextField, Button, Typography } from '@mui/material'
 import React, { useContext, useState } from 'react'
 import { fetchData } from '../utils/servises';
 import mallContext from '../context/mallContext'
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
-export default function Data({ show1, show2, setShow, setFormData, formData, elementCol, elementRow, addStoreToMatrix, addDorToMAtrix, addEntranceToMatrix }) {
+export default function Data({ showLeftCorner, setShowLeftCorner,show, showDoor,setShowDoor, setShow, setFormData, formData, elementCol, elementRow, addStoreToMatrix, addDorToMAtrix, addEntranceToMatrix }) {
     const { mall, setStore, store, setStoreArr, storeArr, showStore, setShowStore } = useContext(mallContext);
     const [width, setWidth] = useState('');
     const [widthError, setWidthError] = useState(false);
@@ -43,13 +44,6 @@ export default function Data({ show1, show2, setShow, setFormData, formData, ele
         setHightError(!isValidHight);
         setHight(value);
     };
-
-
-
-
-
-
-
     const isNameUnique = (name) => {
         return !storeArr.includes(name);
     };
@@ -76,18 +70,9 @@ export default function Data({ show1, show2, setShow, setFormData, formData, ele
         return true;
     };
 
-
-
-
-
-
-
-
-
-
     const addStore = () => {
-        if (!handleNameValidation()){
-            alert ("name is not unique")
+        if (!handleNameValidation()) {
+            alert("name is not unique")
         }
         const tmpData = formData;
         tmpData.location.row = elementRow
@@ -105,19 +90,9 @@ export default function Data({ show1, show2, setShow, setFormData, formData, ele
             setFormData(tmpData);
         } else {
             console.log(tmpData);
-            alert("Y R missing Something")
+            alert("U R missing Something")
         }
 
-    }
-
-    const addEnter = () => {
-        const tmpData = formData;
-        tmpData.enterance.row = elementRow
-        tmpData.enterance.col = elementCol
-        console.log("dor", tmpData);
-        addEntranceToMatrix(tmpData)
-        setFormData(tmpData)
-        // setShowStore(true)       
     }
 
     const addDor = () => {
@@ -129,63 +104,78 @@ export default function Data({ show1, show2, setShow, setFormData, formData, ele
         setFormData(tmpData)
     }
 
-    const updateStoreArr = (index, updatedObject) => {
-        setStoreArr((prevStoreArr) => {
-            const newStoreArr = [...prevStoreArr];
-            newStoreArr[index] = updatedObject;
-            return newStoreArr;
-        });
-    };
-
+    const [showDetails, setShowDetails] = useState(true)
+    const [showRU, setShowRU] = useState()
     return (
-        <div>{console.log(show1, show2)}
-            {!showStore && !show1 && <Alert severity="success" >chhose the left-top corner</Alert>}
-            {!showStore && show1 && <form >
+        <div>
+
+            {showDetails && <form >
                 <br />
+                <Typography sx={{ fontSize: 15 }} color="#4a4cf5" textAlign={'center'} >
+                    mall-Height
+                </Typography>
                 <TextField
                     margin="dense"
                     required
-                    id="outlined-required"
+                    id="outlined"
                     label="height"
                     name="height"
                     defaultValue=""
                     onChange={(e) => { handleChange(e), handleHightChange(e) }}
                     error={hightError}
                     helperText={hightError ? 'Please enter a valid integer' : ''}
-
                 />
+                <Typography sx={{ fontSize: 15 }} color="#4a4cf5" textAlign={'center'} >
+                    mall-width
+                </Typography>
                 <TextField
                     margin="dense"
                     required
-                    id="outlined-required"
+                    id="outlined"
                     label="width"
                     defaultValue=""
                     name='width'
                     onChange={(e) => { handleChange(e), handleWidthChange(e) }}
                     error={widthError}
                     helperText={widthError ? 'Please enter a valid integer' : ''}
-
                 />
                 <br />
+                <Typography sx={{ fontSize: 15 }} color="#4a4cf5" textAlign={'center'} >
+                    mall-name
+                </Typography>
                 <TextField
                     margin="dense"
                     required
-                    id="outlined-required"
+                    id="outlined"
                     label="Name"
                     name="name"
                     defaultValue=""
                     onChange={handleChange}
-
                 />
-
                 <br />
-                <Button onClick={addStore} >OK</Button>
-
-                {!showStore && show2 && show1 && <div><Alert severity="success" >chhose the dor</Alert>
-                    <Button onClick={addDor}>Submit</Button>
-                </div>}
+                <Button sx={{ color: '#4a4cf5' }} size="medium" variant='outlined' onClick={() => { setShowLeftCorner(true); setShowDetails(false) }} >OK</Button>
             </form >}
-            {showStore && <Button onClick={() => { console.log(store); setStoreArr((prevStoreArr) => [...prevStoreArr, store]); setShowStore(false) }}>R U shure?</Button>}
+            {/* ! data */}
+            {showLeftCorner && <div>
+                <Typography color="#4a4cf5">choose the left-top corner</Typography>
+                {show && <>{<>{elementCol} , {elementRow}</>}
+                    <br />
+                    <Button sx={{ color: '#4a4cf5' }} size="medium" variant='outlined' onClick={() => {setShowLeftCorner(false); setShowDoor(true); addStore(); }} >OK</Button>
+                </>}
+                 {/* !corner */}
+            </div>}
+            {showDoor && <div><h5 severity="success" >chhose the dor</h5>
+                <Button sx={{ color: '#4a4cf5' }} size="medium" variant='outlined' onClick={() => { setShowDoor(false); addDor();  setShowRU(true) }}>Submit</Button>
+            </div>}
+             {/* !door */}
+            {showRU && <Button sx={{ color: '#4a4cf5' }} size="medium" variant='outlined'
+                onClick={() => {
+                    console.log(store); setStoreArr((prevStoreArr) => [...prevStoreArr, store]);
+                    setShowStore(true)
+                    setShowRU(false)
+                    setShowDetails(true)
+                    setShow(false)
+                }}>R U shure?</Button>}
         </div>
     )
 }

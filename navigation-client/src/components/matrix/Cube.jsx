@@ -34,7 +34,7 @@ export default function Cube({ title, color, width, height, border, path, icon =
       onMouseLeave={handleMouseLeave}
     >
       <div>
-        {(title === "door" || title === "enter") ? <DoorSlidingTwoToneIcon /> : title}
+        {(title === "door" || title === "entrance") ? <DoorSlidingTwoToneIcon /> : title}
       </div>
       <div>
          {icon && icon}

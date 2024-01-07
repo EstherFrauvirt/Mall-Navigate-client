@@ -3,7 +3,7 @@ import Deteils from '../details';
 import Cube from './Cube';
 import { Button, Stack } from '@mui/material';
 import "./style.css"
-export default function Matrix({ matrix, setElementCol, setElementRow, setShow1, setShow2, heightmat, widthmat }) {
+export default function Matrix({ matrix, setElementCol, setElementRow, setShow, heightmat, widthmat }) {
 
     //const [mat,setMat]=useState(mar)
     const [isClicked, setIsClicked] = useState(false);
@@ -14,7 +14,6 @@ export default function Matrix({ matrix, setElementCol, setElementRow, setShow1,
         console.log("hi");
 
     }, [])
-
     return (
         <>
             {matrix.map((row, indexR) => {
@@ -25,17 +24,16 @@ export default function Matrix({ matrix, setElementCol, setElementRow, setShow1,
                             console.log("onclick", indexR, indexC);
                             setElementCol(indexC);
                             setElementRow(indexR)
-                            setShow1(true)
-                            setShow2(true)
-setIsClicked(true);
+                            setShow(true)
+                            setIsClicked(true);
                         }}>
 
                             <Cube key={`${indexR},${indexC}`}
                                 title={matrix[indexR][indexC].name}
                                 color={matrix[indexR][indexC].color}
-                                border={matrix[indexR][indexC].border||borderString}
+                                border={matrix[indexR][indexC].border || borderString}
                                 width={100 / widthmat}
-                                height={100/heightmat}
+                                height={100 / heightmat}
                                 index={indexC}
                                 isClicked={isClicked}
                             />
