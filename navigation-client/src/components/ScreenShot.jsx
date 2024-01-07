@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import html2canvas from 'html2canvas';
 
 const ScreenshotButton = () => {
+  const [screenshotData, setScreenshotData] = useState(null);
+
   const handleScreenshot = () => {
-    const elementToCapture = document.getElementById('elementToCapture'); // Replace with the actual ID of the element
+    const elementToCapture = document.getElementById('elementToCapture');
 
     if (elementToCapture) {
       html2canvas(elementToCapture).then((canvas) => {
         const imgData = canvas.toDataURL('image/png');
-        const link = document.createElement('a');
-        link.href = imgData;
-        link.download = 'screenshot.png';
-        link.click();
+        
+        setScreenshotData(imgData);
+        console.log(screenshotData);
+
       });
     } else {
       console.error('Element not found');
@@ -25,6 +27,13 @@ const ScreenshotButton = () => {
         {/* Your content to capture goes here */}
         <p>This is the content to capture</p>
       </div>
+
+      {screenshotData && (
+        <div>
+          <p>Screenshot saved in variable</p>
+          <img src={screenshotData} alt="Screenshot" />
+        </div>
+      )}
     </div>
   );
 };
