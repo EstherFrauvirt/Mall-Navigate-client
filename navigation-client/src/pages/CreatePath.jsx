@@ -13,11 +13,13 @@ import './CreatePath.css'
 import ShowPath from './ShowPath';
 import MatrixForShow from '../components/matrix/matrixForShow';
 import ModalContext from '../components/context/modalContext';
+import MallContext from '../components/context/mallContext';
 import MapModal from '../components/modal/MapModal';
 import { getUserLocation } from '../components/utils/map'
 import { findClosestCoordinate } from '../components/utils/map'
 import SendEmailButton from '../components/user/sendEmailButton';
 import AlternateEmailRoundedIcon from '@mui/icons-material/AlternateEmailRounded';
+import LoginContext from '../components/context/loginContext';
 
 // import { makeStyles } from '@mui/system';
 
@@ -106,7 +108,15 @@ export default function CreatePath() {
     }
     console.log(obj);
     fetchData(`path`, options)
-      .then((data => { console.log(data); setPathCoordinates(data.path); setMat(data.mat); setStorePathArr(data.storePathArr); setShowColorMatrix(true) }))
+      .then((data => {
+        console.log(data);
+        setPathCoordinates(data.path);
+        setMat(data.mat);
+        setStorePathArr(data.storePathArr);
+        setShowColorMatrix(true);
+        const tmp=data.storePathArr.map(route => route.name).join(' -> ')
+        setStringPath(tmp);
+      }))
       .catch((err) => console.log(err))
     // navigate('/path')
   }
@@ -152,6 +162,8 @@ export default function CreatePath() {
     arr[0] = place;
     setPlacesToVisit(arr);
   }
+
+
 
   const chooseMall = (value) => {
     setCurrentMall(value)

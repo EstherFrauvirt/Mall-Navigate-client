@@ -4,7 +4,7 @@ import { fetchData } from '../utils/servises';
 import mallContext from '../context/mallContext'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
-export default function Data({ showLeftCorner, setShowLeftCorner,show, showDoor,setShowDoor, setShow, setFormData, formData, elementCol, elementRow, addStoreToMatrix, addDorToMAtrix, addEntranceToMatrix }) {
+export default function Data({removeStore,showRU, setShowRU, showLeftCorner, setShowLeftCorner,show, showDoor,setShowDoor, setShow, setFormData, formData, elementCol, elementRow, addStoreToMatrix, addDorToMAtrix, addEntranceToMatrix }) {
     const { mall, setStore, store, setStoreArr, storeArr, showStore, setShowStore } = useContext(mallContext);
     const [width, setWidth] = useState('');
     const [widthError, setWidthError] = useState(false);
@@ -105,7 +105,6 @@ export default function Data({ showLeftCorner, setShowLeftCorner,show, showDoor,
     }
 
     const [showDetails, setShowDetails] = useState(true)
-    const [showRU, setShowRU] = useState()
     return (
         <div>
 
@@ -165,17 +164,21 @@ export default function Data({ showLeftCorner, setShowLeftCorner,show, showDoor,
                  {/* !corner */}
             </div>}
             {showDoor && <div><h5 severity="success" >chhose the dor</h5>
-                <Button sx={{ color: '#4a4cf5' }} size="medium" variant='outlined' onClick={() => { setShowDoor(false); addDor();  setShowRU(true) }}>Submit</Button>
+                <Button sx={{ color: '#4a4cf5' }} size="medium" variant='outlined' onClick={() => { setShowDoor(false);setShowRU(true); addDor();   }}>Submit</Button>
             </div>}
              {/* !door */}
-            {showRU && <Button sx={{ color: '#4a4cf5' }} size="medium" variant='outlined'
+            {showRU && <>
+                <Typography color="#4a4cf5">are you sure?</Typography>
+            
+            <Button sx={{ color: '#4a4cf5' }} size="medium" variant='outlined'
                 onClick={() => {
                     console.log(store); setStoreArr((prevStoreArr) => [...prevStoreArr, store]);
                     setShowStore(true)
                     setShowRU(false)
                     setShowDetails(true)
                     setShow(false)
-                }}>R U shure?</Button>}
+                }}>YES</Button>
+                <Button sx={{ color: '#4a4cf5' }} size="medium" variant='outlined' onClick={()=>{removeStore(formData);setShowDetails(true)}}>NO</Button></>}
         </div>
     )
 }
