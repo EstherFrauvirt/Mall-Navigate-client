@@ -49,7 +49,7 @@ export default function Footer() {
   Contact Us
 </Link><br/>
 <Link href="#"  underline="hover" sx={{color:"white"}}>
-  Term Use
+  Terms Of Use
 </Link>
     </div>
     </div></Container>

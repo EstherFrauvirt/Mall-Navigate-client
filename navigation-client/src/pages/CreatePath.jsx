@@ -138,9 +138,11 @@ export default function CreatePath() {
     const endCoord = findClosestCoordinate(startCoord, mallCoords);
     setEndCoord(endCoord);
     console.log(endCoord);
+    
     const closestMall = malls.filter(item => {
+      console.log(item);
       if (item.coords)
-        if (item.coords[0] == endCoord[0] && item.coords[1] == endCoord[1])
+        if (item.coords.length>0 && (item.coords[0] == endCoord[0] && item.coords[1] == endCoord[1]))
           return item
     });
     setNearestMall({ ...closestMall })
