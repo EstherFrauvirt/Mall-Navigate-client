@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import Matrix from '../matrix'
 import Details from '../details'
-import { useLocation ,useNavigate} from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Card, Divider, Grid, Snackbar, Typography, useStepContext } from '@mui/material';
 import { fetchData } from '../utils/servises'
 import mallContext from '../context/mallContext'
@@ -213,7 +213,7 @@ export default function BuildMatrix({ handleCreateClick }) {
         const tmp = mat;
         let i = parseInt(formData.location.row)
         let j = parseInt(formData.location.col)
-        
+
         const h = parseInt(i) + parseInt(formData.height);
         const w = parseInt(j) + parseInt(formData.width);
         for (let row = i; row < h; row++) {
@@ -382,21 +382,21 @@ export default function BuildMatrix({ handleCreateClick }) {
 
 
     const addToDB = () => {
-        try{
+        try {
             console.log({ mat });
             console.log(mallEnterArr);
             console.log("addMap");
             addMap()
             console.log("addStoreArr");
-    
+
             addStoreArr()
             console.log("created");
             handleCreateClick();
             navigate("/created")
-        }catch{
+        } catch {
             alert("error")
         }
-        
+
     }
 
     return (
@@ -444,7 +444,7 @@ export default function BuildMatrix({ handleCreateClick }) {
                     </div>
                     <div style={{ width: "70%", marginBottom: '5%' }}>
                         <Stack alignItems="center">
-                            <div id='matrix' style={{ height: '100vh', width: '100%' }}>
+                            <div id='matrix' style={{ height: '100%', width: '100%' ,margin:"5% 0"}}>
                                 <Matrix
                                     matrix={mat}
                                     setElementRow={setElementRow}
@@ -453,16 +453,19 @@ export default function BuildMatrix({ handleCreateClick }) {
                                     setShow2={setShow2}
                                     heightmat={height}
                                     widthmat={width}
-                                    width="200hv"
-                                /></div></Stack>
-                    </div>
+                                    // width="200hv"
+                                />
+                            </div>
 
+                            <Button  variant="contained" color="primary" onClick={addToDB} >
+                                Create
+                            </Button>
+                        </Stack>
+                    </div>
                 </Stack>
                 <Stack alignItems="center">
-                    
-                    <Button variant="contained" color="primary" onClick={addToDB} >
-                        Create
-                    </Button>
+
+
                 </Stack>
                 <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                     <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>

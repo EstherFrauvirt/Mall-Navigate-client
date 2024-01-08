@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import RouteIcon from '@mui/icons-material/Route';
 import { AppBar, Typography, Toolbar, Box, Button } from '@mui/material'
 import ModalContext from '../context/modalContext';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LoginContext from '../context/loginContext';
 
 const StyledToolbar = styled('Toolbar')({
@@ -15,7 +15,7 @@ export default function NavBar() {
 
   const navigate = useNavigate();
   const { handleOpen } = useContext(ModalContext);
-  const { setIsLogin, isLogin, logout} = useContext(LoginContext);
+  const { setIsLogin, isLogin, logout } = useContext(LoginContext);
 
   useEffect(() => {
     if (localStorage.getItem("token")) setIsLogin(true)
@@ -28,7 +28,7 @@ export default function NavBar() {
   const registerHandle = () => {
     navigate('/register')
   }
-  
+
   const logoutHandle = () => {
     logout()
     navigate('/')
@@ -39,9 +39,12 @@ export default function NavBar() {
 
       <AppBar position='sticky' sx={{ backgroundColor: '#4a4cf5', height: '10vh' }}>
         <Toolbar>
-          <RouteIcon sx={{ fontSize: '42px', marginRight: '7px', display: { xs: "block", sm: "block" } }}></RouteIcon>
-          <Typography variant='h5' sx={{ display: { xs: "none", sm: "block" } }}>NAV<span  style={{ fontFamily:'Mansalva, sans-serif' }}>it</span></Typography>
-
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <RouteIcon sx={{ fontSize: '42px', color: 'white',  marginRight: '7px', display: { xs: "block", sm: "block" } }}></RouteIcon>
+          </Link>
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <Typography variant='h5' sx={{ color: 'white', display: { xs: "none", sm: "block" } }}>NAV<span style={{color: 'white', fontFamily: 'Mansalva, sans-serif' }}>it</span></Typography>
+          </Link>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' } }}>
             {!isLogin && <>
