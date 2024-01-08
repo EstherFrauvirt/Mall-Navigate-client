@@ -392,7 +392,6 @@ export default function BuildMatrix({ handleCreateClick }) {
             addStoreArr()
             console.log("created");
             handleCreateClick();
-            navigate("/created")
         } catch {
             alert("error")
         }

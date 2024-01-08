@@ -103,7 +103,7 @@ export default function Admin() {
   const handleCreateClick = () => {
     setFlags((prevflags) => ({
       ...prevflags,
-      create: true
+      create: true,draw:false
 
     }))
     setTimeline((prev) => ({
