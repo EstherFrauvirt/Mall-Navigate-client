@@ -14,7 +14,7 @@ export default function Created() {
             <div className="text-overlay">
                 <div className='text-overlay-div'>
                 <h1 >Created!</h1>
-                <h5>thank U for using navIt</h5>
+                <h5>thank U for using NAVit</h5>
                 </div>
                 <Link to="/">
                     <Button variant="outlined" size='large' style={{
@@ -24,7 +24,7 @@ export default function Created() {
                             color: 'white',
                             border: '#ff8e88'
                         }
-                    }}>back to start</Button>
+                    }}>back to home page</Button>
                 </Link>
                 </div> 
                  

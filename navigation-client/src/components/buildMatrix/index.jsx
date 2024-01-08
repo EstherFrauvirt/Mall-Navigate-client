@@ -101,7 +101,7 @@ export default function BuildMatrix({ handleCreateClick }) {
         const doorCord = {}
         doorCord.row = elementRow;
         doorCord.col = elementCol;
-        setStore({ ...store, doorCord: doorCord })
+        // setStore([] ...tmpStore ])
         console.log(tmp);
         if (tmp[elementRow][elementCol].content == -1) {
             console.log("enter formData", formData.location);
@@ -149,7 +149,7 @@ export default function BuildMatrix({ handleCreateClick }) {
     const addPathToMatrix = (formData) => {//הוספת מעבר למטריצה
         const tmp = mat
         console.log(tmp);
-
+console.log("storeArr",storeArr);
         if (tmp[elementRow][elementCol].content == -1) {
             tmp[elementRow][elementCol].name = formData.type;
             tmp[elementRow][elementCol].color = "silver";
