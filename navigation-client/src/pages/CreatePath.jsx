@@ -33,6 +33,7 @@ import LoginContext from '../components/context/loginContext';
 
 export default function CreatePath() {
   const { handleOpen1 } = useContext(ModalContext)
+  const {setStringPath } = useContext(LoginContext)
   const navigate = useNavigate();
   const [currentPlace, setCurrentPlace] = useState([]);
   const [currentMall, setCurrentMall] = useState();
@@ -115,6 +116,8 @@ export default function CreatePath() {
         setStorePathArr(data.storePathArr);
         setShowColorMatrix(true);
         const tmp=data.storePathArr.map(route => route.name).join(' -> ')
+        console.log("tmp:"+tmp);
+        
         setStringPath(tmp);
       }))
       .catch((err) => console.log(err))

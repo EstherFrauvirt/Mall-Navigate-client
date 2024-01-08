@@ -24,7 +24,7 @@ const EmailProvider = ({ children}) => {
       await axios.post(`${config.BASE_URL}mail/send-email`, {
         to: user.email,
         subject: "NAVit: Here is your path!",
-        text: `Visit stores in the following order: ${stringPath}`,
+        text: `Visit the stores in the following order: ${stringPath}`,
       });
       alert('Email sent successfully!');
     } catch (error) {
