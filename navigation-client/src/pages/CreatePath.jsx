@@ -227,7 +227,7 @@ export default function CreatePath() {
               }
               <div style={{display:'flex',justifyContent:'space-between'}}>
               <div style={{ display: 'flex' }}>
-                {storePathArr.map((store, index) => (
+                {storePathArr?.map((store, index) => (
                   <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
                     <Button
                       sx={{ color: '#4a4cf5' }}

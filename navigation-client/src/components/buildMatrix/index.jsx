@@ -7,7 +7,6 @@ import { fetchData } from '../utils/servises'
 import mallContext from '../context/mallContext'
 import { StoreMallDirectory } from '@mui/icons-material';
 import { Stack, border } from '@mui/system';
-import "./style.css"
 import MuiAlert from '@mui/material/Alert';
 
 
