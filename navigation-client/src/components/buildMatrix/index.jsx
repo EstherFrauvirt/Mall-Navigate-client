@@ -101,6 +101,7 @@ export default function BuildMatrix({ handleCreateClick }) {
         const doorCord = {}
         doorCord.row = elementRow;
         doorCord.col = elementCol;
+        tmpStore.doorCord = doorCord;
         // setStore([] ...tmpStore ])
         console.log(tmp);
         if (tmp[elementRow][elementCol].content == -1) {
@@ -149,7 +150,7 @@ export default function BuildMatrix({ handleCreateClick }) {
     const addPathToMatrix = (formData) => {//הוספת מעבר למטריצה
         const tmp = mat
         console.log(tmp);
-console.log("storeArr",storeArr);
+        console.log("storeArr", storeArr);
         if (tmp[elementRow][elementCol].content == -1) {
             tmp[elementRow][elementCol].name = formData.type;
             tmp[elementRow][elementCol].color = "silver";
@@ -444,7 +445,7 @@ console.log("storeArr",storeArr);
                     </div>
                     <div style={{ width: "70%", marginBottom: '5%' }}>
                         <Stack alignItems="center">
-                            <div id='matrix' style={{ height: '100%', width: '100%' ,margin:"5% 0"}}>
+                            <div id='matrix' style={{ height: '100%', width: '100%', margin: "5% 0" }}>
                                 <Matrix
                                     matrix={mat}
                                     setElementRow={setElementRow}
@@ -453,11 +454,11 @@ console.log("storeArr",storeArr);
                                     setShow2={setShow2}
                                     heightmat={height}
                                     widthmat={width}
-                                    // width="200hv"
+                                // width="200hv"
                                 />
                             </div>
 
-                            <Button  variant="contained" color="primary" onClick={addToDB} >
+                            <Button variant="contained" color="primary" onClick={addToDB} >
                                 Create
                             </Button>
                         </Stack>
