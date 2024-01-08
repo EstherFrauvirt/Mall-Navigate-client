@@ -21,7 +21,23 @@ export default function Cube({ title, color, width, height, border, path, icon =
     height: `${600 * height / 100}px`,
     zIndex: '999'
   };
-
+  const content = (title) => {
+    switch (title) {
+      case "door":
+        return <DoorSlidingTwoToneIcon />
+      case "entrance":
+        return <DoorSlidingTwoToneIcon />
+      case "path":
+        return " "
+      default: {
+        if (title.length <= 1) {
+          return title
+        } else {
+          return " "
+        }
+      }
+    }
+  }
   return (
     <div
       style={{
@@ -29,15 +45,20 @@ export default function Cube({ title, color, width, height, border, path, icon =
         border: border,
         width: `${600 * width / 100}px`,
         height: `${600 * height / 100}px`,
+        textAlign:"center",
+        display:"flex",
+        justifyContent:"center",alignItems:"center"
       }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div>
-        {(title === "door" || title === "entrance") ? <DoorSlidingTwoToneIcon /> : title}
+      <div style={{
+      }}>
+        {content(title)}
+        {/* {(title === "door" || title === "entrance") ? <DoorSlidingTwoToneIcon /> : title} */}
       </div>
       <div>
-         {icon && icon}
+        {icon && icon}
       </div>
     </div>
   );

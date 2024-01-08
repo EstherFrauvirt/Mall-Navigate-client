@@ -9,9 +9,6 @@ export default function Matrix({ matrix, setElementCol, setElementRow, setShow, 
     const [isClicked, setIsClicked] = useState(false);
     const borderString = "1px solid black"
     useEffect(() => {
-        // printMat();
-
-        console.log("hi");
 
     }, [])
     return (

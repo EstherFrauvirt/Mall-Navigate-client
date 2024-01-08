@@ -23,6 +23,7 @@ import ScreenShot from '../../components/ScreenShot'
 
 import Place from '../admin/Place'
 import ContactUs from '../../pages/ContactUs'
+import Created from '../../pages/created'
 
 
 
@@ -68,7 +69,8 @@ export default function AppRoutes() {
                 <Route path='/screenShot' element={<ScreenShot />} />
                 <Route path='/path' element={<Path />}/>
                 <Route path='/contact' element={<ContactUs />}/>
-
+                <Route path='/created' element={<Created />}/>
+                
 
 
                 {/* <Route path='/cvList' element={<CvList />} /> */}

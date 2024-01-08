@@ -41,7 +41,7 @@ const MallProvider = ({ children }) => {
     storeArr, setStoreArr, store, setStore,
      mallEnterArr, setMallEnterArr,
       width,height,setHeight,setWidth,
-      showStore, setShowStore }
+      showStore, setShowStore}
   return (
     <MallContext.Provider value={shared}>
       {children}

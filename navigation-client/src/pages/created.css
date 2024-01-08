@@ -1,0 +1,30 @@
+.image-container {
+    margin:auto 0 ;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .image {
+    /* width: 100%; Ensure the image takes 100% width of its container */
+    height: 80vh;
+    display: block;
+    /* width: 100%; */
+  }
+  
+  .text-overlay {
+    position: absolute;
+    top: 50%; /* Center the text vertically */
+    left: 50%; /* Center the text horizontally */
+    transform: translate(-50%, -50%); /* Center the text perfectly */
+    text-align: center;
+    color: #fff; 
+
+  }
+  
+  .text-overlay-div  {
+    margin: 0;
+    padding: 10px;
+    background:#f05e5191;
+    border-radius: 10px;
+  }
+  

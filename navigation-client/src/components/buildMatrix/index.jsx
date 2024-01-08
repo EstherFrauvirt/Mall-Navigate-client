@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react'
 import Matrix from '../matrix'
 import Details from '../details'
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Card, Divider, Grid, Snackbar, Typography, useStepContext } from '@mui/material';
 import { fetchData } from '../utils/servises'
 import mallContext from '../context/mallContext'
 import { StoreMallDirectory } from '@mui/icons-material';
 import { Stack, border } from '@mui/system';
-import "./style.css"
 import MuiAlert from '@mui/material/Alert';
 
 
@@ -16,6 +15,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 export default function BuildMatrix({ handleCreateClick }) {
+    const navigate = useNavigate()
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const { mall, setStore, store, setStoreArr, storeArr, mallEnterArr, setMallEnterArr, setShowStore, width, height } = useContext(mallContext);
@@ -31,7 +31,7 @@ export default function BuildMatrix({ handleCreateClick }) {
     const [show2, setShow2] = useState()//הצגה של חלק הדלת
     const [showDoor, setShowDoor] = useState()
     const [showLeftCorner, setShowLeftCorner] = useState()
-    
+    const [showRU, setShowRU] = useState()
     const [open, setOpen] = React.useState(false);
 
     const handleClick = () => {
@@ -152,11 +152,10 @@ export default function BuildMatrix({ handleCreateClick }) {
 
         if (tmp[elementRow][elementCol].content == -1) {
             tmp[elementRow][elementCol].name = formData.type;
-            tmp[elementRow][elementCol].color = "grey";
+            tmp[elementRow][elementCol].color = "silver";
             tmp[elementRow][elementCol].content = 0;
+            tmp[elementRow][elementCol].border = "none";
             setMat([...tmp])
-            setShow1(false)
-            setShow2(false)
             console.log("mallEnterArr", mallEnterArr);
         } else {
             handleClick1();
@@ -199,6 +198,8 @@ export default function BuildMatrix({ handleCreateClick }) {
         }
         else {
             handleClick2()
+            setShowRU(false)
+            setShowDoor(true)
             console.error("enter", formData.enterance.col, formData.enterance.row)
             console.error("loc", formData.location.col, formData.location.row)
             console.error("endline", formData.location.col + formData.width - 1, parseInt(formData.location.row) + parseInt(formData.height - 1))
@@ -207,6 +208,28 @@ export default function BuildMatrix({ handleCreateClick }) {
         }
 
     }
+
+    const removeStore = (formData) => {
+        const tmp = mat;
+        let i = parseInt(formData.location.row)
+        let j = parseInt(formData.location.col)
+
+        const h = parseInt(i) + parseInt(formData.height);
+        const w = parseInt(j) + parseInt(formData.width);
+        for (let row = i; row < h; row++) {
+            for (let col = j; col < w; col++) {
+                tmp[row][col] = {
+                    content: -1,
+                    color: "white",
+                    name: "",
+                    border: "1px solid black"
+                };
+            }
+        }
+        setMat([...tmp])
+        setShowRU(false)
+    }
+
     const addStoreToMatrix = (formData) => {
         const tmp = mat;
         const tmpStore = {}
@@ -250,6 +273,8 @@ export default function BuildMatrix({ handleCreateClick }) {
                 if (tmp[row][col].content != -1) {
                     handleClick1();
                     console.error("the area is occupied please choose again");
+                    setShowDoor(false)
+                    setShowLeftCorner(true)
                     return
                 }
             }
@@ -357,15 +382,21 @@ export default function BuildMatrix({ handleCreateClick }) {
 
 
     const addToDB = () => {
-        console.log({ mat });
-        console.log(mallEnterArr);
-        console.log("addMap");
-        addMap()
-        console.log("addStoreArr");
+        try {
+            console.log({ mat });
+            console.log(mallEnterArr);
+            console.log("addMap");
+            addMap()
+            console.log("addStoreArr");
 
-        addStoreArr()
-        console.log("created");
-        handleCreateClick();
+            addStoreArr()
+            console.log("created");
+            handleCreateClick();
+            navigate("/created")
+        } catch {
+            alert("error")
+        }
+
     }
 
     return (
@@ -404,13 +435,16 @@ export default function BuildMatrix({ handleCreateClick }) {
                             setShowDoor={setShowDoor}
                             setShowLeftCorner={setShowLeftCorner}
                             showLeftCorner={showLeftCorner}
+                            showRU={showRU}
+                            setShowRU={setShowRU}
+                            removeStore={removeStore}
                         />
                         <Divider orientation="vertical" flexItem />
 
                     </div>
-                    <div style={{ width: "70%", marginBottom: '5%', padding: '20px 0' }}>
+                    <div style={{ width: "70%", marginBottom: '5%' }}>
                         <Stack alignItems="center">
-                            <div id='matrix' style={{ height: '100vh', width: '100vh' }}>
+                            <div id='matrix' style={{ height: '100%', width: '100%' ,margin:"5% 0"}}>
                                 <Matrix
                                     matrix={mat}
                                     setElementRow={setElementRow}
@@ -419,15 +453,19 @@ export default function BuildMatrix({ handleCreateClick }) {
                                     setShow2={setShow2}
                                     heightmat={height}
                                     widthmat={width}
-                                    width="200hv"
-                                /></div></Stack>
-                    </div>
+                                    // width="200hv"
+                                />
+                            </div>
 
+                            <Button  variant="contained" color="primary" onClick={addToDB} >
+                                Create
+                            </Button>
+                        </Stack>
+                    </div>
                 </Stack>
                 <Stack alignItems="center">
-                    <Button variant="contained" color="primary" onClick={addToDB} >
-                        Create
-                    </Button>
+
+
                 </Stack>
                 <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                     <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
