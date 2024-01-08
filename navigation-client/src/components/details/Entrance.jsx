@@ -13,11 +13,18 @@ export default function Entrance({ addEntranceToMatrix, elementRow, elementCol }
                 row: '',
                 col: '',
                 
+            },
+            entrance: {
+                row: '',
+                col: '',
+                
             }
         };
-        tmpData.location.name = name
+        tmpData.name = name
         tmpData.location.row = elementRow
         tmpData.location.col = elementCol
+        tmpData.entrance.row = elementRow
+        tmpData.entrance.col = elementCol
         tmpData.type = "entrance"
         addEntranceToMatrix(tmpData)
     }
