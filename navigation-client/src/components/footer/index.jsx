@@ -1,6 +1,13 @@
-import { Box, Button, styled } from '@mui/material'
+import { Box, Button, styled ,Link,Container} from '@mui/material'
+import { display } from '@mui/system'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import FacebookIcon from '@mui/icons-material/Facebook';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import ContactPageRoundedIcon from '@mui/icons-material/ContactPageRounded';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+
 const FooterBox=styled('div')({
   width:'100%',
   backgroundColor:'#91b3fa',
@@ -19,21 +26,33 @@ export default function Footer() {
 
   return (
     <FooterBox>
-    <div>
-    <Button
-                onClick={contactHandle}
-                variant="outlined"
-                sx={{
-                  my: 2, color: 'white', marginLeft: "40px", display: 'block', "&:hover": {
-                    backgroundColor: 'white',
-                    color: '#ff8e88',
+      <Container>
+    <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',height:'100%'}}>
 
-                  }
-                }}
-              >
-                {"Contact Us"}
-              </Button>
+
+    <div   style={{
+      height:'100%',
+      display:'flex',
+      justifyContent:'space-around',
+      alignItems:'center',
+      width:'50%'
+  
+      }}>
+<FacebookIcon sx={{color:'white'}}/>
+<LinkedInIcon sx={{color:'white'}}/>
+<WhatsAppIcon sx={{color:'white'}}/>
+<YouTubeIcon sx={{color:'white'}}/>
     </div>
+    <div style={{display:'',direction:'',}} >
+
+    <Link href="#"  underline="hover" onClick={contactHandle} sx={{color:"white", }}>
+  Contact Us
+</Link><br/>
+<Link href="#"  underline="hover" sx={{color:"white"}}>
+  Term Use
+</Link>
+    </div>
+    </div></Container>
     </FooterBox>
 
   )

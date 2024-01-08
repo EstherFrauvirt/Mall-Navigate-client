@@ -143,7 +143,7 @@ export default function Login() {
       <div style={{ height: '90vh' }}>
 
 
-        <Card sx={{ minWidth: 275, width: "40%", marginLeft: '30%', marginTop: '', position: 'absolute', top: '25%', padding: '20px' }}>
+        <Card sx={{ minWidth: 275, width: "40%", marginLeft: '30%', marginTop: '', position: 'absolute', top: '15%', padding: '20px' }}>
           <Box display="flex" flexDirection="column" alignItems="center">      <CardContent>
             <Typography sx={{ fontSize: 40 }} color="#4a4cf5" textAlign={'center'} >
               LOGIN
