@@ -442,9 +442,9 @@ export default function BuildMatrix({ handleCreateClick }) {
                         <Divider orientation="vertical" flexItem />
 
                     </div>
-                    <div style={{ width: "70%", marginBottom: '5%', padding: '20px 0' }}>
+                    <div style={{ width: "70%", marginBottom: '5%' }}>
                         <Stack alignItems="center">
-                            <div id='matrix' style={{ height: '100vh', width: '100vh' }}>
+                            <div id='matrix' style={{ height: '100vh', width: '100%' }}>
                                 <Matrix
                                     matrix={mat}
                                     setElementRow={setElementRow}
