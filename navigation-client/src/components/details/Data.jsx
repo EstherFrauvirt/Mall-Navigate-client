@@ -163,7 +163,7 @@ export default function Data({removeStore,showRU, setShowRU, showLeftCorner, set
                 </>}
                  {/* !corner */}
             </div>}
-            {showDoor && <div><h5 severity="success" >chhose the dor</h5>
+            {showDoor && <div><h5 severity="success" >chhose the door</h5>
                 <Button sx={{ color: '#4a4cf5' }} size="medium" variant='outlined' onClick={() => { setShowDoor(false);setShowRU(true); addDor();   }}>Submit</Button>
             </div>}
              {/* !door */}
