@@ -38,7 +38,7 @@ export default function Entrance({ addEntranceToMatrix, elementRow, elementCol }
 
                 />
 
-            <Button onClick={addEntrance}>add Entrance</Button>
+            <Button sx={{ color: '#4a4cf5' }} size="medium"  variant='outlined'  onClick={addEntrance}>add Entrance</Button>
         </div>
     )
 }

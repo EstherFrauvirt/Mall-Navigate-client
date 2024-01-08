@@ -1,4 +1,4 @@
-import React, { useContext, useState ,useEffect} from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import AppRoutes from '../routers/appRouters'
 import { Link } from 'react-router-dom'
 import config from '../../config';
@@ -20,9 +20,10 @@ import CampSize from '../details/campSize';
 import Size from './Size';
 import BuildMatrix from '../buildMatrix';
 import Place from './Place';
+import Created from '../../pages/created';
 
 
-const eventsArr= [
+const eventsArr = [
   {
     icon: <LocationOnRoundedIcon />,
     title: 'Location',
@@ -56,18 +57,18 @@ const eventsArr= [
 ];
 
 export default function Admin() {
-  const {isValidName, setIsValidName} = useState(true);
+  const { isValidName, setIsValidName } = useState(true);
   const { mall, setMall } = useContext(mallContext)
   const [events, setEvents] = useState(eventsArr);
   const [timeline, setTimeline] = useState({
-    location:true,
+    location: true,
     name: false,
     size: false,
     draw: false,
     create: false
   });
   const [flags, setFlags] = useState({
-    location:true,
+    location: true,
     name: false,
     size: false,
     draw: false,
@@ -75,63 +76,63 @@ export default function Admin() {
   });
 
 
-useEffect(() => {
+  useEffect(() => {
 
-  setEvents(prevEvents => prevEvents.map(ev => {
-    if (timeline[`${ev.title.toLowerCase()}`]) {
-      ev.color = '#ff8b84';
-    } else {
-      ev.color = 'grey';
+    setEvents(prevEvents => prevEvents.map(ev => {
+      if (timeline[`${ev.title.toLowerCase()}`]) {
+        ev.color = '#ff8b84';
+      } else {
+        ev.color = 'grey';
+      }
+      return ev;
+    }));
+
+  }, [flags])
+
+  useEffect(() => {
+    return () => {
+      setEvents([...eventsArr])
     }
-    return ev;
-  }));
- 
-}, [flags])
-
-useEffect(() => {
-  return () => {
-    setEvents([...eventsArr])
-  }
-}, [])
+  }, [])
 
 
   const handleNameClick = () => {
-    fetchData();   
-  
+    fetchData();
+
   }
-  const handleCreateClick=()=>{
+  const handleCreateClick = () => {
     setFlags((prevflags) => ({
       ...prevflags,
-      create:true
-      
+      create: true
+
     }))
     setTimeline((prev) => ({
       ...prev,
-      create:true
+      create: true
     }))
   }
   const handleSizeClick = () => {
     setFlags((prevflags) => ({
       ...prevflags,
-      draw:true,size:false
-      
+      draw: true, size: false
+
     }))
     setTimeline((prev) => ({
-      ...prev,draw:true
+      ...prev, draw: true
     }))
-  
+
   }
 
   const handlePlaceClick = () => {
     setFlags((prevflags) => ({
       ...prevflags,
-      name:true,location:false
-      
+      name: true, location: false
+
     }))
     setTimeline((prev) => ({
-      ...prev,name:true
+      ...prev, name: true
     }))
-  
+
   }
   const fetchData = async () => {
     console.log(mall);
@@ -156,12 +157,12 @@ useEffect(() => {
       setMall({ ...mall, placeId: result.id })
       setFlags((prevflags) => ({
         ...prevflags,
-         size:true,name:false
-        
+        size: true, name: false
+
       }))
       setTimeline((prev) => ({
         ...prev,
-       size:true
+        size: true
       }))
     } catch (error) {
       console.log(error);
@@ -172,13 +173,14 @@ useEffect(() => {
     <>
       <div style={{ minHeight: '120vh' }}>
         <Container>
-          
-          {flags.location && <Place handleClick={handlePlaceClick}/>}
+
+          {flags.location && <Place handleClick={handlePlaceClick} />}
           {flags.name && <Name isValidName={isValidName} handleClick={handleNameClick} />}
           {flags.size && <Size handleClick={handleSizeClick} />}
-        { flags.draw && <BuildMatrix handleCreateClick={handleCreateClick}/>}
-        <div style={{ position: 'absolute', top: '15%', right:'0%',maxWidth:"40%" }}>
-            <DynamicTimeline  events={events} />
+          {flags.draw && <BuildMatrix handleCreateClick={handleCreateClick} />}
+          {flags.create && <Created  />}
+          <div style={{ position: 'absolute', top: '15%', right: '0%', maxWidth: "40%" }}>
+            <DynamicTimeline events={events} />
           </div>
         </Container>
       </div>
