@@ -24,14 +24,15 @@ import ScreenShot from '../../components/ScreenShot'
 import Place from '../admin/Place'
 import ContactUs from '../../pages/ContactUs'
 import Created from '../../pages/created'
+import PrivateArea from '../../pages/privateArea'
 
 
 
 const mallCoords = [
 
-[31.0981, 34.8783],
-[31.7380, 34.6943],
-[30.7380, 35.6943]
+    [31.0981, 34.8783],
+    [31.7380, 34.6943],
+    [30.7380, 35.6943]
 
 
 ];
@@ -49,7 +50,7 @@ console.log(endCoord);
 export default function AppRoutes() {
     return (
         <div>
-            
+
             <Navbar></Navbar>
 
             <Routes>
@@ -67,18 +68,18 @@ export default function AppRoutes() {
                 <Route path='/maps' element={<Maps startCoords={startCoord} endCoords={endCoord} />} />
                 <Route path='/place' element={<Place />} />
                 <Route path='/screenShot' element={<ScreenShot />} />
-                <Route path='/path' element={<Path />}/>
-                <Route path='/contact' element={<ContactUs />}/>
-                <Route path='/created' element={<Created />}/>
-                
+                <Route path='/path' element={<Path />} />
+                <Route path='/contact' element={<ContactUs />} />
+                <Route path='/created' element={<Created />} />
 
+                <Route path='/privateArea' element={<PrivateArea />} />
 
                 {/* <Route path='/cvList' element={<CvList />} /> */}
                 {/* <Route path='/cvList/:id' element={<Resume />} /> */}
             </Routes>
             <GlobalModal></GlobalModal>
             <Footer></Footer>
-            
+
         </div>
     )
 }

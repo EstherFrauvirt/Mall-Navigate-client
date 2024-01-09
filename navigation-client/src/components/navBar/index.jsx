@@ -73,7 +73,18 @@ export default function NavBar() {
               >
                 {"login"}
               </Button></>}
-            {isLogin && <Button
+            {isLogin && <>
+             <Link to="/privateArea" style={{ textDecoration: 'none' }}> <Button
+              variant="outlined"
+              sx={{
+                my: 2, color: 'white', marginLeft: "40px", display: 'block', "&:hover": {
+                  backgroundColor: 'white',
+                  color: '#ff8e88',
+
+                }
+              }}
+            >Private area</Button></Link>
+              <Button
               onClick={logoutHandle}
               variant="outlined"
               sx={{
@@ -85,7 +96,7 @@ export default function NavBar() {
               }}
             >
               {"logout"}
-            </Button>}
+            </Button></>}
 
           </Box>
 
