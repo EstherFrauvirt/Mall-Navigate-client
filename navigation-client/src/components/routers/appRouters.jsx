@@ -25,6 +25,7 @@ import Place from '../admin/Place'
 import ContactUs from '../../pages/ContactUs'
 import Created from '../../pages/created'
 import PrivateArea from '../../pages/privateArea'
+import NotFound404 from '../../pages/notFound404'
 
 
 
@@ -73,6 +74,7 @@ export default function AppRoutes() {
                 <Route path='/created' element={<Created />} />
 
                 <Route path='/privateArea' element={<PrivateArea />} />
+                <Route path='/*' element={<NotFound404 />} />
 
                 {/* <Route path='/cvList' element={<CvList />} /> */}
                 {/* <Route path='/cvList/:id' element={<Resume />} /> */}
