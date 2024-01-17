@@ -51,7 +51,7 @@ const PrivateArea = () => {
 
                 {data.length != 0 ?
                     data?.map((m, i) => {
-                        return <Card key={i} style={{ width: "21%" }}>
+                        return <Card key={i} style={{ width: "21%" ,marginBottom:"10px"}}>
                             <CardActionArea style={{ height: "300px" }}>
                                 <CardMedia >
                                     {console.log(m.coords)}
